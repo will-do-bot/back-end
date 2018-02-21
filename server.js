@@ -6,7 +6,7 @@ const mongoose = require('mongoose')
 require('./models/Project')
 const User = mongoose.model('Project')
 
-mongoose.connect(process.env.MONGODB_URI)
+mongoose.connect(process.env.MONGO_URI)
 mongoose.connection.on('error', err => {
     console.log(err.message)
 })
