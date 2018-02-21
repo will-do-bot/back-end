@@ -17,6 +17,7 @@ app.use(bodyParser.json())
 
 app.listen(process.env.PORT || 8080,function(){
     console.log('Listening..')
+    console.log(process.env.MONGODB_URI)
 })
 
 app.use(express.static(__dirname + '/public'));
