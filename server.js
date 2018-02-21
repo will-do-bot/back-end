@@ -6,7 +6,11 @@ const mongoose = require('mongoose')
 require('dotenv').config()
 require('./models/Project')
 const User = mongoose.model('Project')
-mongoose.connect(process.env.DB_HOST)
+
+var options = { server: { socketOptions: { keepAlive: 300000, connectTimeoutMS: 30000 } }, 
+replset: { socketOptions: { keepAlive: 300000, connectTimeoutMS : 30000 } } };    
+
+mongoose.connect(process.env.DB_HOST, options)
 mongoose.connection.on('error', err => {
     console.log(err.message)
 })
