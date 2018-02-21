@@ -7,7 +7,7 @@ require('dotenv').config()
 require('./models/Project')
 const User = mongoose.model('Project')
 
-mongoose.connect(process.env.MONGODB_URI, options)
+mongoose.connect(process.env.MONGODB_URI)
 mongoose.connection.on('error', err => {
     console.log(err.message)
 })
