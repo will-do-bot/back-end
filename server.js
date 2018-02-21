@@ -22,10 +22,11 @@ app.use(express.static(__dirname + '/public'));
 
 app.post("/teste", function(req, res) {
 
-  const user =  (new User(req.body))
+  const user =  (new User({name: 'matheus', description: 'desc'}))
   user.save((err, savedUser) => {
       if (err)
           return next({message: err.message, status: 400})
+      console.log(savedUser)
       res.status(200).send(savedUser)
   })
 })
