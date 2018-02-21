@@ -10,7 +10,7 @@ const User = mongoose.model('Project')
 var options = { server: { socketOptions: { keepAlive: 300000, connectTimeoutMS: 30000 } }, 
 replset: { socketOptions: { keepAlive: 300000, connectTimeoutMS : 30000 } } };    
 
-mongoose.connect(process.env.DB_HOST, options)
+mongoose.connect(process.env.MONGODB_URI, options)
 mongoose.connection.on('error', err => {
     console.log(err.message)
 })
