@@ -21,7 +21,7 @@ app.listen(process.env.PORT || 8080,function(){
 app.use(express.static(__dirname + '/public'));
 
 app.get('/webhook/', function (req, res) {
-	if (req.query['hub.verify_token'] === 'my_voice_is_my_password_verify_me') {
+	if (req.query['hub.verify_token'] === 'task') {
 		res.send(req.query['hub.challenge'])
 	} else {
 		res.send('Error, wrong token')
