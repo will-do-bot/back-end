@@ -1,57 +1,73 @@
-
-var express = require("express");
-var bodyParser = require("body-parser")
-
-const mongoose = require('mongoose')
-require('./models/Project')
-const User = mongoose.model('Project')
+const express = require("express");
+const bodyParser = require("body-parser");
+const request = require('request');
+const mongoose = require('mongoose');
+const app = express();
+require('./models/Project');
+const User = mongoose.model('Project');
+const verify_token = 'tuxedo_cat';
 
 // mongoose.connect(process.env.MONGO_URI)
 // mongoose.connection.on('error', err => {
 //     console.log(err.message)
 // })
 
-var app = express()
-app.use(bodyParser.json())
+app.use(bodyParser.json());
 
 app.listen(process.env.PORT || 8080,function(){
-    console.log('Listening..')
+    console.log('Listening..');
 })
 
 app.use(express.static(__dirname + '/public'));
 
-app.get('/webhook/', function (req, res) {
-	if (req.query['hub.verify_token'] === 'task') {
-		res.send(req.query['hub.challenge'])
-	} else {
-		res.send('Error, wrong token')
-	}
-})
+/* For Facebook Validation */
+app.get('/webhook', (req, res) => {
+    if (req.query['hub.mode'] && req.query['hub.verify_token'] === verify_token) {
+      res.status(200).send(req.query['hub.challenge']);
+    } else {
+      res.status(403).end();
+    }
+});
+  
+/* Tratar mensagem recebida */
+app.post('/webhook', (req, res) => {
+    console.log(req.body);
+    if (req.body.object === 'page') {
+        req.body.entry.forEach((entry) => {
+            entry.messaging.forEach((event) => {
+                if (event.message && event.message.text) {
+					let resposta = gerarResposta(event.message.text);
+                    sendMessage(event.sender.id, resposta);
+                }
+            });
+        });
+        res.status(200).end();
+    }
+});
 
-// to post data
-app.post('/webhook/', function (req, res) {
-	// Parse the request body from the POST
-	let body = req.body;
-	
-	  // Check the webhook event is from a Page subscription
-	  if (body.object === 'page') {
-	
-		// Iterate over each entry - there may be multiple if batched
-		body.entry.forEach(function(entry) {
-	
-		  // Get the webhook event. entry.messaging is an array, but 
-		  // will only ever contain one event, so we get index 0
-		  let webhook_event = entry.messaging[0];
-		  console.log(webhook_event);
-		  
-		});
-	
-		// Return a '200 OK' response to all events
-		res.status(200).send('EVENT_RECEIVED');
-	
-	  } else {
-		// Return a '404 Not Found' if event is not from a page subscription
-		res.sendStatus(404);
-	  }
-})
+function gerarResposta(text) {
+	let resposta;
+	if (text === 'Oi')
+		resposta = 'Olá, querido usuário';
+	else
+		resposta = 'WillDo';
+	return resposta;
+}
 
+function sendMessage(sender, texto) {
+    request({
+        url: 'https://graph.facebook.com/v2.6/me/messages',
+        qs: { access_token: 'EAACDnQfxGoMBAHhho7WogS6yMPv0bff9Q9F1ZBGN2fgZAoWZAAq5nTAkJo3pj0Vjn5ZAmpSKjrslNL4a57aDvfkERAZAMsoV8M9KL9PP5kSW8ivg9tUakiogmrkSqunZASWNT9LoMo27MwMOFE0QmQNWbDKTO8po5bzuSDoHEuaBT9dbxdpA47' },
+        method: 'POST',
+        json: {
+            recipient: { id: sender },
+            message: { text: texto }
+        }
+    }, function (error, response) {
+        if (error) {
+            console.log('Error sending message: ', error);
+        } else if (response.body.error) {
+            console.log('Error: ', response.body.error);
+        }
+    });
+}
