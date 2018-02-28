@@ -1,127 +1,73 @@
-
-var express = require("express");
-var bodyParser = require("body-parser")
-
-const mongoose = require('mongoose')
-require('./models/Project')
-const User = mongoose.model('Project')
+const express = require("express");
+const bodyParser = require("body-parser");
+const request = require('request');
+const mongoose = require('mongoose');
+const app = express();
+require('./models/Project');
+const User = mongoose.model('Project');
+const verify_token = 'tuxedo_cat';
 
 // mongoose.connect(process.env.MONGO_URI)
 // mongoose.connection.on('error', err => {
 //     console.log(err.message)
 // })
 
-var app = express()
-app.use(bodyParser.json())
+app.use(bodyParser.json());
 
 app.listen(process.env.PORT || 8080,function(){
-    console.log('Listening..')
+    console.log('Listening..');
 })
 
 app.use(express.static(__dirname + '/public'));
 
-app.get('/webhook/', function (req, res) {
-	if (req.query['hub.verify_token'] === 'task') {
-		res.send(req.query['hub.challenge'])
-	} else {
-		res.send('Error, wrong token')
-	}
-})
+/* For Facebook Validation */
+app.get('/webhook', (req, res) => {
+    if (req.query['hub.mode'] && req.query['hub.verify_token'] === verify_token) {
+      res.status(200).send(req.query['hub.challenge']);
+    } else {
+      res.status(403).end();
+    }
+});
+  
+/* Tratar mensagem recebida */
+app.post('/webhook', (req, res) => {
+    console.log(req.body);
+    if (req.body.object === 'page') {
+        req.body.entry.forEach((entry) => {
+            entry.messaging.forEach((event) => {
+                if (event.message && event.message.text) {
+					let resposta = gerarResposta(event.message.text);
+                    sendMessage(event.sender.id, resposta);
+                }
+            });
+        });
+        res.status(200).end();
+    }
+});
 
-// to post data
-app.post('/webhook/', function (req, res) {
-	let messaging_events = req.body.entry[0].messaging
-	for (let i = 0; i < messaging_events.length; i++) {
-		let event = req.body.entry[0].messaging[i]
-		let sender = event.sender.id
-		if (event.message && event.message.text) {
-			let text = event.message.text
-			if (text === 'Generic'){ 
-				console.log("welcome to chatbot")
-				//sendGenericMessage(sender)
-				continue
-			}
-			sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
-		}
-		if (event.postback) {
-			let text = JSON.stringify(event.postback)
-			sendTextMessage(sender, "Postback received: "+text.substring(0, 200), token)
-			continue
-		}
-	}
-	res.sendStatus(200)
-})
-
-
-// recommended to inject access tokens as environmental variables, e.g.
-// const token = process.env.FB_PAGE_ACCESS_TOKEN
-const token = "4f19b37cb6f183731d9380a007164656"
-
-function sendTextMessage(sender, text) {
-	let messageData = { text:text }
-	
-	request({
-		url: 'https://graph.facebook.com/v2.6/me/messages',
-		qs: {access_token:token},
-		method: 'POST',
-		json: {
-			recipient: {id:sender},
-			message: messageData,
-		}
-	}, function(error, response, body) {
-		if (error) {
-			console.log('Error sending messages: ', error)
-		} else if (response.body.error) {
-			console.log('Error: ', response.body.error)
-		}
-	})
+function gerarResposta(text) {
+	let resposta;
+	if (text === 'Oi')
+		resposta = 'Olá, querido usuário';
+	else
+		resposta = 'WillDo';
+	return resposta;
 }
 
-function sendGenericMessage(sender) {
-	let messageData = {
-		"attachment": {
-			"type": "template",
-			"payload": {
-				"template_type": "generic",
-				"elements": [{
-					"title": "First card",
-					"subtitle": "Element #1 of an hscroll",
-					"image_url": "http://messengerdemo.parseapp.com/img/rift.png",
-					"buttons": [{
-						"type": "web_url",
-						"url": "https://www.messenger.com",
-						"title": "web url"
-					}, {
-						"type": "postback",
-						"title": "Postback",
-						"payload": "Payload for first element in a generic bubble",
-					}],
-				}, {
-					"title": "Second card",
-					"subtitle": "Element #2 of an hscroll",
-					"image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
-					"buttons": [{
-						"type": "postback",
-						"title": "Postback",
-						"payload": "Payload for second element in a generic bubble",
-					}],
-				}]
-			}
-		}
-	}
-	request({
-		url: 'https://graph.facebook.com/v2.6/me/messages',
-		qs: {access_token:token},
-		method: 'POST',
-		json: {
-			recipient: {id:sender},
-			message: messageData,
-		}
-	}, function(error, response, body) {
-		if (error) {
-			console.log('Error sending messages: ', error)
-		} else if (response.body.error) {
-			console.log('Error: ', response.body.error)
-		}
-	})
+function sendMessage(sender, texto) {
+    request({
+        url: 'https://graph.facebook.com/v2.6/me/messages',
+        qs: { access_token: 'EAACDnQfxGoMBAHhho7WogS6yMPv0bff9Q9F1ZBGN2fgZAoWZAAq5nTAkJo3pj0Vjn5ZAmpSKjrslNL4a57aDvfkERAZAMsoV8M9KL9PP5kSW8ivg9tUakiogmrkSqunZASWNT9LoMo27MwMOFE0QmQNWbDKTO8po5bzuSDoHEuaBT9dbxdpA47' },
+        method: 'POST',
+        json: {
+            recipient: { id: sender },
+            message: { text: texto }
+        }
+    }, function (error, response) {
+        if (error) {
+            console.log('Error sending message: ', error);
+        } else if (response.body.error) {
+            console.log('Error: ', response.body.error);
+        }
+    });
 }
