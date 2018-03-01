@@ -52,8 +52,8 @@ function gerarResposta(text) {
 		let project = new Project({name: 'Teste', description: 'This is a test!!!'})
 		project.save(function(err,savedObj){
 			console.log(savedObj)
-			resposta = "I am Groot"
 		})
+		resposta = "I am Groot"		
 	}
 	else
 		resposta = 'WillDo';
