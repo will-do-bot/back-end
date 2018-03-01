@@ -11,6 +11,15 @@ const projectSchema = new mongoose.Schema({
     },
     description: {
         type: String
+    },
+    deadline: {
+        type: Date
+    },
+    priority: {
+        type: String
+    },
+    user: {
+        type: Number
     }
 })
 

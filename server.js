@@ -3,10 +3,10 @@ const bodyParser = require("body-parser");
 const request = require('request');
 const mongoose = require('mongoose');
 const app = express();
-require('dotenv').config()
-const Project = require('./models/Project');
-const User = mongoose.model('Project');
+require('dotenv').config();
 const verify_token = 'tuxedo_cat';
+//Models
+const Project = mongoose.model('Project');
 
 mongoose.connect(process.env.MONGO_URI || 'mongodb://prod:taskbot@ds243728.mlab.com:43728/taskbot')
 mongoose.connection.on('error', err => {
@@ -30,7 +30,7 @@ app.get('/webhook', (req, res) => {
     }
 });
   
-/* Tratar mensagem recebida */
+/* Handles messages */
 app.post('/webhook', (req, res) => {
     console.log(req.body);
     if (req.body.object === 'page') {
@@ -45,20 +45,6 @@ app.post('/webhook', (req, res) => {
         res.status(200).end();
     }
 });
-
-function gerarResposta(text) {
-	let resposta;
-	if (text === 'Oi'){
-		let project = new Project({name: 'Teste', description: 'This is a test!!!'})
-		project.save(function(err,savedObj){
-			console.log(savedObj)
-		})
-		resposta = "I am Groot"		
-	}
-	else
-		resposta = 'WillDo';
-	return resposta;
-}
 
 function sendMessage(sender, texto) {
     request({
