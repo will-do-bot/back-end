@@ -4,7 +4,7 @@ const request = require('request');
 const mongoose = require('mongoose');
 const app = express();
 require('dotenv').config()
-require('./models/Project');
+const Project = require('./models/Project');
 const User = mongoose.model('Project');
 const verify_token = 'tuxedo_cat';
 
@@ -49,9 +49,10 @@ app.post('/webhook', (req, res) => {
 function gerarResposta(text) {
 	let resposta;
 	if (text === 'Oi'){
-		let project = new project({name: 'Teste', description: 'This is a test!!!'})
+		let project = new Project({name: 'Teste', description: 'This is a test!!!'})
 		project.save(function(err,savedObj){
-			res.send(savedObj)
+			console.log(savedObj)
+			return 'Hi, this is WillDo working with database connection'
 		})
 	}
 	else
