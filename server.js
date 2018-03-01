@@ -52,7 +52,7 @@ function gerarResposta(text) {
 		let project = new Project({name: 'Teste', description: 'This is a test!!!'})
 		project.save(function(err,savedObj){
 			console.log(savedObj)
-			return 'Hi, this is WillDo working with database connection'
+			resposta = "I am Groot"
 		})
 	}
 	else
