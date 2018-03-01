@@ -3,14 +3,15 @@ const bodyParser = require("body-parser");
 const request = require('request');
 const mongoose = require('mongoose');
 const app = express();
+require('dotenv').config()
 require('./models/Project');
 const User = mongoose.model('Project');
 const verify_token = 'tuxedo_cat';
 
-// mongoose.connect(process.env.MONGO_URI)
-// mongoose.connection.on('error', err => {
-//     console.log(err.message)
-// })
+mongoose.connect(process.env.MONGO_URI || 'mongodb://prod:taskbot@ds243728.mlab.com:43728/taskbot')
+mongoose.connection.on('error', err => {
+    console.log(err.message)
+})
 
 app.use(bodyParser.json());
 
@@ -47,8 +48,12 @@ app.post('/webhook', (req, res) => {
 
 function gerarResposta(text) {
 	let resposta;
-	if (text === 'Oi')
-		resposta = 'Olá, querido usuário';
+	if (text === 'Oi'){
+		let project = new project({name: 'Teste', description: 'This is a test!!!'})
+		project.save(function(err,savedObj){
+			res.send(savedObj)
+		})
+	}
 	else
 		resposta = 'WillDo';
 	return resposta;
