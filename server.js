@@ -37,8 +37,8 @@ app.post('/webhook', (req, res) => {
         req.body.entry.forEach((entry) => {
             entry.messaging.forEach((event) => {
                 if (event.message && event.message.text) {
-					let resposta = gerarResposta(event.message.text);
-                    sendMessage(event.sender.id, resposta);
+					let answer = "Do you WillDo? You will!";
+                    sendMessage(event.sender.id, answer);
                 }
             });
         });
@@ -46,14 +46,14 @@ app.post('/webhook', (req, res) => {
     }
 });
 
-function sendMessage(sender, texto) {
+function sendMessage(sender, message) {
     request({
         url: 'https://graph.facebook.com/v2.6/me/messages',
         qs: { access_token: 'EAACDnQfxGoMBAHhho7WogS6yMPv0bff9Q9F1ZBGN2fgZAoWZAAq5nTAkJo3pj0Vjn5ZAmpSKjrslNL4a57aDvfkERAZAMsoV8M9KL9PP5kSW8ivg9tUakiogmrkSqunZASWNT9LoMo27MwMOFE0QmQNWbDKTO8po5bzuSDoHEuaBT9dbxdpA47' },
         method: 'POST',
         json: {
             recipient: { id: sender },
-            message: { text: texto }
+            message: { text: message }
         }
     }, function (error, response) {
         if (error) {
