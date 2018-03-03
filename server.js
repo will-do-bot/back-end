@@ -40,7 +40,7 @@ app.post('/webhook', (req, res) => {
         req.body.entry.forEach((entry) => {
             entry.messaging.forEach((event) => {
                 if (event.message && event.message.text) {
-                    let answer = "Do you WillDo? You will!";
+                    let answer = runCommands(event);
                     sendMessage(event.sender.id, answer);
                 }
             });
