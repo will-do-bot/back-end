@@ -49,6 +49,23 @@ app.post('/webhook', (req, res) => {
     }
 });
 
+function runCommands(event) {
+    let answer = 'Do you WillDo? You will!';
+    switch (event.message.text) {
+        case 'create project':
+            project.create({
+                name: 'Nome',
+                description: 'Descrição',
+                deadline: Date.now(),
+                priority: 'Prioridade',
+                user: event.sender.id
+            }, function (err, data) { });
+            answer = 'Projeto adicionado';
+            break;
+    }
+    return answer;
+}
+
 function sendMessage(sender, message) {
     request({
         url: 'https://graph.facebook.com/v2.6/me/messages',
