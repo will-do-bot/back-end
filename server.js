@@ -6,12 +6,13 @@ const app = express();
 require('dotenv').config();
 const verify_token = 'tuxedo_cat';
 //Models
+require('./models/Project')
 const Project = mongoose.model('Project');
 
-mongoose.connect(process.env.MONGO_URI || 'mongodb://prod:taskbot@ds243728.mlab.com:43728/taskbot')
-mongoose.connection.on('error', err => {
-    console.log(err.message)
-})
+// mongoose.connect(process.env.MONGO_URI || 'mongodb://prod:taskbot@ds243728.mlab.com:43728/taskbot')
+// mongoose.connection.on('error', err => {
+//     console.log(err.message)
+// })
 
 app.use(bodyParser.json());
 
