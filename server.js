@@ -40,8 +40,8 @@ app.post('/webhook', (req, res) => {
         req.body.entry.forEach((entry) => {
             entry.messaging.forEach((event) => {
                 if (event.message && event.message.text) {
-                    let answer = runCommands(event);
-                    sendMessage(event.sender.id, answer);
+                    runCommands(event);
+                    //sendMessage(event.sender.id, answer);
                 }
             });
         });
@@ -61,18 +61,18 @@ function runCommands(event) {
                 user: event.sender.id
             }, function (err, data) { });
             answer = 'Projeto adicionado';
+            sendMessage(event.sender.id, answer);
             break;
         case 'list projects':
-            answer = '';
+            answer = 'Tentando listar projetos:  ';
             project.list({ }, function(err, list) {
                 list.forEach(function(item) {
                     answer += item.name + " ";
-                })
+                });
+                sendMessage(event.sender.id, answer);
             })
-            answer += '... Tentei listar projetos';
             break;
     }
-    return answer;
 }
 
 function sendMessage(sender, message) {
