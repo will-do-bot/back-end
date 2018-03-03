@@ -52,7 +52,7 @@ app.post('/webhook', (req, res) => {
 
 function genAnswer(event) {
     let answer = 'Do you WillDo? You will!';
-    if (event.message.text === 'create project') {
+    /*if (event.message.text === 'create project') {
         project.create({ 
             name: 'Projeto legal',
             description: 'Descrição legal',
@@ -62,7 +62,7 @@ function genAnswer(event) {
         }, 
         function(err, desc) { });
         answer = 'Projeto criado';
-    }
+    }*/
     return answer;
 }
 
