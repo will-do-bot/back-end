@@ -7,6 +7,8 @@ require('dotenv').config();
 const verify_token = 'dont_panic_42';
 //Models
 const Project = mongoose.model('Project');
+//Controllers
+const project = require('./controllers/project');
 
 mongoose.connect(process.env.MONGO_URI || 'mongodb://prod:taskbot@ds243728.mlab.com:43728/taskbot')
 mongoose.connection.on('error', err => {
@@ -37,7 +39,8 @@ app.post('/webhook', (req, res) => {
         req.body.entry.forEach((entry) => {
             entry.messaging.forEach((event) => {
                 if (event.message && event.message.text) {
-					let answer = "Do you WillDo? You will!";
+                    //let answer = "Do you WillDo? You will!";
+                    let answer = genAnswer(event);
                     sendMessage(event.sender.id, answer);
                 }
             });
@@ -45,6 +48,22 @@ app.post('/webhook', (req, res) => {
         res.status(200).end();
     }
 });
+
+function genAnswer(event) {
+    let answer = 'Do you WillDo? You will!';
+    if (event.message.text === 'create project') {
+        project.create({ 
+            name: 'Projeto legal',
+            description: 'Descrição legal',
+            deadline: Date.now(),
+            priority: 'High',
+            user: 'Lucas'
+        }, 
+        function(err, desc) { });
+        answer = 'Projeto criado';
+    }
+    return answer;
+}
 
 function sendMessage(sender, message) {
     request({
