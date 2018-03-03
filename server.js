@@ -76,13 +76,13 @@ function runCommands(event) {
             answer = 'Tentando atualizar projetos:  ';
             project.update({ name: 'Nome' }, 
             {
-                name: 'Nome',
+                name: 'Atualizado',
                 description: 'Descrição',
                 deadline: Date.now(),
                 priority: 'Prioridade',
                 user: event.sender.id
-            }, function(err, numAffected) {
-                answer = numAffected + ' registros afetados';
+            }, function(err, obj) {
+                answer = 'Sucesso';
                 sendMessage(event.sender.id, answer);
             });
             break;
