@@ -70,7 +70,21 @@ function runCommands(event) {
                     answer += item.name + " ";
                 });
                 sendMessage(event.sender.id, answer);
-            })
+            });
+            break;
+        case 'update projects':
+            answer = 'Tentando atualizar projetos:  ';
+            project.update({ name: 'Nome' }, 
+            {
+                name: 'Nome',
+                description: 'Descrição',
+                deadline: Date.now(),
+                priority: 'Prioridade',
+                user: event.sender.id
+            }, function(err, numAffected) {
+                answer = numAffected + ' registros afetados';
+                sendMessage(event.sender.id, answer);
+            });
             break;
     }
 }
