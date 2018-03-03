@@ -62,6 +62,14 @@ function runCommands(event) {
             }, function (err, data) { });
             answer = 'Projeto adicionado';
             break;
+        case 'list projects':
+            project.list({ }, 0, function(err, list) {
+                answer = '';
+                list.forEach(function(item) {
+                    answer += item.name + " ";
+                })
+            })
+            break;
     }
     return answer;
 }
