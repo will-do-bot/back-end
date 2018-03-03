@@ -10,10 +10,8 @@ module.exports = {
             cb(created);
         });
     },
-    list: function(query={ }, limit=0, cb) {
-        let q = Project.find(query);
-        if (limit > 0) query.limit(limit);
-        q.exec(cb);
+    list: function(query={ }, cb) {
+        Project.find(query, cb);
     },
     update: function(conditions, newObj, cb) {
         Project.update(conditions, newObj, { multi: true }, cb);

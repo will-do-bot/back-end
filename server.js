@@ -63,12 +63,13 @@ function runCommands(event) {
             answer = 'Projeto adicionado';
             break;
         case 'list projects':
-            project.list({ }, 0, function(err, list) {
-                answer = '';
+            answer = '';
+            project.list({ }, function(err, list) {
                 list.forEach(function(item) {
                     answer += item.name + " ";
                 })
             })
+            answer += '... Tentei listar projetos';
             break;
     }
     return answer;
