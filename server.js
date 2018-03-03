@@ -9,10 +9,10 @@ const verify_token = 'dont_panic_42';
 require('./models/Project')
 const Project = mongoose.model('Project');
 
-// mongoose.connect(process.env.MONGO_URI || 'mongodb://prod:taskbot@ds243728.mlab.com:43728/taskbot')
-// mongoose.connection.on('error', err => {
-//     console.log(err.message)
-// })
+mongoose.connect(process.env.MONGO_URI || 'mongodb://willdo:PucMinas@ds253918.mlab.com:53918/willdo')
+mongoose.connection.on('error', err => {
+    console.log(err.message)
+})
 
 app.use(bodyParser.json());
 
