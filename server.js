@@ -6,11 +6,12 @@ const app = express();
 require('dotenv').config();
 const verify_token = 'dont_panic_42';
 //Models
+require('./models/Project')
 const Project = mongoose.model('Project');
 //Controllers
 const project = require('./controllers/project');
 
-mongoose.connect(process.env.MONGO_URI || 'mongodb://prod:taskbot@ds243728.mlab.com:43728/taskbot')
+mongoose.connect(process.env.MONGO_URI || 'mongodb://willdo:PucMinas@ds253918.mlab.com:53918/willdo')
 mongoose.connection.on('error', err => {
     console.log(err.message)
 })
