@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const Project = mongoose.model('Project');
 
 module.exports = {
