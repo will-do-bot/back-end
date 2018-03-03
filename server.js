@@ -4,7 +4,7 @@ const request = require('request');
 const mongoose = require('mongoose');
 const app = express();
 require('dotenv').config();
-const verify_token = 'tuxedo_cat';
+const verify_token = 'dont_panic_42';
 //Models
 require('./models/Project')
 const Project = mongoose.model('Project');
@@ -50,7 +50,7 @@ app.post('/webhook', (req, res) => {
 function sendMessage(sender, message) {
     request({
         url: 'https://graph.facebook.com/v2.6/me/messages',
-        qs: { access_token: 'EAACDnQfxGoMBAHhho7WogS6yMPv0bff9Q9F1ZBGN2fgZAoWZAAq5nTAkJo3pj0Vjn5ZAmpSKjrslNL4a57aDvfkERAZAMsoV8M9KL9PP5kSW8ivg9tUakiogmrkSqunZASWNT9LoMo27MwMOFE0QmQNWbDKTO8po5bzuSDoHEuaBT9dbxdpA47' },
+        qs: { access_token: 'EAACcCV52z1oBAMsWSemRGY5RPwXaDuGyQaNvlsLPvRfiZAMYkiDzJzIZCTPhtZCJNGekusvveXZC13TANrQDk22zWUJ8Cp1tOZCl4SVafWcgOOR7GKaZB8SWZB7bWunAIwnbVWT03ZB0fFyMTB3HSvDVGZAmYPDsSXR62vxXt6ND7nip6el9ZC0NXn' },
         method: 'POST',
         json: {
             recipient: { id: sender },
