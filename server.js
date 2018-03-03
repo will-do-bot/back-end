@@ -73,7 +73,6 @@ function runCommands(event) {
             });
             break;
         case 'update projects':
-            answer = 'Tentando atualizar projetos:  ';
             project.update({ name: 'Nome' }, 
             {
                 name: 'Atualizado',
@@ -85,6 +84,15 @@ function runCommands(event) {
                 answer = 'Sucesso';
                 sendMessage(event.sender.id, answer);
             });
+            break;
+        case 'remove projects':
+            project.remove({ name: 'Nome' }, function(err, obj) {
+                answer = 'Sucesso';
+                sendMessage(event.sender.id, answer);
+            });
+            break;
+        default: 
+            sendMessage(event.sender.id, answer);
             break;
     }
 }
