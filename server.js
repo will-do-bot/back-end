@@ -86,7 +86,7 @@ function runCommands(event) {
             });
             break;
         case 'remove projects':
-            project.remove({ name: 'Nome' }, function(err, obj) {
+            project.remove({ }, function(err, obj) {
                 answer = 'Sucesso';
                 sendMessage(event.sender.id, answer);
             });
