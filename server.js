@@ -57,6 +57,7 @@ function runCommands(event) {
                 name: 'Nome',
                 description: 'Descrição',
                 deadline: Date.now(),
+                startDate: Date.now(),
                 priority: 'Prioridade',
                 user: event.sender.id
             }, function (err, data) { });
@@ -78,6 +79,7 @@ function runCommands(event) {
                 name: 'Atualizado',
                 description: 'Descrição',
                 deadline: Date.now(),
+                startDate: Date.now(),
                 priority: 'Prioridade',
                 user: event.sender.id
             }, function(err, obj) {
