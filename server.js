@@ -65,10 +65,11 @@ function runCommands(event) {
             sendMessage(event.sender.id, answer);
             break;
         case 'list projects':
-            answer = 'Tentando listar projetos:  ';
+            answer = 'Listando projetos:  ';
             project.list({ }, function(err, list) {
                 list.forEach(function(item) {
-                    answer += item.name + " ";
+                    if (answer != 'Listando projetos: ') answer += '\n';
+                    answer += "{ Name: " + item.name + ", Description: " + item.description + ", Deadline: " + item.deadLine + ", StartDate: " + item.startDate + ", Priority: " + item.priority + ", User: " + item.user + " }";
                 });
                 sendMessage(event.sender.id, answer);
             });
