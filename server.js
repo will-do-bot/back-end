@@ -7,7 +7,7 @@ const verify_token = 'dont_panic_42';
 require('./models/Project')
 const Project = mongoose.model('Project');
 const project = require('./controllers/project');
-
+const app = express()
 mongoose.connect(process.env.MONGO_URI || 'mongodb://willdo:PucMinas@ds253918.mlab.com:53918/willdo')
 mongoose.connection.on('error', err => {
     console.log(err.message)
