@@ -8,6 +8,7 @@ module.exports = {
             //if(err) handlesError(err);
             if (err) console.log(err);
             cb(created);
+            next()
         });
     },
     list: function(query={ }, cb) {

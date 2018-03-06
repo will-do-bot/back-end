@@ -69,7 +69,7 @@ function runCommands(event) {
             project.list({ }, function(err, list) {
                 list.forEach(function(item) {
                     if (answer != 'Listando projetos: ') answer += '\n';
-                    answer += "{ Name: " + item.name + ", Description: " + item.description + ", Deadline: " + item.deadline + ", StartDate: " + item.startDate + ", Priority: " + item.priority + ", User: " + item.user + " }";
+                    answer += JSON.stringify(item);  
                 });
                 sendMessage(event.sender.id, answer);
             });
