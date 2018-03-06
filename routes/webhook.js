@@ -12,7 +12,6 @@ module.exports = function (app) {
 
     /* Handles messages */
     app.post('/webhook', middle.exemploDeMiddleware, (req, res) => {
-        console.log(req.body);
         if (req.body.object === 'page') {
             req.body.entry.forEach((entry) => {
                 entry.messaging.forEach((event) => {
