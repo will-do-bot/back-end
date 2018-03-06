@@ -18,5 +18,9 @@ module.exports = {
     },
     remove: function(conditions, cb) {
         Project.remove(conditions, cb);
+    },
+    exemploDeMiddleware: function( req, res, next){
+        console.log('Passou no middleware')
+        next() //chama o proximo metodo do route
     }
 };
