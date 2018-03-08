@@ -12,7 +12,9 @@ mongoose.connect(process.env.MONGO_URI || 'mongodb://willdo:PucMinas@ds253918.ml
 mongoose.connection.on('error', err => {
     console.log(err.message)
 })
-
+app.use(bodyParser.urlencoded({
+    extended: true
+  }));
 app.use(bodyParser.json());
 
 app.listen(process.env.PORT || 8080,function(){
@@ -22,6 +24,7 @@ app.listen(process.env.PORT || 8080,function(){
 app.use(express.static(__dirname + '/public'));
 
 require('./routes/webhook')(app)
+require('./routes/task')(app)
 
 // function sendMessage(sender, message) {
 //     request({
