@@ -1,10 +1,10 @@
+require('./models/Project')
 const express = require("express");
 const bodyParser = require("body-parser");
 const request = require('request');
 const mongoose = require('mongoose');
 require('dotenv').config();
 const verify_token = 'dont_panic_42';
-require('./models/Project')
 const Project = mongoose.model('Project');
 const project = require('./controllers/project');
 const app = express()
@@ -24,6 +24,7 @@ app.listen(process.env.PORT || 8080,function(){
 app.use(express.static(__dirname + '/public'));
 
 require('./routes/webhook')(app)
+<<<<<<< HEAD
 require('./routes/task')(app)
 
 // function sendMessage(sender, message) {
@@ -43,3 +44,6 @@ require('./routes/task')(app)
 //         }
 //     });
 // }
+=======
+require('./routes/project')(app)
+>>>>>>> 8eca4cf5134ee17db9ee588b8e630acbc9c25226
