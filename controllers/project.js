@@ -8,7 +8,7 @@ module.exports = {
             //if(err) handlesError(err);
             if (err) console.log(err);
             cb(created);
-            next()
+            //next()
         });
     },
     list: function(query={ }, cb) {
@@ -20,7 +20,7 @@ module.exports = {
     remove: function(conditions, cb) {
         Project.remove(conditions, cb);
     },
-    exemploDeMiddleware: function( req, res, next){
+    exemploDeMiddleware: function(req, res, next){
         console.log('Passou no middleware')
         next() //chama o proximo metodo do route
     }
