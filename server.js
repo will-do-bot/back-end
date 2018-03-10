@@ -21,7 +21,7 @@ app.listen(process.env.PORT || 8080,function(){
     console.log('Listening..');
 })
 
-app.use(express.static(__dirname + '/public/front'));
+app.use(express.static(__dirname + '/public'));
 
 require('./routes/webhook')(app)
 require('./routes/task')(app)
