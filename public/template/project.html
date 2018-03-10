@@ -1,26 +1,21 @@
 <div class="content">
     <div class="top-content">
-        <p class="title">Swampum</p>
+        <p class="title">{{project.name}}</p>
     </div>
     <div class="bottom-content">
         <div class="tasks-panel">
             <p class="sub-title">Task</p>
             <div class="tasks">
-                <p class="task selected">#1 - Criar Banco</p>
-                <p class="task">#2 - Revisa Interface</p>
-                <p class="task">#3 - Criar Documentacao</p>
-                <p class="task">#4 - Comer Pudim</p>
+                <p ng-click='changeContent(x)' ng-repeat="x in project.tasks" ng-class="getChosen(x)">#{{$index+1}} - {{x.name}}</p>
             </div>
         </div>
         <div class="selected-task">
             <div class="top-selected-task">
-                <p class="sub-title-task">Criar Banco</p>
-                <p class="priority high">High Priority</p>
+                <p class="sub-title-task">{{chosenTask.name}}</p>
+                <p ng-class="getPriority()">{{chosenTask.priority}} Priority</p>
             </div>
             <div class="task-attribute">
-                <p class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc posuere accumsan dui, ac malesuada justo finibus
-                    non.
-                </p>
+                <p class="description">{{chosenTask.description}}</p>
                 <div class="task-button">
                     <div class="task-buttom-left">
                         <a class='button' href="#!timetracker"> Time Tracker</a>

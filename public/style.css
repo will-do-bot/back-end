@@ -137,11 +137,20 @@ p {
     margin-left: 10%;
     font-size: 1.2em;
     padding: 1% 1%;
+    color: white;
 }
 
 .high{
     background-color: red;
-    color: white;
+}
+
+.medium {
+    background-color: yellow;
+    color: #222;
+}
+
+.low{
+    background-color: blue;
 }
 
 .description{
