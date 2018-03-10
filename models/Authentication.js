@@ -7,6 +7,10 @@ const projectSchema = new mongoose.Schema({
     },
     user: {
         type: int
+    },
+    created: {
+        type: Date,
+        default: Date.now()
     }
 });
 

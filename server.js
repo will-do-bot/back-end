@@ -21,10 +21,9 @@ app.listen(process.env.PORT || 8080,function(){
     console.log('Listening..');
 })
 
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/public/front'));
 
 require('./routes/webhook')(app)
-<<<<<<< HEAD
 require('./routes/task')(app)
 
 // function sendMessage(sender, message) {
@@ -44,6 +43,3 @@ require('./routes/task')(app)
 //         }
 //     });
 // }
-=======
-require('./routes/project')(app)
->>>>>>> 8eca4cf5134ee17db9ee588b8e630acbc9c25226
