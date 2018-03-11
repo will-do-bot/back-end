@@ -11,14 +11,17 @@ module.exports = {
             //next()
         });
     },
-    list: function(query={ }, cb) {
-        Project.find(query, cb);
+    list: function(user, cb) {
+        Project.find({ 'user': user }, cb);
     },
-    update: function(conditions, newObj, cb) {
-        Project.update(conditions, newObj, { multi: true }, cb);
+    getOne: function(user, id, cb) {
+        Project.find({ 'user': user, '_id': id}, cb);
     },
-    remove: function(conditions, cb) {
-        Project.remove(conditions, cb);
+    update: function(user, id, newObj, cb) {
+        Project.update({ 'user': user, '_id': id }, newObj, { multi: true }, cb);
+    },
+    remove: function(user, id, cb) {
+        Project.remove({ 'user': user, '_id': id}, cb);
     },
     exemploDeMiddleware: function(req, res, next){
         console.log('Passou no middleware')

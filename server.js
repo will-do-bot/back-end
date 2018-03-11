@@ -25,6 +25,7 @@ app.use(express.static(__dirname + '/public'));
 
 require('./routes/webhook')(app)
 require('./routes/task')(app)
+require('./routes/project')(app)
 
 // function sendMessage(sender, message) {
 //     request({
