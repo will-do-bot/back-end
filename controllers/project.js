@@ -22,9 +22,5 @@ module.exports = {
     },
     remove: function(user, id, cb) {
         Project.remove({ 'user': user, '_id': id}, cb);
-    },
-    exemploDeMiddleware: function(req, res, next){
-        console.log('Passou no middleware')
-        next() //chama o proximo metodo do route
     }
 };

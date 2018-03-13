@@ -4,19 +4,16 @@ const auth = require('./../middleware/auth');
 
 module.exports = function (app) {
 
+    app.get('/project/:id', auth.checkAuth, (req, res) => {
+        controller.getOne(req.user, req.params.id, function(err, obj) {
+            res.status(200).send(obj);
+        })
+    })
+
     app.get('/project', auth.checkAuth, (req, res) => {
-        if (req.query['id']) {
-            controller.getOne(req.user, req.query['id'], function(err, obj) {
-                res.writeHead(200, {"Content-Type": "application/json"});
-                res.end(JSON.stringify(obj));
-            })
-        } 
-        else {
-            controller.list(req.user, function(err, obj) {
-                res.writeHead(200, {"Content-Type": "application/json"});
-                res.end(JSON.stringify(obj));
-            })
-        }  
+        controller.list(req.user, function(err, obj) {
+            res.status(200).send(obj);
+        })
     })
 
     app.post('/project', auth.checkAuth, (req, res) => {
@@ -33,15 +30,14 @@ module.exports = function (app) {
                 if (err)
                     res.status(500).send();
                 else {
-                    res.writeHead(200, {"Content-Type": "application/json"});
-                    res.end(JSON.stringify(result));
+                    res.status(200).send(result);
                 }
             })
         }
     })
 
-    app.put('/project', auth.checkAuth, (req, res) => {
-        if (req.query['id'] && req.query['name'] && req.user) {
+    app.put('/project/:id', auth.checkAuth, (req, res) => {
+        if (req.query['name'] && req.user) {
             let obj = {
                 'name': req.query['name'],
                 'description': req.query['description'],
@@ -50,25 +46,23 @@ module.exports = function (app) {
                 'priority': req.query['priority'],
                 'user': req.user
             };
-            controller.update(req.user, req.query['id'], obj, (err, result) => {
+            controller.update(req.user, req.params.id, obj, (err, result) => {
                 if (err)
                     res.status(500).send();
                 else {
-                    res.writeHead(200, {"Content-Type": "application/json"});
-                    res.end(JSON.stringify(result));
+                    res.status(200).send(result);
                 }
             })
         }
     })
 
-    app.delete('/project', auth.checkAuth, (req, res) => {
-        if (req.query['id'] && req.user) {
-            controller.remove(req.user, req.query['id'], (err, result) => {
+    app.delete('/project/:id', auth.checkAuth, (req, res) => {
+        if (req.params.id && req.user) {
+            controller.remove(req.user, req.params.id, (err, result) => {
                 if (err)
                     res.status(500).send();
                 else {
-                    res.writeHead(200, {"Content-Type": "application/json"});
-                    res.end(JSON.stringify(result));
+                    res.status(200).send(result);
                 }
             })
         }
