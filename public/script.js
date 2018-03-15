@@ -41,36 +41,40 @@ app.config(function ($routeProvider) {
     })
 });
 
-app.controller('project', function ($scope) {
+app.controller('project', function ($scope, $http) {
   $scope.project = {
     name: 'Swampum',
     tasks: [
       {
-        name: 'Criar Banco',
-        description: 'This is a description',
+        name: 'WEB-46',
+        description: 'Change user account details',
         priority: 'High'
       },
       {
-        name: 'Revisar Interface',
-        description: 'This is a description',
+        name: 'WEB-53',
+        description: 'Confirm changed email address',
         priority: 'High'
       }, {
-        name: 'Criar Documentacao',
-        description: 'This is a description',
+        name: 'WEB-58',
+        description: 'Facebook login proccess',
         priority: 'Medium'
       }, {
-        name: 'Comer Pudim',
-        description: 'This is a description',
+        name: 'WEB-52',
+        description: 'Reply to user message',
         priority: 'Low'
       }
     ]
   }
 
-  $scope.chosenTask = {
-    name: 'Criar Banco',
-    description: 'This is a description',
-    priority: 'High'
-  }
+  $http.get('https://willdomessenger.herokuapp.com/project')
+    .then(response => { 
+      console.log(response.data)
+    })
+
+
+
+
+  $scope.chosenTask = $scope.project.tasks[0]
 
   $scope.changeContent = function (task) {
     $scope.chosenTask = task
