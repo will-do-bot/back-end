@@ -6,7 +6,7 @@ const projectSchema = new mongoose.Schema({
         type: String
     },
     user: {
-        type: int
+        type: Number
     },
     created: {
         type: Date,

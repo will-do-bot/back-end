@@ -1,6 +1,7 @@
 const controller = require('./../controllers/project')
 const request = require('request');
 const auth = require('./../middleware/auth');
+const authC = require('./../controllers/auth')
 
 module.exports = function (app) {
 
@@ -11,6 +12,7 @@ module.exports = function (app) {
     })
 
     app.get('/project', auth.checkAuth, (req, res) => {
+        authC.getToken('a5f0d15d-cd12-4d33-8212-7ddd9f2cb6b', (res)=> console.log(res))
         controller.list(req.user, function(err, obj) {
             res.status(200).send(obj);
         })

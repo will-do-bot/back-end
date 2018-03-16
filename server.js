@@ -1,4 +1,6 @@
 require('./models/Project')
+require('./models/Authentication')
+
 const express = require("express");
 const bodyParser = require("body-parser");
 const request = require('request');
@@ -6,6 +8,8 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 const verify_token = 'dont_panic_42';
 const Project = mongoose.model('Project');
+const Authentication = mongoose.model('Authentication');
+
 const project = require('./controllers/project');
 const app = express()
 mongoose.connect(process.env.MONGO_URI || 'mongodb://willdo:PucMinas@ds253918.mlab.com:53918/willdo')
