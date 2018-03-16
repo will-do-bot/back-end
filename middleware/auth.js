@@ -11,10 +11,13 @@ module.exports = {
     },
 
     validate: function (req, res, next) {
-        if (authController.getToke(req.get('auth_key')))
-            next();
-        else
-            res.status(400).send({ error: 'FORBIDDEN' })
+        console.log(req.get('auth_key'))
+        authController.getToken(req.get('auth_key'), (resul) => {
+            if (resul)
+                next();
+            else
+                res.status(400).send({ error: 'FORBIDDEN' })
+        })
 
     }
 
