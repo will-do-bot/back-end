@@ -1,7 +1,10 @@
 require('./models/Project')
 require('./models/Authentication')
+require('./models/User')
 
 const express = require("express");
+const passport_facebook = require('passport-facebook')
+const passport = require('passport')
 const bodyParser = require("body-parser");
 const request = require('request');
 const mongoose = require('mongoose');
@@ -9,6 +12,7 @@ require('dotenv').config();
 const verify_token = 'dont_panic_42';
 const Project = mongoose.model('Project');
 const Authentication = mongoose.model('Authentication');
+const User = mongoose.model('User');
 
 const project = require('./controllers/project');
 const app = express()
@@ -16,6 +20,10 @@ mongoose.connect(process.env.MONGO_URI || 'mongodb://willdo:PucMinas@ds253918.ml
 mongoose.connection.on('error', err => {
     console.log(err.message)
 })
+
+app.use(passport.initialize());
+app.use(passport.session());
+require('./config')(app,passport)
 app.use(bodyParser.urlencoded({
     extended: true
   }));
@@ -30,6 +38,16 @@ app.use(express.static(__dirname + '/public'));
 require('./routes/webhook')(app)
 require('./routes/task')(app)
 require('./routes/project')(app)
+
+app.get('/auth/facebook',
+passport.authenticate('facebook'));
+
+app.get('/auth/facebook/callback',
+passport.authenticate('facebook', { failureRedirect: '/login' }),
+function(req, res) {
+  // Successful authentication, redirect home.
+  res.redirect('/');
+});
 
 // function sendMessage(sender, message) {
 //     request({
