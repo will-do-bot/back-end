@@ -5,10 +5,8 @@ module.exports = {
     create: function (obj, cb) {
         let project = new Project(obj);
         project.save(function (err, created) {
-            //if(err) handlesError(err);
             if (err) cb(err);
             else cb(created);
-            //next()
         });
     },
     list: function (user, cb) {
