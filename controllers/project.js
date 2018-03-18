@@ -6,8 +6,8 @@ module.exports = {
         let project = new Project(obj);
         project.save(function (err, created) {
             //if(err) handlesError(err);
-            if (err) console.log(err);
-            cb(created);
+            if (err) cb(err);
+            else cb(created);
             //next()
         });
     },
