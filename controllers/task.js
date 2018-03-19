@@ -5,8 +5,8 @@ module.exports = {
     create: function (obj, cb) {
         let task = new Task(obj);
         project.save(function (err, created) {
-            if (err) console.log(err);
-            cb(created);
+            if (err) cb(err);
+            else cb(created);
         });
     },
     list: function (project, cb) {
