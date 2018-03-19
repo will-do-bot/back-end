@@ -4,7 +4,7 @@ const Task = mongoose.model('Task');
 module.exports = {
     create: function (obj, cb) {
         let task = new Task(obj);
-        project.save(function (err, created) {
+        task.save(function (err, created) {
             if (err) cb(err);
             else cb(created);
         });
