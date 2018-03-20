@@ -6,6 +6,7 @@ const auth_controller = require('./../controllers/auth')
 module.exports = function (app) {
 
     // O PROJECT É SEMPRE PASSADO POR _POST
+    // DEPOIS ARRUMAR TRATAMENTO DE GET VAZIO NO UPDATE
     
 
     app.post('/task', auth.checkAuth, auth.validate, (req, res) => {
