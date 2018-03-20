@@ -29,9 +29,6 @@ const projectSchema = new mongoose.Schema({
     },
     kind : {
         type: String
-    },
-    timeTracker: {
-        type: Number
     }
 })
 

@@ -1,6 +1,7 @@
 require('./models/Project')
 require('./models/Authentication')
 require('./models/User')
+require('./models/TimeTracker')
 
 const express = require("express");
 const passport_facebook = require('passport-facebook')
@@ -38,6 +39,7 @@ app.use(express.static(__dirname + '/public'));
 require('./routes/webhook')(app)
 require('./routes/task')(app)
 require('./routes/project')(app)
+require('./routes/time-tracker')(app)
 
 app.get('/auth/facebook',
 passport.authenticate('facebook'));
