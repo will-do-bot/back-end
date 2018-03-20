@@ -27,7 +27,7 @@ const projectSchema = new mongoose.Schema({
     difficulty: {
         type: Number
     },
-    kind : {
+    "type" : {
         type: String
     }
 })

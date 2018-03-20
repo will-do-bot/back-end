@@ -2,23 +2,26 @@ const mongoose = require('mongoose');
 const Task = mongoose.model('Task');
 
 module.exports = {
-    create: function (obj, cb) {
+    create: (obj, cb) => {
         let task = new Task(obj);
         task.save(function (err, created) {
             if (err) cb(err);
             else cb(created);
         });
     },
-    list: function (project, cb) {
+    list: (project, cb) => {
         Task.find({ 'project': project }, cb);
     },
-    getOne: function (project, id, cb) {
-        Task.find({ 'project': project, '_id': id }, cb);
+    list_all: (cb) => {
+        Task.find({}, cb);
     },
-    update: function (project, id, newObj, cb) {
-        Task.update({ 'project': project, '_id': id }, newObj, cb);
+    getOne: (id, cb) => {
+        Task.find({'_id': id }, cb);
     },
-    remove: function (project, id, cb) {
-        Task.remove({ 'project': project, '_id': id }, cb);
+    update: (id, newObj, cb) => {
+        Task.update({ '_id': id }, newObj, cb);
+    },
+    remove: (id, cb) => {
+        Task.remove({ '_id': id }, cb);
     }
 };
