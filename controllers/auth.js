@@ -4,10 +4,10 @@ const Auth = mongoose.model('Authentication');
 
 module.exports = {
 
-    create: function (user, cb) {
+    create: function (user, cb, token = '') {
         let auth = new Auth({
             user,
-            token: generateToken()
+            token: token || generateToken()
         })
         auth.save(function (err, saved) {
             if (err) console.log(err)
