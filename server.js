@@ -3,6 +3,7 @@ require('./models/Authentication')
 require('./models/User')
 require('./models/Commands')
 require('./models/TimeTracker')
+require('./models/Task')
 
 
 //packages
@@ -12,11 +13,6 @@ const passport = require('passport')
 const bodyParser = require("body-parser");
 const request = require('request');
 const mongoose = require('mongoose');
-
-//database models
-const Project = mongoose.model('Project');
-const Authentication = mongoose.model('Authentication');
-const User = mongoose.model('User');
 
 //database config
 mongoose.connect(process.env.MONGO_URI || 'mongodb://willdo:PucMinas@ds253918.mlab.com:53918/willdo')
