@@ -1,4 +1,7 @@
 
+const mongoose = require('mongoose')
+const userController = require('./controllers/user')
+const authController = require('./controllers/auth')
 
 module.exports = function (app, passport) {
 
@@ -14,9 +17,25 @@ module.exports = function (app, passport) {
         callbackURL: 'https://willdomessenger.herokuapp.com/auth/facebook/callback',
         profileFields: ['id', 'displayName', 'emails', 'profileUrl']
     }, function (accessToken, refreshToken, profile, done) {
-
+        userController.find(profile.id, function (user) {
+            if (user) {
+                authController.create(user, function (token) {
+                    console.log(token)
+                }, accessToken)
+            } else {
+                userController.save({
+                    name: profile.displayName,
+                    facebook_id: profile.id
+                }, function (savedUser) {
+                    authController.create(user, function (token) {
+                        console.log(token)
+                    }, accessToken)
+                })
+            }
+        })
     })
     );
+    
     passport.serializeUser(function (user, done) {
         done(null, user);
     });
