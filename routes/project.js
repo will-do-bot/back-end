@@ -6,7 +6,7 @@ const authC = require('./../controllers/auth')
 module.exports = function (app) {
 
     app.get('/project/:id', auth.checkAuth, auth.validate, (req, res) => {
-        controller.getOne(1636208479780756, req.params.id, function(err, obj) {
+        controller.getOne(req.params.id, function(err, obj) {
             res.status(200).send(obj);
         })
     })
@@ -38,7 +38,7 @@ module.exports = function (app) {
     })
 
     app.put('/project/:id', auth.checkAuth,  auth.validate,(req, res) => {
-        if (req.query['name'] && 1636208479780756) {
+        if (req.query['name']) {
             let obj = {
                 'name': req.query['name'],
                 'description': req.query['description'],
@@ -47,7 +47,7 @@ module.exports = function (app) {
                 'priority': req.query['priority'],
                 'user': 1636208479780756
             };
-            controller.update(1636208479780756, req.params.id, obj, (err, result) => {
+            controller.update(req.params.id, obj, (err, result) => {
                 if (err)
                     res.status(500).send();
                 else {
@@ -58,8 +58,8 @@ module.exports = function (app) {
     })
 
     app.delete('/project/:id', auth.checkAuth,  auth.validate,(req, res) => {
-        if (req.params.id && 1636208479780756) {
-            controller.remove(1636208479780756, req.params.id, (err, result) => {
+        if (req.params.id) {
+            controller.remove(req.params.id, (err, result) => {
                 if (err)
                     res.status(500).send();
                 else {

@@ -40,6 +40,48 @@ app.config(function ($routeProvider) {
 });
 
 app.controller('project', function ($scope, $http) {
+  $scope.projects = [
+    {
+      name: 'Swampum',
+      tasks: [
+          {
+            name: 'WEB-46',
+            description: 'Change user account details',
+            priority: 'High'
+          },
+          {
+            name: 'WEB-53',
+            description: 'Confirm changed email address',
+            priority: 'High'
+          }, {
+            name: 'WEB-58',
+            description: 'Facebook login proccess',
+            priority: 'Medium'
+          }, {
+            name: 'WEB-52',
+            description: 'Reply to user message',
+            priority: 'Low'
+          }
+    ],
+      priority: 'High'
+    },
+    {
+      name: 'Home',
+      tasks: [
+          {
+            name: 'Buy materials',
+            description: 'Buy materials for building',
+            priority: 'High'
+          },
+          {
+            name: 'Hire a civil engineer',
+            description: 'Hire a good civil engineer',
+            priority: 'High'
+          }
+    ],
+    priority: 'Medium'
+    }
+  ]
   $scope.project = {
     name: 'Swampum',
     tasks: [
@@ -64,6 +106,15 @@ app.controller('project', function ($scope, $http) {
     ]
   }
 
+  $scope.content = {
+    title : "Projects", 
+    sideBar :{
+      type: "All Projects",
+      content : $scope.projects
+    }
+    
+  }
+
   $http.get('https://willdomessenger.herokuapp.com/project')
     .then(response => { 
       console.log(response.data)
@@ -72,7 +123,49 @@ app.controller('project', function ($scope, $http) {
 
 
 
-  $scope.chosenTask = $scope.project.tasks[0]
+  $scope.chosenProject = $scope.projects[0]
+
+  $scope.changeContent = function (project) {
+    $scope.chosenProject = project
+  }
+
+  $scope.getPriority = function () {
+    return "priority " + $scope.chosenProject.priority.toLowerCase()
+  }
+
+  $scope.getChosen = function(x){
+    if($scope.chosenProject.name == x.name) return 'task selected'
+    else return 'task'
+  }
+
+
+})
+
+
+
+app.controller('task', function ($scope,$http) {
+  $scope.tasks = {
+    name : "Tasks",
+    tasks : [
+      {
+        name: 'Talk to the boss',
+        description: 'Talk to the boss about TIS',
+        priority: 'High'
+      },
+      {
+        name: 'Go to the bank',
+        description: 'Pay the skin',
+        priority: 'Medium'
+      },
+      {
+        name: 'Dog training',
+        description: 'Training the dog to crouch ',
+        priority: 'Low'
+      }
+    ]
+  }
+  
+  $scope.chosenTask = $scope.tasks.tasks[0]
 
   $scope.changeContent = function (task) {
     $scope.chosenTask = task
@@ -86,18 +179,15 @@ app.controller('project', function ($scope, $http) {
     if($scope.chosenTask.name == x.name) return 'task selected'
     else return 'task'
   }
-
-
+  
 })
 
 
-
-app.controller('task', function ($scope) {
-  console.log('task')
-})
 app.controller('command', function ($scope) {
   console.log('command')
 })
+
+
 app.controller('chart', function ($scope) {
   console.log('charts');
     var ctx = document.getElementById("chartTasks");
@@ -140,6 +230,8 @@ app.controller('chart', function ($scope) {
         }
     });
 })
+
+
 app.controller('calendar', function ($scope) {
   console.log('calendar')
 })
