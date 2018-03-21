@@ -2,6 +2,7 @@ require('./models/Project')
 require('./models/Authentication')
 require('./models/User')
 require('./models/Commands')
+require('./models/TimeTracker')
 
 
 //packages
@@ -44,7 +45,7 @@ require('./routes/facebook')(app)
 require('./routes/task')(app)
 require('./routes/project')(app)
 require('./routes/commands')(app)
-
+require('./routes/time-tracker')(app)
 
 // facebook login routes
 
