@@ -10,15 +10,15 @@ module.exports = {
         });
     },
     list: function (task, cb) {
-        Project.find({ 'task': task }, cb);
+        TimeTracker.find({ 'task': task }, cb);
     },
     getOne: function (task, id, cb) {
-        Project.find({ 'task': task, '_id': id }, cb);
+        TimeTracker.find({ 'task': task, '_id': id }, cb);
     },
     update: function (task, id, newObj, cb) {
         Project.update({ 'task': user, '_id': id }, newObj, { multi: true }, cb);
     },
     remove: function (task, id, cb) {
-        Project.remove({ 'task': user, '_id': id }, cb);
+        TimeTracker.remove({ 'task': user, '_id': id }, cb);
     }
 };
