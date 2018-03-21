@@ -10,7 +10,6 @@ module.exports = function (app, passport) {
 
     const FacebookStrategy = require('passport-facebook').Strategy;
 
-
     passport.use(new FacebookStrategy({
         clientID: FACEBOOK_APP_ID,
         clientSecret: FACEBOOK_APP_SECRET,

@@ -173,3 +173,44 @@ p {
     text-decoration: none;
     text-align: center;
 }
+
+.b-content{
+    display: grid;
+    grid-template-rows: 1fr 5fr;
+    height: 100%;
+}
+
+.form{
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.form-s{
+    padding-left: 5%;    
+    border-right: 1px solid #222;
+    height: 100%;
+}
+
+.input-box{
+    height: 16%;
+    padding-top:10%;
+}
+
+.label{
+    font-weight: bold;
+    display: block;
+    font-size: 1.5em;
+    margin-bottom: 2px;
+}
+
+.input{
+    width: 50%;
+    height: 20%;
+    border-radius: 5%;
+}
+
+.explication{
+    font-size: 2em;
+    padding-left: 10%;
+}
