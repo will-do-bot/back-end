@@ -16,9 +16,9 @@ module.exports = {
         TimeTracker.find({ 'task': task, '_id': id }, cb);
     },
     update: function (task, id, newObj, cb) {
-        Project.update({ 'task': user, '_id': id }, newObj, { multi: true }, cb);
+        TimeTracker.update({ 'task': task, '_id': id }, newObj, { multi: true }, cb);
     },
     remove: function (task, id, cb) {
-        TimeTracker.remove({ 'task': user, '_id': id }, cb);
+        TimeTracker.remove({ 'task': task, '_id': id }, cb);
     }
 };
