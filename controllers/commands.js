@@ -7,7 +7,7 @@ module.exports = {
 	update: (user, commands, cb) => {
 		let c = new Commands(commands)
 		c.save((err, saved) => {
-			if(err) // trata erro
+			if(err) console.log(err)
 			cb(saved)
 		})
 	},

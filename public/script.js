@@ -1,4 +1,4 @@
-var app = angular.module('willdo', ["ngRoute"]);
+var app = angular.module('willdo', ["ngRoute", 'ngAnimate']);
 
 app.config(function ($routeProvider) {
   $routeProvider
