@@ -1,4 +1,7 @@
 
+const mongoose = require('mongoose')
+const User = mongoose.model('User')
+
 
 module.exports = function (app, passport) {
 
@@ -14,7 +17,8 @@ module.exports = function (app, passport) {
         callbackURL: 'https://willdomessenger.herokuapp.com/auth/facebook/callback',
         profileFields: ['id', 'displayName', 'emails', 'profileUrl']
     }, function (accessToken, refreshToken, profile, done) {
-
+        console.log(accessToken)
+        console.log(profile)
     })
     );
     passport.serializeUser(function (user, done) {
