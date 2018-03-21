@@ -6,11 +6,9 @@ const authC = require('./../controllers/auth')
 module.exports = function (app) {
 
     app.get('/time_tracker/:id', auth.checkAuth, auth.validate, (req, res) => {
-        if (req.query['task']) {
-            controller.getOne(req.query['task'], req.params.id, function(err, obj) {
-                res.status(200).send(obj);
-            })
-        }
+        controller.getOne(req.params.id, function(err, obj) {
+            res.status(200).send(obj);
+        })
     })
 
     app.get('/time_tracker', auth.checkAuth,  auth.validate,(req, res) => {
@@ -56,8 +54,8 @@ module.exports = function (app) {
     })
 
     app.delete('/time_tracker/:id', auth.checkAuth,  auth.validate,(req, res) => {
-        if (req.params.id && req.query['task']) {
-            controller.remove(req.query['task'], req.params.id, (err, result) => {
+        if (req.params.id) {
+            controller.remove(req.params.id, (err, result) => {
                 if (err)
                     res.status(500).send();
                 else {

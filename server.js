@@ -5,7 +5,6 @@ require('./models/Commands')
 require('./models/TimeTracker')
 require('./models/Task')
 
-
 //packages
 const express = require("express");
 const passport_facebook = require('passport-facebook')
