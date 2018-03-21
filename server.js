@@ -2,6 +2,7 @@ require('./models/Project')
 require('./models/Authentication')
 require('./models/User')
 require('./models/TimeTracker')
+require('./models/Task')
 
 const express = require("express");
 const passport_facebook = require('passport-facebook')
