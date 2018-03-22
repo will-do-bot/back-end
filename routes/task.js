@@ -5,7 +5,7 @@ const auth_controller = require('./../controllers/auth')
 
 module.exports = function (app) {
 
-    // O PROJECT É SEMPRE PASSADO POR _POST
+    // O PROJECT É SEMPRE PASSADO POR _GET
     // DEPOIS ARRUMAR TRATAMENTO DE GET VAZIO NO UPDATE
     
 
