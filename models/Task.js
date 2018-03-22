@@ -22,7 +22,7 @@ const projectSchema = new mongoose.Schema({
         type: String
     },
     project: {
-        type: Number
+        type: String
     },
     difficulty: {
         type: Number

@@ -10,6 +10,7 @@ module.exports = function (app) {
     
 
     app.post('/task', auth.checkAuth, auth.validate, (req, res) => {
+        console.log(req.body);
         task_controller.create(req.body, (result, err) => {
             if (err)
                 res.status(500).send(err);
@@ -58,17 +59,7 @@ module.exports = function (app) {
     })
 
     app.put('/task/:id', auth.checkAuth, auth.validate, (req, res) => {
-        let obj = {
-            'name': req.query['name'],
-            'description': req.query['description'],
-            'deadline': req.query['deadline'],
-            'startDate': req.query['start_date'],
-            'priority': req.query['priority'],
-            'project': req.query['project'],
-            'difficulty': req.query['difficulty'],
-            'kind': req.query['kind']
-        };
-        task_controller.update(req.params.id, obj, (err, result) => {
+        task_controller.update(req.params.id, req.body, (err, result) => {
             if (err)
                 res.status(500).send();
             else

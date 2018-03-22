@@ -20,13 +20,8 @@ module.exports = function (app) {
     })
 
     app.post('/time_tracker', auth.checkAuth,  auth.validate,(req, res) => {
-        if (req.query['task'] && req.query['startDate'] && req.query['endDate']) {
-            let obj = {
-                'task': req.query['task'],
-                'startDate': req.query['startDate'],
-                'endDate': req.query['endDate']
-            };
-            controller.create(obj, (result, err) => {
+        if (req.body['task'] && req.body['startDate'] && req.body['endDate']) {
+            controller.create(req.body, (result, err) => {
                 if (err)
                     res.status(500).send();
                 else {
@@ -37,13 +32,8 @@ module.exports = function (app) {
     })
 
     app.put('/time_tracker/:id', auth.checkAuth,  auth.validate,(req, res) => {
-        if (req.query['task'] && req.query['startDate'] && req.query['endDate']) {
-            let obj = {
-                'task': req.query['task'],
-                'startDate': req.query['startDate'],
-                'endDate': req.query['endDate']
-            };
-            controller.update(req.query['task'], req.params.id, obj, (err, result) => {
+        if (req.body['task'] && req.body['startDate'] && req.body['endDate']) {
+            controller.update(req.params.id, req.body, (err, result) => {
                 if (err)
                     res.status(500).send();
                 else {

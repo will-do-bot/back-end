@@ -18,7 +18,7 @@ module.exports = {
     update: function (id, newObj, cb) {
         TimeTracker.update({ '_id': id }, newObj, { multi: true }, cb);
     },
-    remove: function (task, id, cb) {
+    remove: function (id, cb) {
         TimeTracker.remove({ '_id': id }, cb);
     }
 };

@@ -18,16 +18,8 @@ module.exports = function (app) {
     })
 
     app.post('/project', auth.checkAuth,  auth.validate,(req, res) => {
-        if (req.query['name'] && 1636208479780756) {
-            let obj = {
-                'name': req.query['name'],
-                'description': req.query['description'],
-                'deadline': req.query['deadline'],
-                'startDate': req.query['start_date'],
-                'priority': req.query['priority'],
-                'user': 1636208479780756
-            };
-            controller.create(obj, (result, err) => {
+        if (req.body['name'] && 1636208479780756) {
+            controller.create(req.body, (result, err) => {
                 if (err)
                     res.status(500).send();
                 else {
@@ -38,16 +30,8 @@ module.exports = function (app) {
     })
 
     app.put('/project/:id', auth.checkAuth,  auth.validate,(req, res) => {
-        if (req.query['name']) {
-            let obj = {
-                'name': req.query['name'],
-                'description': req.query['description'],
-                'deadline': req.query['deadline'],
-                'startDate': req.query['start_date'],
-                'priority': req.query['priority'],
-                'user': 1636208479780756
-            };
-            controller.update(req.params.id, obj, (err, result) => {
+        if (req.body['name']) {
+            controller.update(req.params.id, req.body, (err, result) => {
                 if (err)
                     res.status(500).send();
                 else {
