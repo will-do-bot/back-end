@@ -115,10 +115,18 @@ p {
 
 .task{
     font-size: 1.2em;
-    margin-left: 5%;    
+    margin: 0 5%;    
     padding: 5% 0;
     border-bottom: solid 1px #DDD;
-    
+    padding-left: 1em;
+}
+
+.task:hover {
+    cursor: pointer;
+}
+
+.task:hover:not(.selected) {
+    background-color: #e4e4e4;
 }
 
 .selected{

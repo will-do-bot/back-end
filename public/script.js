@@ -66,6 +66,30 @@ app.controller('project', function ($scope, $http) {
       priority: 'High'
     },
     {
+      name: 'School',
+      tasks: [
+          {
+            name: 'Lab-3',
+            description: 'Files exercise',
+            priority: 'High'
+          },
+          {
+            name: 'Truth Table',
+            description: 'Discrete Maths Work. Ps: HELP',
+            priority: 'High'
+          }, {
+            name: 'WEB-58',
+            description: 'Facebook login proccess',
+            priority: 'Medium'
+          }, {
+            name: 'WEB-52',
+            description: 'Reply to user message',
+            priority: 'Low'
+          }
+    ],
+      priority: 'Medium'
+    },
+    {
       name: 'Home',
       tasks: [
           {
@@ -79,7 +103,7 @@ app.controller('project', function ($scope, $http) {
             priority: 'High'
           }
     ],
-    priority: 'Medium'
+    priority: 'Low'
     }
   ]
   $scope.project = {

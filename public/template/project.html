@@ -15,9 +15,9 @@
                 <p ng-class="getPriority()">{{chosenProject.priority}} Priority</p>
             </div>
             <div class="project-content">
-                    <p class = 'tasks-title'>Tasks</p>
+                    <p class = 'tasks-title'>Main Tasks</p>
                     <div class = 'project-tasks'>
-                            <p id ='tasks'ng-repeat = "x in chosenProject.tasks">{{x.name}}</p>
+                        <p class='but_task' ng-repeat = "x in chosenProject.tasks" ng-click="toggleTask(x)">{{x.name}}</p>
                     </div>
             </div>
             <div class="task-attribute">
