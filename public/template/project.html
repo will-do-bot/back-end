@@ -6,6 +6,7 @@
         <div class="tasks-panel">
             <p class="sub-title">{{content.sideBar.type}}</p>
             <div class="tasks">
+                <p id="new_project" class="task">New Project</p>
                 <p ng-click='changeContent(x)' ng-repeat="x in projects" ng-class="getChosen(x)">#{{$index+1}} - {{x.name}}</p>
             </div>
         </div>
@@ -17,7 +18,7 @@
             <div class="project-content">
                     <p class = 'tasks-title'>Main Tasks</p>
                     <div class = 'project-tasks'>
-                        <p class='but_task' ng-repeat = "x in chosenProject.tasks" ng-click="toggleTask(x)">{{x.name}}</p>
+                        <p class='but_task' ng-repeat = "x in chosenProject.tasks">{{x.name}}</p>
                     </div>
             </div>
             <div class="task-attribute">
@@ -29,7 +30,7 @@
                     </div>
                     <div class="task-buttom-right">
                         <a class='button' href="#!time">Ends in 1 week and 2 days</a>
-                        <a class='button' href="#!task">Tasks Details</a>
+                        <a class='button' href="#!task">All Tasks</a>
                     </div>
 
                 </div>

@@ -161,7 +161,7 @@ app.controller('project', function ($scope, $http) {
     if($scope.chosenProject.name == x.name) return 'task selected'
     else return 'task'
   }
-
+  
 
 })
 

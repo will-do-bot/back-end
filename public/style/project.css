@@ -12,9 +12,22 @@
     text-decoration: none;
     text-align: center;
 }
+.but_task:invisible {
+    display: none;
+}
 .tasks-title{
     padding-top: 5%;
     text-align: center;
     font-size: 1.2em;
     margin: center
+}
+#new_project{
+    background-color: rgba(18, 209, 18, 0.89);
+    color: white;
+    padding-left: 0;
+    text-align: center;
+    margin-bottom: 10px;
+}
+#new_project:hover{
+    background-color: rgba(37, 221, 37, 0.89);
 }
