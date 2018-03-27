@@ -43,7 +43,8 @@ require('./routes/project')(app)
 require('./routes/commands')(app)
 require('./routes/time-tracker')(app)
 
-console.log(decoder.decode('add a new project called good swampum with high priority and deadline 2018-03-27'));
+console.log(decoder.decode('add a new project called good swampum with high priority and deadline equal to 2018-03-27'));
 console.log(decoder.decode('list all projects with priority high'));
 console.log(decoder.decode('show project named swampum'));
 console.log(decoder.decode('list tasks from project swampum'));
+console.log(decoder.decode('show projects with priority equal to 10'));
