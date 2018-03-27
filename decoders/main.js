@@ -3,7 +3,8 @@ const project = require('./project');
 const actions = ['add', 'list', 'show', 'remove', 'change'];
 const actors = ['project', 'projects', 'task', 'tasks'];
 const attributes = ['name', 'named', 'called', 'priority', 'deadline', 'project'];
-const ignore = ['and', 'with', 'where', 'a', 'of', 'to', 'equal', 'equals', '='];
+const ignore = ['and', 'with', 'where', 'a', 'of', 'to', 'equal', 'equals', '=', 'is'];
+// Não é necessário colocar todas as palavras no ignore, ele é importante em alguns casos específicos
 
 function isKeyword(word) {
     return actions.includes(word) || actors.includes(word) || attributes.includes(word);
@@ -24,16 +25,6 @@ function postProcess(obj) {
 }
 
 module.exports = {
-
-    // decode: (string) => {
-    //     let words = string.split(" ");
-    //     switch (words[1]) {
-    //         case 'proj':
-    //             return project.decode(words);
-    //         default:
-    //             return 'Sorry... I\'m WillDo';
-    //     }
-    // }
 
     decode: (string) => {
         string = string;
