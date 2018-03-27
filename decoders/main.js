@@ -15,8 +15,8 @@ function postProcess(obj) {
         if (obj.hasOwnProperty(property)) {
             if (property === 'named' || property === 'called')
                 obj2['name'] = obj[property];
-            else if (property === 'actor' && obj[property] === 'projects')
-                obj2['actor'] = 'project'; 
+            else if (property === 'actor' && obj['actor'].endsWith('s'))
+                obj2['actor'] = obj['actor'].substring(0, obj['actor'].length - 1); 
             else obj2[property] = obj[property];
         }
     }

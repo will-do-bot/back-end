@@ -48,3 +48,4 @@ console.log(decoder.decode('list all projects with priority high'));
 console.log(decoder.decode('show project named swampum'));
 console.log(decoder.decode('list tasks from project swampum'));
 console.log(decoder.decode('show projects with priority equal to 10'));
+console.log(decoder.decode('remove project with name good swampum'))
