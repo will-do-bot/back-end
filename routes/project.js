@@ -1,7 +1,7 @@
-const controller = require('./../controllers/project')
+const controller = require('./../controllers/project');
 const request = require('request');
 const auth = require('./../middleware/auth');
-const authC = require('./../controllers/auth')
+const authC = require('./../controllers/auth');
 
 module.exports = function (app) {
 

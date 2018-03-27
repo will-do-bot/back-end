@@ -12,6 +12,7 @@ const passport = require('passport')
 const bodyParser = require("body-parser");
 const request = require('request');
 const mongoose = require('mongoose');
+const decoder = require('./decoders/main');
 
 //database config
 mongoose.connect(process.env.MONGO_URI || 'mongodb://willdo:PucMinas@ds253918.mlab.com:53918/willdo')
@@ -33,7 +34,7 @@ app.use(bodyParser.urlencoded({
   }));
 app.use(bodyParser.json());
 app.listen(process.env.PORT || 8080,function(){
-    console.log('Listening..');
+    //console.log('Listening..');
 })
 app.use(express.static(__dirname + '/public'));
 require('./routes/facebook')(app)
@@ -42,23 +43,7 @@ require('./routes/project')(app)
 require('./routes/commands')(app)
 require('./routes/time-tracker')(app)
 
-// facebook login routes
-
-
-// function sendMessage(sender, message) {
-//     request({
-//         url: 'https://graph.facebook.com/v2.6/me/messages',
-//         qs: { access_token: 'EAACcCV52z1oBAMsWSemRGY5RPwXaDuGyQaNvlsLPvRfiZAMYkiDzJzIZCTPhtZCJNGekusvveXZC13TANrQDk22zWUJ8Cp1tOZCl4SVafWcgOOR7GKaZB8SWZB7bWunAIwnbVWT03ZB0fFyMTB3HSvDVGZAmYPDsSXR62vxXt6ND7nip6el9ZC0NXn' },
-//         method: 'POST',
-//         json: {
-//             recipient: { id: sender },
-//             message: { text: message }
-//         }
-//     }, function (error, response) {
-//         if (error) {
-//             console.log('Error sending message: ', error);
-//         } else if (response.body.error) {
-//             console.log('Error: ', response.body.error);
-//         }
-//     });
-// }
+console.log(decoder.decode('add a new project called good swampum with high priority and deadline 2018-03-27'));
+console.log(decoder.decode('list all projects with priority high'));
+console.log(decoder.decode('show project named swampum'));
+console.log(decoder.decode('list tasks from project swampum'));
