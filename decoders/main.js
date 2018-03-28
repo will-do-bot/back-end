@@ -2,22 +2,39 @@ const project = require('./project');
 
 const actions = ['add', 'list', 'show', 'remove', 'change'];
 const actors = ['project', 'projects', 'task', 'tasks'];
-const attributes = ['name', 'named', 'called', 'priority', 'deadline', 'project'];
+const attributes = ['name', 'named', 'called', 'priority', 'deadline', 'project', 'description'];
 const ignore = ['and', 'with', 'where', 'a', 'of', 'to', 'equal', 'equals', '=', 'is'];
 // Não é necessário colocar todas as palavras no ignore, ele é importante em alguns casos específicos
+
+function solveQuot (i, words) {
+    let acumulator = [];
+    acumulator.push(words[i].substring(1, words[i].length));
+    for (i = i + 1; i < words.length; i++) {
+        if (words[i].endsWith('"')) {
+            acumulator.push(words[i].substring(0, words[i].length - 1))
+            break;
+        }
+        acumulator.push(words[i]);
+    }
+    return [i, acumulator.join(' ')];
+}
 
 function isKeyword(word) {
     return actions.includes(word) || actors.includes(word) || attributes.includes(word);
 }
 
 function postProcess(obj) {
+    // Iterar por objeto original e criar um novo corrigindo nomes dos atributos
     let obj2 = { };
     for (var property in obj) {
         if (obj.hasOwnProperty(property)) {
+            // Aliases de name
             if (property === 'named' || property === 'called')
                 obj2['name'] = obj[property];
+            // Caso actor esteja no plural, remover último s
             else if (property === 'actor' && obj['actor'].endsWith('s'))
                 obj2['actor'] = obj['actor'].substring(0, obj['actor'].length - 1); 
+            // No caso default, só inserir no novo objeto
             else obj2[property] = obj[property];
         }
     }
@@ -27,23 +44,41 @@ function postProcess(obj) {
 module.exports = {
 
     decode: (string) => {
-        string = string;
-        let words = string.split(" ");
-        let obj = { };
-        let expecting, temp;
-        let w;
-        let eraseTemp = true;
-        words.forEach((word, index) => {
-            if (word.endsWith(',')) word = word.substring(0, word.length-1);
+        // Percorrer string e gerar objeto com o que deverá ser acessado do banco
+        let words = string.split(" ");                 // Vetor de palavras
+        let obj = { };                                 // Objeto que será retornado
+        let expecting, temp, word, w, virgula=false;  // Variáveis auxiliares
+        for (let i = 0; i < words.length; i++) {
+            if (words[i].startsWith('"')) {
+                let x = solveQuot(i, words);
+                i = x[0];
+                word = x[1];
+            }
+            else word = words[i];
+            if (word.endsWith(',')) {
+                // Remover vírgula da palavra, caso haja
+                word = word.substring(0, word.length-1); 
+                virgula = true;
+            }
             if (expecting) {
+                // Caso esteja esperando por algum atributo
+                var eraseTemp = true, r = true;
                 if (isKeyword(word)) {
-                    if (temp) obj[expecting] = temp;
+                    // Se vier palavra chave ao invés de um atributo, então utilizar último valor temporário
+                    if (temp) {
+                        obj[expecting] = temp;
+                        r = false;
+                    }
                 } else {
-                    if (ignore.includes(word)) {
+                    if (ignore.includes(word) || virgula) {
+                        // Se for palavra que deve ser ignorada, utilizar último valor temporário
+                        // Se não houver nenhum, esperar pela próxima palavra
                         if (temp) obj[expecting] = temp;
                         else eraseTemp = false;
                     }
                     else {
+                        // Neste caso, simplesmente atribuir ao objeto
+                        // w é utilizado para atributos com mais de uma palavra
                         obj[expecting] = word;
                         w = expecting;
                     }
@@ -51,25 +86,26 @@ module.exports = {
                 if (eraseTemp) {
                     temp = null;
                     expecting = null;
-                    return;
-                } else eraseTemp = true;
+                    virgula = false;
+                    if (r) continue;
+                }
             }
             if (actions.includes(word) && !obj['action']) {
                 obj['action'] = word;
-                return;
+                continue;
             }
             if (actors.includes(word) && !obj['actor']) {
                 obj['actor'] = word;
-                return;
+                continue;
             }
             if (attributes.includes(word)) {
                 expecting = word;
-                return;
+                continue;
             }
             if (ignore.includes(word) || isKeyword(word)) w = '';
             if (w) obj[w] += ' ' + word;
             else if (!ignore.includes(word)) temp = word;
-        });
+        }
         if (expecting) obj[expecting] = temp;
         return postProcess(obj);
     }
