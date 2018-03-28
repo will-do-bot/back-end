@@ -47,14 +47,15 @@ module.exports = {
         // Percorrer string e gerar objeto com o que deverá ser acessado do banco
         let words = string.split(" ");                 // Vetor de palavras
         let obj = { };                                 // Objeto que será retornado
-        let expecting, temp, word, w, virgula=false;  // Variáveis auxiliares
+        let expecting, temp, word, w, virgula=false;   // Variáveis auxiliares
         for (let i = 0; i < words.length; i++) {
             if (words[i].startsWith('"')) {
+                // Se começar com aspas, colocar todo o conteúdo delas dentro de word
                 let x = solveQuot(i, words);
                 i = x[0];
                 word = x[1];
             }
-            else word = words[i];
+            else word = words[i]; // Se não, word será a palavra atual
             if (word.endsWith(',')) {
                 // Remover vírgula da palavra, caso haja
                 word = word.substring(0, word.length-1); 
