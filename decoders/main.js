@@ -79,7 +79,7 @@ function apply(obj, cb) {
         understood = true;
         controller.removeByCond(obj2, (err, result) => cb(result));
     }
-    else if ((obj['action'] === 'show' || obj['action'] === 'show') && obj['actor'] === 'project') {
+    else if ((obj['action'] === 'list' || obj['action'] === 'show') && obj['actor'] === 'project') {
         understood = true;
         controller.getByCond(obj2, (err, result) => cb(result));
     }
