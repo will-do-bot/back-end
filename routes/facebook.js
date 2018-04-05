@@ -20,7 +20,7 @@ module.exports = function (app) {
 				entry.messaging.forEach((event) => {
 					if (event.message && event.message.text) {
 						console.log("OIOI");
-						dec.decode(event.message.text, (result) => sendMessage(event.sender.id, result));
+						dec.decode(event.message.text, (result) => sendMessage(event.sender.id, JSON.stringify(result)));
 					}
 				});
 			});
