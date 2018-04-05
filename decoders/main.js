@@ -18,7 +18,7 @@ function updateProjectsArray(cb=function(){}) {
 
 updateProjectsArray(function() {
     // Por enquanto, insira seu comando aqui
-    dec.decode(`list my projects`);
+    dec.decode(`create project called swampum with priority high and description descrição`, (result) => console.log(result));
     // Pois é necessário esperar que os projetos sejam carregados na lista
 });
 
@@ -64,7 +64,7 @@ function postProcess(obj) {
     return obj2;
 }
 
-function apply(obj) {
+function apply(obj, cb) {
     var obj2 = { };
     for (var property in obj) {
         if (obj.hasOwnProperty(property) && property != 'action' && property != 'actor') {
@@ -74,30 +74,34 @@ function apply(obj) {
     obj2['user'] = 1636208479780756;
     if (obj['action'] === 'add' && obj['actor'] === 'project') {
         controller.create(obj2, (result) => {
-            console.log(result);
+            updateProjectsArray();
+            cb(result);
         });
     }
     if (obj['action'] === 'remove' && obj['actor'] === 'project') {
         controller.removeByCond(obj2, (err, result) => {
-            console.log(result);
+            updateProjectsArray();
+            cb(result);
         });
     }
     if (obj['action'] === 'show' && obj['actor'] === 'project') {
         if (obj['name']) {
             controller.getByCond({ 'name': obj['name'], 'user': obj2['user'] }, (err, result) => {
-                console.log(result);
+                updateProjectsArray();
+                cb(result);
             });
         }
         else controller.list(obj2['user'], (err, result) => {
-            console.log(result);
+            updateProjectsArray();
+            cb(result);
         });
     }
     if (obj['action'] === 'list' && obj['actor'] === 'project') {
         controller.list(obj2['user'], (err, result) => {
-            console.log(result);
+            updateProjectsArray();
+            cb(result);
         })
     }
-    updateProjectsArray();
 }
 
 function existsProject(name, cb) {
@@ -113,12 +117,12 @@ function existsProject(name, cb) {
 
 const dec = {
 
-    decode: (string) => {
+    decode: (string, cb=()=>{}) => {
         console.log("Command: " + string);
         // Percorrer string e gerar objeto com o que deverá ser acessado do banco
-        let words = string.split(" ");                 // Vetor de palavras
-        let obj = { };                                 // Objeto que será retornado
-        let expecting, temp, word, w, virgula=false;   // Variáveis auxiliares
+        let words = string.split(" ");                       // Vetor de palavras
+        let obj = { };                                       // Objeto que será retornado
+        let expecting, temp, word, w, virgula=false, ac='';  // Variáveis auxiliares
         for (let i = 0; i < words.length; i++) {
             if (words[i].startsWith('"')) {
                 // Se começar com aspas, colocar todo o conteúdo delas dentro de word
@@ -162,8 +166,15 @@ const dec = {
                     if (r) continue;
                 }
             }
-            if (isKeyword(word))
+            if (isKeyword(word)) {
                 temp = null;
+                ac = '';
+            }
+            if (ignore.includes(word)) ac = '';
+            else if (!isKeyword(word)) {
+                if (ac) ac += ' ' + word;
+                else ac = word;
+            }
             if (actions.includes(word) && !obj['action']) {
                 obj['action'] = word;
                 continue;
@@ -181,6 +192,16 @@ const dec = {
                 obj['actor'] = 'project';
                 continue;
             }
+            if (!obj['name'] && existsProject(temp)) {
+                obj['name'] = temp;
+                obj['actor'] = 'project';
+                continue;
+            }
+            if (!obj['name'] && existsProject(ac)) {
+                obj['name'] = ac;
+                obj['actor'] = 'project';
+                continue;
+            }
             if (ignore.includes(word) || isKeyword(word)) w = '';
             if (w) obj[w] += ' ' + word;
             else if (!ignore.includes(word)) temp = word;
@@ -188,8 +209,8 @@ const dec = {
         if (expecting) obj[expecting] = temp;
         let result = postProcess(obj);
         console.log(result);
-        apply(result);
         console.log('----');
+        apply(result, (result) => cb(result));
     }
 
 }
