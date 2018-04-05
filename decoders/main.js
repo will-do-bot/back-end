@@ -17,9 +17,7 @@ function updateProjectsArray(cb=function(){}) {
 }
 
 updateProjectsArray(function() {
-    // Por enquanto, insira seu comando aqui
-    dec.decode(`create project called swampum with priority high and description descrição`, (result) => console.log(result));
-    // Pois é necessário esperar que os projetos sejam carregados na lista
+
 });
 
 function solveQuot (i, words) {
@@ -65,6 +63,7 @@ function postProcess(obj) {
 }
 
 function apply(obj, cb) {
+    let understood = false;
     var obj2 = { };
     for (var property in obj) {
         if (obj.hasOwnProperty(property) && property != 'action' && property != 'actor') {
@@ -73,35 +72,18 @@ function apply(obj, cb) {
     }
     obj2['user'] = 1636208479780756;
     if (obj['action'] === 'add' && obj['actor'] === 'project') {
-        controller.create(obj2, (result) => {
-            updateProjectsArray();
-            cb(result);
-        });
+        understood = true;
+        controller.create(obj2, (result) => cb(result));
     }
-    if (obj['action'] === 'remove' && obj['actor'] === 'project') {
-        controller.removeByCond(obj2, (err, result) => {
-            updateProjectsArray();
-            cb(result);
-        });
+    else if (obj['action'] === 'remove' && obj['actor'] === 'project') {
+        understood = true;
+        controller.removeByCond(obj2, (err, result) => cb(result));
     }
-    if (obj['action'] === 'show' && obj['actor'] === 'project') {
-        if (obj['name']) {
-            controller.getByCond({ 'name': obj['name'], 'user': obj2['user'] }, (err, result) => {
-                updateProjectsArray();
-                cb(result);
-            });
-        }
-        else controller.list(obj2['user'], (err, result) => {
-            updateProjectsArray();
-            cb(result);
-        });
+    else if ((obj['action'] === 'show' || obj['action'] === 'show') && obj['actor'] === 'project') {
+        understood = true;
+        controller.getByCond(obj2, (err, result) => cb(result));
     }
-    if (obj['action'] === 'list' && obj['actor'] === 'project') {
-        controller.list(obj2['user'], (err, result) => {
-            updateProjectsArray();
-            cb(result);
-        })
-    }
+    return understood;
 }
 
 function existsProject(name, cb) {
@@ -210,7 +192,11 @@ const dec = {
         let result = postProcess(obj);
         console.log(result);
         console.log('----');
-        apply(result, (result) => cb(result));
+        if (apply(result, (result) => {
+            updateProjectsArray();
+            cb(result);
+        })) { }
+        else cb('Sorry, I did not understand your message');
     }
 
 }
