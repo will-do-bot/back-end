@@ -40,104 +40,40 @@ app.config(function ($routeProvider) {
 });
 
 app.controller('project', function ($scope, $http) {
-  $scope.projects = [
-    {
-      name: 'Swampum',
-      tasks: [
-          {
-            name: 'WEB-46',
-            description: 'Change user account details',
-            priority: 'High'
-          },
-          {
-            name: 'WEB-53',
-            description: 'Confirm changed email address',
-            priority: 'High'
-          }, {
-            name: 'WEB-58',
-            description: 'Facebook login proccess',
-            priority: 'Medium'
-          }, {
-            name: 'WEB-52',
-            description: 'Reply to user message',
-            priority: 'Low'
-          }
-    ],
-      priority: 'High'
-    },
-    {
-      name: 'Home',
-      tasks: [
-          {
-            name: 'Buy materials',
-            description: 'Buy materials for building',
-            priority: 'High'
-          },
-          {
-            name: 'Hire a civil engineer',
-            description: 'Hire a good civil engineer',
-            priority: 'High'
-          }
-    ],
-    priority: 'Medium'
-    }
-  ]
-  $scope.project = {
-    name: 'Swampum',
-    tasks: [
-      {
-        name: 'WEB-46',
-        description: 'Change user account details',
-        priority: 'High'
+
+  $scope.getProjects = function() {
+    $http({
+      headers: {
+        auth_key: 'a5f0d15d-cd12-4d33-8212-7ddd9f2cb6b8'
       },
-      {
-        name: 'WEB-53',
-        description: 'Confirm changed email address',
-        priority: 'High'
-      }, {
-        name: 'WEB-58',
-        description: 'Facebook login proccess',
-        priority: 'Medium'
-      }, {
-        name: 'WEB-52',
-        description: 'Reply to user message',
-        priority: 'Low'
-      }
-    ]
-  }
-
-  $scope.content = {
-    title : "Projects", 
-    sideBar :{
-      type: "All Projects",
-      content : $scope.projects
-    }
-    
-  }
-
-  $http.get('https://willdomessenger.herokuapp.com/project')
-    .then(response => { 
-      console.log(response.data)
+      method: 'GET',
+      url: '/project'
     })
+    .then(function (response) {
+      $scope.projects = response.data;
+      $scope.chosenProject = response.data[0]
+      $scope.getPriority = $scope.chosenProject.priority.toLowerCase()
+    })
+  }
 
+  $scope.getProjects()  
 
-
-
-  $scope.chosenProject = $scope.projects[0]
+  $scope.changeContent = (x) => {
+    $scope.chosenProject = x
+  }
 
   $scope.changeContent = function (project) {
     $scope.chosenProject = project
   }
-
+  
   $scope.getPriority = function () {
-    return "priority " + $scope.chosenProject.priority.toLowerCase()
+    return $scope.chosenProject.priority.toLowerCase()
   }
 
   $scope.getChosen = function(x){
     if($scope.chosenProject.name == x.name) return 'task selected'
     else return 'task'
   }
-
 
 })
 

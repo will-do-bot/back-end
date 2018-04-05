@@ -1,6 +1,6 @@
 <div class="content">
     <div class="top-content">
-        <p class="title">{{content.title}}</p>
+        <p class="title">Project</p>
     </div>
     <div class="bottom-content">
         <div class="tasks-panel">
@@ -12,7 +12,7 @@
         <div class="selected-task">
             <div class="top-selected-task">
                 <p class="sub-title-task">{{chosenProject.name}}</p>
-                <p ng-class="getPriority()">{{chosenProject.priority}} Priority</p>
+                <p ng-class="chosenProject.priority">Priority: {{chosenProject.priority}}</p>
             </div>
             <div class="project-content">
                     <p class = 'tasks-title'>Tasks</p>
