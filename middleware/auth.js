@@ -11,7 +11,6 @@ module.exports = {
     },
 
     validate: function (req, res, next) {
-        console.log(req.get('auth_key'))
         authController.getToken(req.get('auth_key'), (resul) => {
             if (resul) {
                 req.token = resul

@@ -41,6 +41,19 @@ app.config(function ($routeProvider) {
 
 app.controller('project', function ($scope, $http) {
 
+  $scope.getTasks = function(i) {
+    $http({
+      headers: {
+        auth_key: 'a5f0d15d-cd12-4d33-8212-7ddd9f2cb6b8'
+      },
+      method: 'GET',
+      url: '/task/?project=' + $scope.projects[i]['_id']
+    })
+    .then(function (response) {
+      $scope.projects[i].tasks = response.data;
+    });
+  }
+
   $scope.getProjects = function() {
     $http({
       headers: {
@@ -51,19 +64,16 @@ app.controller('project', function ($scope, $http) {
     })
     .then(function (response) {
       $scope.projects = response.data;
-      $scope.chosenProject = response.data[0]
-      $scope.getPriority = $scope.chosenProject.priority.toLowerCase()
-    })
+      $scope.chosenProject = response.data[0];
+      $scope.getPriority = $scope.chosenProject.priority.toLowerCase();
+      for (let i = 0; i < $scope.projects.length; i++) $scope.getTasks(i);
+    });
   }
 
-  $scope.getProjects()  
+  $scope.getProjects();
 
   $scope.changeContent = (x) => {
     $scope.chosenProject = x
-  }
-
-  $scope.changeContent = function (project) {
-    $scope.chosenProject = project
   }
   
   $scope.getPriority = function () {
