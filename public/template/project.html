@@ -12,7 +12,7 @@
         <div class="selected-task">
             <div class="top-selected-task">
                 <p class="sub-title-task">{{chosenProject.name}}</p>
-                <p ng-class="chosenProject.priority">Priority: {{chosenProject.priority}}</p>
+                <p ng-class="getPriority">Priority: {{chosenProject.priority}}</p>
             </div>
             <div class="project-content">
                     <p class = 'tasks-title'>Tasks</p>
@@ -29,12 +29,9 @@
                     </div>
                     <div class="task-buttom-right">
                         <a class='button' href="#!time">Ends in 1 week and 2 days</a>
-                        <a class='button' href="#!task">Tasks Details</a>
+                        <a class='button' ng-href="#!/project/{{chosenProject._id}}">Tasks Details</a>
                     </div>
-
                 </div>
-
-
             </div>
         </div>
     </div>

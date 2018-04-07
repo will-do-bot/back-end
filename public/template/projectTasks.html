@@ -1,0 +1,32 @@
+<div class="content">
+  <div class="top-content">
+      <p class="title">{{project.name}}</p>
+  </div>
+  <div class="bottom-content">
+      <div class="tasks-panel">
+          <p class="sub-title">Tasks</p>
+          <div class="tasks">
+              <p ng-click='changeContent(x)' ng-repeat="x in tasks" ng-class="getChosen(x)">#{{$index+1}} - {{x.name}}</p>
+          </div>
+      </div>
+      <div class="selected-task">
+          <div class="top-selected-task">
+              <p class="sub-title-task">{{chosenTask.name}}</p>
+              <p ng-class="getPriority">Priority: {{chosenTask.priority}}</p>
+          </div>
+          <div class="task-attribute">
+              <p class="description">{{chosenTask.description}}</p>
+              <div class="task-button">
+                  <div class="task-buttom-left">
+                      <a class='button' href="#!timetracker"> Time Tracker</a>
+                      <a class='button' href="#!chart"> Chart</a>
+                  </div>
+                  <div class="task-buttom-right">
+                      <a class='button' href="#!time">Ends in 1 week and 2 days</a>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+
+</div>
