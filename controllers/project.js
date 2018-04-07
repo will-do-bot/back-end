@@ -13,7 +13,7 @@ module.exports = {
         Project.find({ 'user': user }, cb);
     },
     getOne: function (id, cb) {
-        Project.find({ '_id': id }, cb);
+        Project.findOne({ '_id': id }, cb);
     },
     getByCond: function (cond, cb) {
         Project.find(cond, cb);
