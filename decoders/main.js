@@ -1,24 +1,23 @@
 const project = require('./project');
-const controller = require('./../controllers/project');
+const controllerProject = require('./../controllers/project');
+const controllerTask = require('./../controllers/task');
 
 const actions = ['add', 'build', 'create', 'list', 'show', 'remove', 'delete', 'edit'];
 const actors = ['project', 'projects', 'task', 'tasks'];
 const attributes = ['name', 'named', 'called', 'priority', 'deadline', 'project', 'description', 'about', 'user', 'change'];
-const ignore = ['and', 'all', 'new', 'with', 'my', 'where', 'a', 'of', 'to', 'me', 'equal', 'equals', '=', 'is', 'the'];
+const ignore = ['and', 'all', 'in', 'new', 'with', 'my', 'where', 'a', 'of', 'to', 'me', 'equal', 'equals', '=', 'is', 'the'];
 // NÃO é necessário colocar todas as palavras no ignore (nem recomendado), ele é importante em alguns casos específicos
 
 var projects = [];
 
 function updateProjectsArray(cb=function(){}) {
-    controller.list(1636208479780756, (err, obj) => {
+    controllerProject.list(1636208479780756, (err, obj) => {
         projects = obj;
         cb();
     });
 }
 
-updateProjectsArray(function() {
-
-});
+updateProjectsArray(function() { });
 
 function solveQuot (i, words) {
     let acumulator = [];
@@ -71,17 +70,18 @@ function apply(obj, cb) {
         }
     }
     obj2['user'] = 1636208479780756;
-    if (obj['action'] === 'add' && obj['actor'] === 'project') {
+    if (obj['action'] === 'add') {
         understood = true;
-        controller.create(obj2, (result) => cb(result));
+        if (obj['actor'] === 'project') controllerProject.create(obj2, (result) => cb(result));
+        else if (obj['actor'] === 'task') controllerTask.create(obj2, (result) => cb(result));
     }
     else if (obj['action'] === 'remove' && obj['actor'] === 'project') {
         understood = true;
-        controller.removeByCond(obj2, (err, result) => cb(result));
+        controllerProject.removeByCond(obj2, (err, result) => cb(result));
     }
     else if ((obj['action'] === 'list' || obj['action'] === 'show') && obj['actor'] === 'project') {
         understood = true;
-        controller.getByCond(obj2, (err, result) => cb(result));
+        controllerProject.getByCond(obj2, (err, result) => cb(result));
     }
     return understood;
 }
@@ -102,7 +102,7 @@ const dec = {
     decode: (string, cb=()=>{}) => {
         console.log("Command: " + string);
         // Percorrer string e gerar objeto com o que deverá ser acessado do banco
-        let words = string.split(" ");                       // Vetor de palavras
+        let words = string.toLowerCase().split(" ");         // Vetor de palavras
         let obj = { };                                       // Objeto que será retornado
         let expecting, temp, word, w, virgula=false, ac='';  // Variáveis auxiliares
         for (let i = 0; i < words.length; i++) {
