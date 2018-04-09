@@ -17,7 +17,7 @@ function updateProjectsArray(cb=function(){}) {
     });
 }
 
-updateProjectsArray(function() { });
+updateProjectsArray(function() { dec.decode('create task oioi in project amo muito tudo isso') });
 
 function solveQuot (i, words) {
     let acumulator = [];
@@ -73,7 +73,12 @@ function apply(obj, cb) {
     if (obj['action'] === 'add') {
         understood = true;
         if (obj['actor'] === 'project') controllerProject.create(obj2, (result) => cb(result));
-        else if (obj['actor'] === 'task') controllerTask.create(obj2, (result) => cb(result));
+        else if (obj['actor'] === 'task') {
+            controllerProject.getByCond({'name' : obj['project'] }, (err, res) => {
+                obj2['project'] = res[0]['_id'];
+                controllerTask.create(obj2, (result) => cb(result));
+            })
+        }
     }
     else if (obj['action'] === 'remove' && obj['actor'] === 'project') {
         understood = true;
@@ -105,6 +110,7 @@ const dec = {
         let words = string.toLowerCase().split(" ");         // Vetor de palavras
         let obj = { };                                       // Objeto que será retornado
         let expecting, temp, word, w, virgula=false, ac='';  // Variáveis auxiliares
+        let lendoName = false;
         for (let i = 0; i < words.length; i++) {
             if (words[i].startsWith('"')) {
                 // Se começar com aspas, colocar todo o conteúdo delas dentro de word
@@ -117,6 +123,17 @@ const dec = {
                 // Remover vírgula da palavra, caso haja
                 word = word.substring(0, word.length-1); 
                 virgula = true;
+            }
+            if (isKeyword(word)) {
+                temp = null;
+                ac = '';
+                if (lendoName)
+                    lendoName = false;
+            }
+            if (ignore.includes(word)) {
+                ac = '';
+                if (lendoName)
+                    lendoName = false;
             }
             if (expecting) {
                 // Caso esteja esperando por algum atributo
@@ -148,14 +165,14 @@ const dec = {
                     if (r) continue;
                 }
             }
-            if (isKeyword(word)) {
-                temp = null;
-                ac = '';
-            }
-            if (ignore.includes(word)) ac = '';
-            else if (!isKeyword(word)) {
-                if (ac) ac += ' ' + word;
-                else ac = word;
+            else {
+                if (lendoName)
+                    if (obj['name']) obj['name'] += ' ' + word;
+                    else obj['name'] = word;
+                if (!isKeyword(word)) {
+                    if (ac) ac += ' ' + word;
+                    else ac = word;
+                }
             }
             if (actions.includes(word) && !obj['action']) {
                 obj['action'] = word;
@@ -163,6 +180,8 @@ const dec = {
             }
             if (actors.includes(word) && !obj['actor']) {
                 obj['actor'] = word;
+                if (!isKeyword(words[i+1]) && !ignore.includes(words[i+1]))
+                    lendoName = true;
                 continue;
             }
             if (attributes.includes(word)) {
