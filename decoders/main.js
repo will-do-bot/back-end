@@ -4,7 +4,7 @@ const controllerTask = require('./../controllers/task');
 
 const actions = ['add', 'build', 'create', 'list', 'show', 'remove', 'delete', 'edit'];
 const actors = ['project', 'projects', 'task', 'tasks'];
-const attributes = ['name', 'named', 'called', 'priority', 'deadline', 'project', 'description', 'about', 'user', 'change'];
+const attributes = ['name', 'named', 'called', 'priority', 'deadline', 'project', 'description', 'about', 'user', 'change', '_id'];
 const ignore = ['and', 'all', 'in', 'new', 'with', 'my', 'where', 'a', 'of', 'to', 'me', 'equal', 'equals', '=', 'is', 'the'];
 // NÃO é necessário colocar todas as palavras no ignore (nem recomendado), ele é importante em alguns casos específicos
 
@@ -17,7 +17,7 @@ function updateProjectsArray(cb=function(){}) {
     });
 }
 
-updateProjectsArray(function() { dec.decode('create task oioi in project amo muito tudo isso') });
+updateProjectsArray(function() { });
 
 function solveQuot (i, words) {
     let acumulator = [];
@@ -54,6 +54,8 @@ function postProcess(obj) {
                 obj2['action'] = 'remove';
             else if (property === 'about')
                 obj2['description'] = obj[property];
+            else if (property === '_id')
+                obj2['id'] = obj[property];
             // No caso default, só inserir no novo objeto
             else obj2[property] = obj[property];
         }
