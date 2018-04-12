@@ -29,28 +29,8 @@ module.exports = function (app) {
         })
     })
 
-
     app.get('/task', auth.checkAuth, auth.validate, (req, res) => {
-        let project = req.query['project'];
-        if(project != undefined){
-            task_controller.list(project, (err, obj) => {
-                if (err)
-                    res.status(500).send(err);
-                else
-                    res.status(200).send(obj);
-            })
-        }else{
-            task_controller.list_all((err, obj) => {
-                if (err)
-                    res.status(500).send(err);
-                else
-                    res.status(200).send(obj);
-            })            
-        }
-    })
-
-    app.get('/task', auth.checkAuth, auth.validate, (req, res) => {
-        task_controller.list({}, (err, obj) => {
+        task_controller.list_all((err, obj) => {
             if (err)
                 res.status(500).send(err);
             else

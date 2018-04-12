@@ -1,26 +1,10 @@
-app.controller('task', function ($scope,$http) {
-  $scope.tasks = {
-    name : "Tasks",
-    tasks : [
-      {
-        name: 'Talk to the boss',
-        description: 'Talk to the boss about TIS',
-        priority: 'High'
-      },
-      {
-        name: 'Go to the bank',
-        description: 'Pay the skin',
-        priority: 'Medium'
-      },
-      {
-        name: 'Dog training',
-        description: 'Training the dog to crouch ',
-        priority: 'Low'
-      }
-    ]
-  }
-  
-  $scope.chosenTask = $scope.tasks.tasks[0]
+app.controller('task', function ($scope, $httpController) {
+
+  $httpController.getTasks(tasks => {
+    console.log(tasks)
+    $scope.tasks = tasks
+    $scope.chosenTask = $scope.tasks[0]
+  })
 
   $scope.changeContent = function (task) {
     $scope.chosenTask = task
@@ -30,9 +14,9 @@ app.controller('task', function ($scope,$http) {
     return "priority " + $scope.chosenTask.priority.toLowerCase()
   }
 
-  $scope.getChosen = function(x){
-    if($scope.chosenTask.name == x.name) return 'task selected'
+  $scope.getChosen = function (x) {
+    if ($scope.chosenTask.name == x.name) return 'task selected'
     else return 'task'
   }
-  
+
 })

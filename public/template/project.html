@@ -6,6 +6,7 @@
         <div class="tasks-panel">
             <p class="sub-title">{{content.sideBar.type}}</p>
             <div class="tasks">
+                <p ng-click="modal()" class='green'>+ Create new Project</p>
                 <p ng-click='changeContent(x)' ng-repeat="x in projects" ng-class="getChosen(x)">#{{$index+1}} - {{x.name}}</p>
             </div>
         </div>
@@ -13,12 +14,6 @@
             <div class="top-selected-task">
                 <p class="sub-title-task">{{chosenProject.name}}</p>
                 <p ng-class="getPriority">Priority: {{chosenProject.priority}}</p>
-            </div>
-            <div class="project-content">
-                    <p class = 'tasks-title'>Tasks</p>
-                    <div class = 'project-tasks'>
-                            <p id ='tasks'ng-repeat = "x in chosenProject.tasks">{{x.name}}</p>
-                    </div>
             </div>
             <div class="task-attribute">
                 <p class="description">{{chosenProject.description}}</p>

@@ -9,6 +9,8 @@ app.controller('projectTasks', function ($scope, $routeParams, $httpController){
 
   $scope.changeContent = function (x) {
     $scope.chosenTask = x
+    $scope.getPriority = `priority ${$scope.chosenProject.priority.toLowerCase()}`
+    
   }
 
   $scope.getChosen = function (x) {

@@ -1,4 +1,4 @@
-app.controller('project', function ($scope, $httpController) {
+app.controller('project', function ($scope, $httpController, $mdDialog) {
 
   $httpController.getProjects(projects => {
     $scope.projects = projects;
@@ -23,5 +23,16 @@ app.controller('project', function ($scope, $httpController) {
     if ($scope.chosenProject.name == x.name) return 'task selected'
     else return 'task'
   }
+
+  $scope.modal = function () {
+    console.log('hey')
+    alert = $mdDialog.alert({
+      title: 'Attention',
+      textContent: 'This is an example of how easy dialogs can be!',
+      ok: 'Close'
+    });
+  }
+
+  
 
 })

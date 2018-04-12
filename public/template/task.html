@@ -1,13 +1,13 @@
 
 <div class="content">
         <div class="top-content">
-                <p class="title">{{tasks.name}}</p>
+                <p class="title">Tasks</p>
         </div>
         <div class="bottom-content">
                 <div class="tasks-panel">
                     <p class="sub-title">All Tasks</p>
                     <div class="tasks">
-                        <p ng-click='changeContent(x)' ng-repeat="x in tasks.tasks" ng-class="getChosen(x)">#{{$index+1}} - {{x.name}}</p>
+                        <p ng-click='changeContent(x)' ng-repeat="x in tasks" ng-class="getChosen(x)">#{{$index+1}} - {{x.name}}</p>
                     </div>
                 </div>
                 <div class="selected-task">
