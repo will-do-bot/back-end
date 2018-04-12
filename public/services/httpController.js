@@ -18,7 +18,7 @@ app.service('$httpController', ['$http', function($http) {
         auth_key: 'a5f0d15d-cd12-4d33-8212-7ddd9f2cb6b8'
       },
       method: 'GET',
-      url: '/task/?project=' + id
+      url: '/task/project/' + id
     })
     .then(response => cb(response.data))
   }

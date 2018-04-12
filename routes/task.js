@@ -7,7 +7,7 @@ module.exports = function (app) {
 
     // O PROJECT É SEMPRE PASSADO POR _GET
     // DEPOIS ARRUMAR TRATAMENTO DE GET VAZIO NO UPDATE
-    
+
 
     app.post('/task', auth.checkAuth, auth.validate, (req, res) => {
         console.log(req.body);
@@ -22,6 +22,15 @@ module.exports = function (app) {
     app.get('/task/:id', auth.checkAuth, auth.validate, (req, res) => {
         let task_id = req.params.id;
         task_controller.getOne(task_id, (err, obj) => {
+            if (err)
+                res.status(500).send(err);
+            else
+                res.status(200).send(obj);
+        })
+    })
+
+    app.get('/task/project/:id', auth.checkAuth, auth.validate, (req, res) => {
+        task_controller.list(req.params.id, (err, obj) => {
             if (err)
                 res.status(500).send(err);
             else
