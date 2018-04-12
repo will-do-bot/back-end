@@ -105,13 +105,13 @@ function apply(obj, cb) {
         } else understood = false;
     }
     else if (obj['action'] === 'update') {
-        understood = true;
-        if (obj['actor'] === 'project') controllerProject.updateByCond({'name':obj['project']}, obj2, (err, result) => cb(result));
-        else if (obj['actor'] === 'task') {
-            controllerProject.getByCond({'name': obj['project'] }, (err, res) => {
-                obj2['project'] = res[0]['_id'];
-                controllerTask.updateByCond({'name':obj['task']}, obj2, (result) => cb(result));
-            })
+        // understood = true;
+        // if (obj['actor'] === 'project') controllerProject.updateByCond({'name':obj['project']}, obj2, (err, result) => cb(result));
+        // else if (obj['actor'] === 'task') {
+        //     controllerProject.getByCond({'name': obj['project'] }, (err, res) => {
+        //         obj2['project'] = res[0]['_id'];
+        //         controllerTask.updateByCond({'name':obj['task']}, obj2, (result) => cb(result));
+        //     })
         } else understood = false;
     }
     return understood;
