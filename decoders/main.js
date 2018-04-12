@@ -17,7 +17,7 @@ function updateProjectsArray(cb=function(){}) {
     });
 }
 
-updateProjectsArray(function() { dec.decode('edit task "só mais uma tarefa passando despercebida" in project projetinho priority low') });
+updateProjectsArray(function() { });
 
 function solveQuot (i, words) {
     let acumulator = [];
