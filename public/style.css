@@ -220,3 +220,19 @@ p {
     font-size: 2em;
     padding-left: 10%;
 }
+
+.green {
+    font-size: 1.2em;
+    margin-left: 5%;    
+    padding: 5% 0;
+    border-bottom: solid 1px #DDD;
+    cursor: pointer;
+    padding-left: 10px;
+    color: white;
+    background-color: green;    
+}
+
+.green:hover {
+    background-color:rgb(1, 73, 1);
+    
+}
