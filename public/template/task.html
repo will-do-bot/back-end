@@ -12,7 +12,8 @@
                 </div>
                 <div class="selected-task">
                     <div class="top-selected-task">
-                        <p class="sub-title-task">{{chosenTask.name}}</p>
+                        <p class="sub-title-task">{{chosenTask.name}} - {{chosenTask.project}}</p>
+                        
                         <p ng-class="getPriority()">{{chosenTask.priority}} Priority</p>
                     </div>
                     <div class="task-attribute">

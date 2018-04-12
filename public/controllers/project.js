@@ -23,8 +23,5 @@ app.controller('project', function ($scope, $httpController) {
     if ($scope.chosenProject.name == x.name) return 'task selected'
     else return 'task'
   }
-  
-
-  
 
 })

@@ -42,6 +42,13 @@ app.service('$httpController', ['$http', function($http) {
       method: 'GET',
       url: '/task'
     })
-    .then(response => cb(response.data))
+    .then(response => {
+      for(let element of response.data){
+        this.getProjectById(element._id, res=>{
+          element.project = res
+        })
+      }
+      cb(response.data)
+    })
   }
  }])
