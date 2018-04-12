@@ -17,7 +17,7 @@ function updateProjectsArray(cb=function(){}) {
     });
 }
 
-updateProjectsArray(function() { dec.decode('create task update bot in willdo description "não usei aspas no update bot" priority high') });
+updateProjectsArray(function() { });
 
 function solveQuot (i, words) {
     let acumulator = [];
