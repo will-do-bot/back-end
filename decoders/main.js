@@ -2,7 +2,7 @@ const project = require('./project');
 const controllerProject = require('./../controllers/project');
 const controllerTask = require('./../controllers/task');
 
-const actions = ['add', 'build', 'create', 'list', 'show', 'update', 'remove', 'delete', 'edit'];
+const actions = ['add', 'build', 'create', 'list', 'show', 'remove', 'delete', 'edit', 'update'];
 const actors = ['project', 'projects', 'task', 'tasks'];
 const attributes = ['name', 'named', 'called', 'priority', 'deadline', 'project', 'description', 'about', 'user', 'change', '_id'];
 const ignore = ['and', 'all', 'in', 'new', 'with', 'my', 'where', 'a', 'of', 'to', 'me', 'equal', 'equals', '=', 'is', 'the'];
@@ -50,6 +50,8 @@ function postProcess(obj) {
                 obj2['actor'] = obj['actor'].substring(0, obj['actor'].length - 1); 
             else if (property === 'action' && (obj[property] === 'create' || obj[property] === 'build'))
                 obj2['action'] = 'add';
+            else if (property === 'action' && obj[property] === 'edit')
+                obj2['action'] = 'update';
             else if (property === 'action' && obj[property] === 'delete')
                 obj2['action'] = 'remove';
             else if (property === 'about')
@@ -221,7 +223,7 @@ const dec = {
             if (existsProject(word)) {
                 if (!obj['actor']) { 
                     obj['actor'] = 'project';
-                    if (obj['action'] === 'update')
+                    if (obj['action'] === 'update' || obj['action'] === 'edit')
                         obj['project'] = word;
                     else obj['name'] = word;
                 }
@@ -231,7 +233,7 @@ const dec = {
             if (existsProject(temp)) {
                 if (!obj['name']) { 
                     obj['actor'] = 'project';
-                    if (obj['action'] === 'update')
+                    if (obj['action'] === 'update' || obj['action'] === 'edit')
                         obj['project'] = temp;
                     else obj['name'] = temp;
                 }
@@ -241,7 +243,7 @@ const dec = {
             if (existsProject(ac)) {
                 if (!obj['name']) { 
                     obj['actor'] = 'project';
-                    if (obj['action'] === 'update')
+                    if (obj['action'] === 'update' || obj['action'] === 'edit')
                         obj['project'] = ac;
                     else obj['name'] = ac;
                 }
