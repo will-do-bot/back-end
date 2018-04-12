@@ -1,7 +1,11 @@
 app.controller('chart', function ($scope) {
-  console.log('charts');
+
+    console.log('charts');
+
     var ctx = document.getElementById("chartTasks");
+
     Chart.defaults.global.legend.display = false;
+
     var myChart = new Chart(ctx, {
         type: 'bar',
         data: {
@@ -39,4 +43,4 @@ app.controller('chart', function ($scope) {
             }
         }
     });
-})
+});
