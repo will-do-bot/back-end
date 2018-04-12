@@ -21,6 +21,9 @@ module.exports = {
     update: function (id, newObj, cb) {
         Project.update({ '_id': id }, newObj, { multi: true }, cb);
     },
+    updateByCond: function (cond, newObj, cb) {
+        Project.update(cond, newObj, cb);
+    },
     remove: function (id, cb) {
         Project.remove({ '_id': id }, cb);
     },
