@@ -43,11 +43,6 @@ app.service('$httpController', ['$http', function($http) {
       url: '/task'
     })
     .then(response => {
-      for(let element of response.data){
-        this.getProjectById(element._id, res=>{
-          element.project = res
-        })
-      }
       cb(response.data)
     })
   }

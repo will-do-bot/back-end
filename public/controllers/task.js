@@ -8,6 +8,7 @@ app.controller('task', function ($scope, $httpController) {
 
   $scope.changeContent = function (task) {
     $scope.chosenTask = task
+    
   }
 
   $scope.getPriority = function () {
