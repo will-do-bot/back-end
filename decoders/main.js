@@ -2,7 +2,7 @@ const project = require('./project');
 const controllerProject = require('./../controllers/project');
 const controllerTask = require('./../controllers/task');
 
-const actions = ['add', 'build', 'create', 'list', 'show', 'remove', 'delete', 'edit'];
+const actions = ['add', 'build', 'create', 'list', 'show', 'update', 'remove', 'delete', 'edit'];
 const actors = ['project', 'projects', 'task', 'tasks'];
 const attributes = ['name', 'named', 'called', 'priority', 'deadline', 'project', 'description', 'about', 'user', 'change', '_id'];
 const ignore = ['and', 'all', 'in', 'new', 'with', 'my', 'where', 'a', 'of', 'to', 'me', 'equal', 'equals', '=', 'is', 'the'];
@@ -17,7 +17,7 @@ function updateProjectsArray(cb=function(){}) {
     });
 }
 
-updateProjectsArray(function() { });
+updateProjectsArray(function() { dec.decode('create task update bot in willdo description "não usei aspas no update bot" priority high') });
 
 function solveQuot (i, words) {
     let acumulator = [];
@@ -80,15 +80,37 @@ function apply(obj, cb) {
                 obj2['project'] = res[0]['_id'];
                 controllerTask.create(obj2, (result) => cb(result));
             })
-        }
+        } else understood = false;
     }
-    else if (obj['action'] === 'remove' && obj['actor'] === 'project') {
+    else if (obj['action'] === 'remove') {
         understood = true;
-        controllerProject.removeByCond(obj2, (err, result) => cb(result));
+        if (obj['actor'] === 'project') controllerProject.removeByCond(obj2, (err, result) => cb(result));
+        else if (obj['actor'] === 'task') {
+            controllerProject.getByCond({'name': obj['project'] }, (err, res) => {
+                obj2['project'] = res[0]['_id'];
+                controllerTask.remove(obj2, (result) => cb(result));
+            })
+        } else understood = false;
     }
-    else if ((obj['action'] === 'list' || obj['action'] === 'show') && obj['actor'] === 'project') {
+    else if (obj['action'] === 'list' || obj['action'] === 'show') {
         understood = true;
-        controllerProject.getByCond(obj2, (err, result) => cb(result));
+        if (obj['actor'] === 'project') controllerProject.getByCond(obj2, (err, result) => cb(result));
+        else if (obj['actor'] === 'task') {
+            controllerProject.getByCond({'name': obj['project'] }, (err, res) => {
+                obj2['project'] = res[0]['_id'];
+                controllerTask.getByCond(obj2, (result) => cb(result));
+            })
+        } else understood = false;
+    }
+    else if (obj['action'] === 'update') {
+        understood = true;
+        if (obj['actor'] === 'project') controllerProject.updateByCond({'name':obj['project']}, obj2, (err, result) => cb(result));
+        else if (obj['actor'] === 'task') {
+            controllerProject.getByCond({'name': obj['project'] }, (err, res) => {
+                obj2['project'] = res[0]['_id'];
+                controllerTask.updateByCond({'name':obj['task']}, obj2, (result) => cb(result));
+            })
+        } else understood = false;
     }
     return understood;
 }
@@ -168,9 +190,15 @@ const dec = {
                 }
             }
             else {
-                if (lendoName)
-                    if (obj['name']) obj['name'] += ' ' + word;
-                    else obj['name'] = word;
+                if (lendoName) {
+                    if (obj['action'] === 'update') {
+                        if (obj[obj['actor']]) obj[obj['actor']] += ' ' + word;
+                        else obj[obj['actor']] = word;
+                    } else {
+                        if (obj['name']) obj['name'] += ' ' + word;
+                        else obj['name'] = word;
+                    }
+                }
                 if (!isKeyword(word)) {
                     if (ac) ac += ' ' + word;
                     else ac = word;
@@ -190,19 +218,34 @@ const dec = {
                 expecting = word;
                 continue;
             }
-            if (!obj['name'] && existsProject(word)) {
-                obj['name'] = word;
-                obj['actor'] = 'project';
+            if (existsProject(word)) {
+                if (!obj['actor']) { 
+                    obj['actor'] = 'project';
+                    if (obj['action'] === 'update')
+                        obj['project'] = word;
+                    else obj['name'] = word;
+                }
+                else obj['project'] = word;
                 continue;
             }
-            if (!obj['name'] && existsProject(temp)) {
-                obj['name'] = temp;
-                obj['actor'] = 'project';
+            if (existsProject(temp)) {
+                if (!obj['name']) { 
+                    obj['actor'] = 'project';
+                    if (obj['action'] === 'update')
+                        obj['project'] = temp;
+                    else obj['name'] = temp;
+                }
+                else obj['project'] = temp;
                 continue;
             }
-            if (!obj['name'] && existsProject(ac)) {
-                obj['name'] = ac;
-                obj['actor'] = 'project';
+            if (existsProject(ac)) {
+                if (!obj['name']) { 
+                    obj['actor'] = 'project';
+                    if (obj['action'] === 'update')
+                        obj['project'] = ac;
+                    else obj['name'] = ac;
+                }
+                else obj['project'] = ac;
                 continue;
             }
             if (ignore.includes(word) || isKeyword(word)) w = '';

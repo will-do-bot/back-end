@@ -18,10 +18,19 @@ module.exports = {
     getOne: (id, cb) => {
         Task.find({'_id': id }, cb);
     },
+    getByCond: function (cond, cb) {
+        Task.find(cond, cb);
+    },
     update: (id, newObj, cb) => {
         Task.update({ '_id': id }, newObj, cb);
     },
+    updateByCond: (cond, newObj, cb) => {
+        Task.update(cond, newObj, cb);
+    },
     remove: (id, cb) => {
         Task.remove({ '_id': id }, cb);
+    },
+    removeByCond: (cond) => {
+        Task.remove(cond, cb);
     }
 };
