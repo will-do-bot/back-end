@@ -23,13 +23,6 @@ app.config(function ($routeProvider) {
                 'check': auth
             }
         })
-        .when("/command", {
-            templateUrl: "template/command.html",
-            controller: 'command',
-            resolve: {
-                'check': auth
-            }
-        })
         .when("/calendar", {
             templateUrl: "template/calendar.html",
             controller: 'calendar',
