@@ -22,7 +22,7 @@ module.exports = {
         Task.find(cond, cb);
     },
     update: (id, newObj, cb) => {
-        Task.update({ '_id': id }, newObj, cb);
+        // Task.update({ '_id': id }, newObj, cb);
     },
     updateByCond: (cond, newObj, cb) => {
         Task.update(cond, newObj, cb);
