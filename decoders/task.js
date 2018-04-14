@@ -12,7 +12,7 @@ module.exports = {
         if (obj['action'] === 'add') {
             understood = true;
             controllerProject.getByCond({'name' : obj['project'] }, (err, res) => {
-                if (res) {
+                if (res[0]) {
                     obj2['project'] = res[0]['id'];
                     controllerTask.create(obj2, (result) => cb(result));
                 }
@@ -21,7 +21,7 @@ module.exports = {
         else if (obj['action'] === 'remove') {
             understood = true;
             controllerProject.getByCond({'name': obj['project'] }, (err, res) => {
-                if (res) {
+                if (res[0]) {
                     obj2['project'] = res[0]['id'];
                     console.log(obj2);
                     controllerTask.removeByCond(obj2, (err, result) => {
@@ -34,7 +34,7 @@ module.exports = {
         else if (obj['action'] === 'list' || obj['action'] === 'show') {
             understood = true;
             controllerProject.getByCond({'name': obj['project'] }, (err, res) => {
-                if (res) {
+                if (res[0]) {
                     obj2['project'] = res[0]['id'];
                     controllerTask.getByCond(obj2, (err, result) => {
                         cb(result)
@@ -45,7 +45,7 @@ module.exports = {
         else if (obj['action'] === 'update') {
             understood = true;
             controllerProject.getByCond({'name': obj['project'] }, (err, res) => {
-                if (res) {
+                if (res[0]) {
                     obj2['project'] = res[0]['id'];
                     controllerTask.updateByCond({'name':obj['task']}, obj2, (err, result) => {
                         if (err) cb(err);
@@ -57,7 +57,7 @@ module.exports = {
         else if (obj['action'] === 'start') {
             understood = true;
             controllerProject.getByCond({'name': obj['project'] }, (err, res) => {
-                if (res) {
+                if (res[0]) {
                     obj2['project'] = res[0]['id'];
                     controllerTask.getByCond(obj2, (err, result) => {
                         controllerTask.start(result[0]['id'], (e, r) => {
@@ -71,7 +71,7 @@ module.exports = {
         else if (obj['action'] === 'pause') {
             understood = true;
             controllerProject.getByCond({'name': obj['project'] }, (err, res) => {
-                if (res) {
+                if (res[0]) {
                     obj2['project'] = res[0]['id'];
                     controllerTask.getByCond(obj2, (err, result) => {
                         controllerTask.pause(result[0]['id'], (e, r) => {
@@ -85,7 +85,7 @@ module.exports = {
         else if (obj['action'] === 'finish') {
             understood = true;
             controllerProject.getByCond({'name': obj['project'] }, (err, res) => {
-                if (res) {
+                if (res[0]) {
                     obj2['project'] = res[0]['id'];
                     controllerTask.getByCond(obj2, (err, result) => {
                         controllerTask.finish(result[0]['id'], (e, r) => {

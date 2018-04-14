@@ -21,7 +21,7 @@ function updateProjectsArray(cb) {
     });
 }
 
-updateProjectsArray(function() { } );
+updateProjectsArray(function() { dec.decode('create task buga'); } );
 
 /**
  * Resolve aspas
