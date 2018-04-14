@@ -19,10 +19,10 @@ module.exports = function (app) {
 			req.body.entry.forEach((entry) => {
 				entry.messaging.forEach((event) => {
 					if (event.message && event.message.text) {
-						/*dec.decode(event.message.text, (result) => {
+						dec.decode(event.message.text, (result) => {
 							console.log(result);
 							sendMessage(event.sender.id, JSON.stringify(result))
-						});*/
+						});
 					}
 				});
 			});
