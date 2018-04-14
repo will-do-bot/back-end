@@ -21,7 +21,7 @@ function updateProjectsArray(cb) {
     });
 }
 
-updateProjectsArray(function() {  });
+updateProjectsArray(function() { dec.decode('edit willdo name willer do')  });
 
 /**
  * Resolve aspas
@@ -92,7 +92,7 @@ function postProcess(obj) {
             else if (property === 'actor' && obj['actor'].endsWith('s'))
                 obj2['actor'] = obj['actor'].substring(0, obj['actor'].length - 1); 
             // Caso tenha sido passado atributo name, mudar para o actor. Exemplo: actor: 'project', project: 'este nome'
-            else if (property === 'name')
+            else if (property === 'name' && !obj[obj['actor']])
                 obj2[obj['actor']] = obj['name'];
             // No caso default, só inserir no novo objeto
             else obj2[property] = obj[property];
