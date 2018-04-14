@@ -21,7 +21,7 @@ function updateProjectsArray(cb) {
     });
 }
 
-updateProjectsArray(function() {  } );
+updateProjectsArray(function() { dec.decode('remove task testar timetracker in willer do') } );
 
 /**
  * Resolve aspas

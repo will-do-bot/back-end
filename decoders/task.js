@@ -21,7 +21,10 @@ module.exports = {
             controllerProject.getByCond({'name': obj['project'] }, (err, res) => {
                 obj2['project'] = res[0]['id'];
                 console.log(obj2);
-                controllerTask.remove(obj2, (err, result) => cb(result));
+                controllerTask.removeByCond(obj2, (err, result) => {
+                    if (err) cb(err);
+                    else cb(result)
+                });
             })
         }
         else if (obj['action'] === 'list' || obj['action'] === 'show') {
