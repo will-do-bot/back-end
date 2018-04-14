@@ -21,7 +21,7 @@ function updateProjectsArray(cb) {
     });
 }
 
-updateProjectsArray(function() { dec.decode('create task buga'); } );
+updateProjectsArray(function() { } );
 
 /**
  * Resolve aspas
@@ -245,6 +245,8 @@ const dec = {
             // Caso palavra atual seja uma ação. Ex: 'create'
             if (actions.includes(word) && !obj['action']) {
                 obj['action'] = word;
+                if (word === 'start' || word === 'pause' || word === 'finish')
+                    obj['actor'] = 'task';
                 continue;
             }
             
