@@ -5,10 +5,6 @@ const auth_controller = require('./../controllers/auth')
 
 module.exports = function (app) {
 
-    // O PROJECT É SEMPRE PASSADO POR _GET
-    // DEPOIS ARRUMAR TRATAMENTO DE GET VAZIO NO UPDATE
-
-
     app.post('/task', auth.checkAuth, auth.validate, (req, res) => {
         console.log(req.body);
         task_controller.create(req.body, (result, err) => {
@@ -16,8 +12,8 @@ module.exports = function (app) {
                 res.status(500).send(err);
             else
                 res.status(200).send(result);
-        })
-    })
+        });
+    });
 
     app.get('/task/:id', auth.checkAuth, auth.validate, (req, res) => {
         let task_id = req.params.id;
@@ -26,8 +22,8 @@ module.exports = function (app) {
                 res.status(500).send(err);
             else
                 res.status(200).send(obj);
-        })
-    })
+        });
+    });
 
     app.get('/task/project/:id', auth.checkAuth, auth.validate, (req, res) => {
         task_controller.list(req.params.id, (err, obj) => {
@@ -35,8 +31,8 @@ module.exports = function (app) {
                 res.status(500).send(err);
             else
                 res.status(200).send(obj);
-        })
-    })
+        });
+    });
 
     app.get('/task', auth.checkAuth, auth.validate, (req, res) => {
         task_controller.list_all((err, obj) => {
@@ -44,8 +40,8 @@ module.exports = function (app) {
                 res.status(500).send(err);
             else
                 res.status(200).send(obj);
-        })
-    })
+        });
+    });
 
     app.put('/task/:id', auth.checkAuth, auth.validate, (req, res) => {
         task_controller.update(req.params.id, req.body, (err, result) => {
@@ -53,8 +49,8 @@ module.exports = function (app) {
                 res.status(500).send();
             else
                 res.status(200).send(result);
-        })
-    })
+        });
+    });
 
     app.delete('/task/:id', auth.checkAuth, auth.validate, (req, res) => {
         task_controller.remove(req.params.id, (err, result) => {
@@ -63,6 +59,33 @@ module.exports = function (app) {
             else {
                 res.status(200).send(result);
             }
+        });
+    });
+    
+    app.post('/task/start/:id', auth.checkAuth, auth.validate, (req, res) => {
+        task_controller.start(req.params.id, (err, result) => {
+            if (err) 
+                res.status(500).send(err);
+            else
+                res.status(200).send(result);
+        });
+    });
+    
+    app.post('/task/pause/:id', auth.checkAuth, auth.validate, (req, res) => {
+        task_controller.pause(req.params.id, (err, result) => {
+            if (err) 
+                res.status(500).send(err);
+            else
+                res.status(200).send(result);
+        });
+    });
+    
+    app.post('/task/finish/:id', auth.checkAuth, auth.validate, (req, res) => {
+        task_controller.finish(req.params.id, (err, result) => {
+            if (err) 
+                res.status(500).send(err);
+            else
+                res.status(200).send(result);
         })
     })
-}
+};
