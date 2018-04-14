@@ -6,7 +6,7 @@ module.exports = {
     apply: function (obj, obj2, cb) {
         let understood = false;
         
-        if (!obj2['name']) obj2['name'] = obj['project'];
+        if (!obj2['name'] && obj['project']) obj2['name'] = obj['project'];
         
         if (obj['action'] === 'add') {
             understood = true;
