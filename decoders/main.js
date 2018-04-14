@@ -21,7 +21,7 @@ function updateProjectsArray(cb) {
     });
 }
 
-updateProjectsArray(function() { dec.decode('start task testar timetracker in willer do') } );
+updateProjectsArray(function() {  } );
 
 /**
  * Resolve aspas

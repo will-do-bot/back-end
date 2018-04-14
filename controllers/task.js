@@ -44,7 +44,7 @@ module.exports = {
                             startDate: Date.now()
                         }, cb);
                     }
-                    else cb('Nenhum time tracker ativo', null);
+                    else cb('Já há um time tracker ativo', null);
                 });
             }
             else cb('Tarefa inexistente ou finalizada', null);

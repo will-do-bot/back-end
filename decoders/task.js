@@ -46,7 +46,10 @@ module.exports = {
                 if (res) {
                     obj2['project'] = res[0]['id'];
                     controllerTask.getByCond(obj2, (err, result) => {
-                        controllerTask.start(result[0]['id'], (e, r) => cb(r));
+                        controllerTask.start(result[0]['id'], (e, r) => {
+                            if (e) cb(e);
+                            else cb(r)
+                        });
                     });
                 }
             })
@@ -57,7 +60,10 @@ module.exports = {
                 if (res) {
                     obj2['project'] = res[0]['id'];
                     controllerTask.getByCond(obj2, (err, result) => {
-                        controllerTask.pause(result[0]['id'], (e, r) => cb(r));
+                        controllerTask.pause(result[0]['id'], (e, r) => {
+                            if (e) cb(e);
+                            else cb(r)
+                        });
                     });
                 }
             })
@@ -68,7 +74,10 @@ module.exports = {
                 if (res) {
                     obj2['project'] = res[0]['id'];
                     controllerTask.getByCond(obj2, (err, result) => {
-                        controllerTask.finish(result[0]['id'], (e, r) => cb(r));
+                        controllerTask.finish(result[0]['id'], (e, r) => {
+                            if (e) cb(e);
+                            else cb(r)
+                        });
                     });
                 }
             })
