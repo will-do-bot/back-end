@@ -47,7 +47,10 @@ module.exports = {
             controllerProject.getByCond({'name': obj['project'] }, (err, res) => {
                 if (res) {
                     obj2['project'] = res[0]['id'];
-                    controllerTask.updateByCond({'name':obj['task']}, obj2, (err, result) => cb(result));
+                    controllerTask.updateByCond({'name':obj['task']}, obj2, (err, result) => {
+                        if (err) cb(err);
+                        else cb(result)
+                    });
                 }
             })
         }
