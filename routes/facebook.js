@@ -19,8 +19,10 @@ module.exports = function (app) {
 			req.body.entry.forEach((entry) => {
 				entry.messaging.forEach((event) => {
 					if (event.message && event.message.text) {
-						console.log("OIOI");
-						dec.decode(event.message.text, (result) => sendMessage(event.sender.id, JSON.stringify(result)));
+						dec.decode(event.message.text, (result) => {
+							console.log(result);
+							sendMessage(event.sender.id, JSON.stringify(result))
+						});
 					}
 				});
 			});
