@@ -6,8 +6,11 @@
         <div class="tasks-panel">
             <p class="sub-title">{{content.sideBar.type}}</p>
             <div class="tasks">
-                <!-- <p ng-click="modal()" class='green'>+ Create new Project</p> -->
-                <p ng-click='changeContent(x)' ng-repeat="x in projects" ng-class="getChosen(x)">#{{$index+1}} - {{x.name}}</p>
+                <p ng-click="modal()" class='green'>+ Create new Project</p>
+                <div ng-repeat="x in projects" ng-class="getChosen(x)">
+                    <p ng-click='changeContent(x)' style='display:inline'>#{{$index+1}} - {{x.name}}</p>
+                    <p class="float-right" ng-click="deleteProject(x)">X</p>
+                </div>
             </div>
         </div>
         <div class="selected-task">

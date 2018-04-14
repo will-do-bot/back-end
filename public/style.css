@@ -237,3 +237,8 @@ p {
     background-color:rgb(1, 73, 1);
     
 }
+
+.float-right {
+    display: inline;
+    color: red;
+}
