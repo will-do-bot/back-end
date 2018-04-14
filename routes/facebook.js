@@ -21,7 +21,7 @@ module.exports = function (app) {
 					if (event.message && event.message.text) {
 						dec.decode(event.message.text, (result) => {
 							console.log(result);
-							sendMessage(event.sender.id, JSON.stringify(result))
+							//sendMessage(event.sender.id, JSON.stringify(result))
 						});
 					}
 				});
