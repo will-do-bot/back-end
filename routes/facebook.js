@@ -15,13 +15,13 @@ module.exports = function (app) {
 
 	/* Handles messages */
 	app.post('/webhook', (req, res) => {
-		console.log(req.body)
 		if (req.body.object === 'page') {
 			req.body.entry.forEach((entry) => {
 				entry.messaging.forEach((event) => {
 					if (event.message && event.message.text) {
+						console.log(event)
 						dec.decode(event.message.text, (result) => {
-							console.log(result);
+						
 							sendMessage(event.sender.id, JSON.stringify(result))
 						});
 					}
