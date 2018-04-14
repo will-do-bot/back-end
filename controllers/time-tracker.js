@@ -16,9 +16,28 @@ module.exports = {
         TimeTracker.find({ '_id': id }, cb);
     },
     update: function (id, newObj, cb) {
-        TimeTracker.update({ '_id': id }, newObj, { multi: true }, cb);
+        TimeTracker.update({ '_id': id }, newObj, cb);
     },
     remove: function (id, cb) {
         TimeTracker.remove({ '_id': id }, cb);
+    },
+    getActiveTimeTracker: function (task_id, cb) {
+        TimeTracker.find({ 'task': task_id }, (err, res) => {
+            let encontrado = false;
+            let finalizado = false;
+            res.forEach((obj) => {
+                if (!obj['endDate']) {
+                    cb(obj);
+                    encontrado = true;
+                }
+            });
+            if (!encontrado) cb(null);
+        });
+    },
+    stop: function (id, cb) {
+        TimeTracker.findOne({ '_id': id }, (err, res) => {
+            res['endDate'] = Date.now();
+            TimeTracker.update({'_id': res['id']}, res, cb);
+        })
     }
 };

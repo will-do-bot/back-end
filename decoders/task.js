@@ -28,9 +28,9 @@ module.exports = {
             understood = true;
             controllerProject.getByCond({'name': obj['project'] }, (err, res) => {
                 obj2['project'] = res[0]['id'];
-            controllerTask.getByCond(obj2, (err, result) => {
+                controllerTask.getByCond(obj2, (err, result) => {
                     cb(result)
-                    });
+                });
             })
         }
         else if (obj['action'] === 'update') {
@@ -38,6 +38,39 @@ module.exports = {
             controllerProject.getByCond({'name': obj['project'] }, (err, res) => {
                 obj2['project'] = res[0]['id'];
                 controllerTask.updateByCond({'name':obj['task']}, obj2, (err, result) => cb(result));
+            })
+        }
+        else if (obj['action'] === 'start') {
+            understood = true;
+            controllerProject.getByCond({'name': obj['project'] }, (err, res) => {
+                if (res) {
+                    obj2['project'] = res[0]['id'];
+                    controllerTask.getByCond(obj2, (err, result) => {
+                        controllerTask.start(result[0]['id'], (e, r) => cb(r));
+                    });
+                }
+            })
+        }
+        else if (obj['action'] === 'pause') {
+            understood = true;
+            controllerProject.getByCond({'name': obj['project'] }, (err, res) => {
+                if (res) {
+                    obj2['project'] = res[0]['id'];
+                    controllerTask.getByCond(obj2, (err, result) => {
+                        controllerTask.pause(result[0]['id'], (e, r) => cb(r));
+                    });
+                }
+            })
+        }
+        else if (obj['action'] === 'finish') {
+            understood = true;
+            controllerProject.getByCond({'name': obj['project'] }, (err, res) => {
+                if (res) {
+                    obj2['project'] = res[0]['id'];
+                    controllerTask.getByCond(obj2, (err, result) => {
+                        controllerTask.finish(result[0]['id'], (e, r) => cb(r));
+                    });
+                }
             })
         }
         return understood;

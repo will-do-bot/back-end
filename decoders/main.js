@@ -4,10 +4,10 @@ const controllerTask = require('./../controllers/task');
 const decoderProject = require('./project');
 const decoderTask = require('./task');
 
-const actions = ['add', 'build', 'create', 'list', 'show', 'remove', 'delete', 'edit', 'update'];
+const actions = ['add', 'build', 'create', 'list', 'show', 'remove', 'delete', 'edit', 'update', 'start', 'pause', 'finish'];
 const actors = ['project', 'projects', 'task', 'tasks'];
 const attributes = ['name', 'named', 'called', 'priority', 'deadline', 'project', 'description', 'about', 'user', 'change', '_id'];
-const ignore = ['and', 'all', 'in', 'new', 'with', 'my', 'where', 'of', 'to', 'equal', 'equals', '=', 'is', 'the'];
+const ignore = ['and', 'all', 'in', 'new', 'with', 'where', 'of', 'to', 'equal', 'equals', '=', 'is', 'the'];
 
 var projects = [];
 
@@ -21,7 +21,7 @@ function updateProjectsArray(cb) {
     });
 }
 
-updateProjectsArray(function() { dec.decode('edit willdo name willer do')  });
+updateProjectsArray(function() { dec.decode('start task testar timetracker in willer do') } );
 
 /**
  * Resolve aspas

@@ -6,7 +6,8 @@ const taskSchema = new mongoose.Schema({
         type: String
     },
     startDate: {
-        type: Date
+        type: Date,
+        default: Date.now
     },
     endDate: {
         type: Date

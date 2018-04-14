@@ -29,6 +29,10 @@ const projectSchema = new mongoose.Schema({
     },
     "type" : {
         type: String
+    },
+    finished: {
+        type: Boolean,
+        default: false
     }
 })
 
