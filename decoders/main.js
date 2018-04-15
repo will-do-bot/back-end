@@ -128,11 +128,9 @@ function apply(obj, cb) {
             understood = decoderTask.apply(obj, obj2, cb);
             break;
         default:
-            understood = false;
+            cb('Fala direito o que você quer e para de encher o saco', null);
             break;
     }
-    
-    return understood;
 }
 
 const dec = {
