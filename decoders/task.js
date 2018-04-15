@@ -18,7 +18,7 @@ module.exports = {
         // Fazendo um get para receber o projeto referente a esta tarefa
         controllerProject.getByCond({'name' : obj['project'] }, (err, proj) => {
 
-            if (err) cb("E aí cara, que tal falar um projeto que existe?", null);
+            if (proj && proj.length === 0) cb("E aí cara, que tal falar um projeto que existe?", null);
 
             // Caso exista algum projeto que atenda à condição:
             else if (proj[0]) {
