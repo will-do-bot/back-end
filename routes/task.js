@@ -35,7 +35,7 @@ module.exports = function (app) {
     });
 
     app.get('/task', auth.checkAuth, auth.validate, (req, res) => {
-        task_controller.list_all((err, obj) => {
+        task_controller.listAll((err, obj) => {
             if (err)
                 res.status(500).send(err);
             else

@@ -1,8 +1,9 @@
 const mongoose = require('mongoose');
 const Task = mongoose.model('Task');
 const timeTracker = require('./time-tracker');
+const taskChooser = require('./taskChooser');
 
-module.exports = {
+exp = {
     create: (obj, cb) => {
         let task = new Task(obj);
         task.save(function (err, created) {
@@ -10,11 +11,13 @@ module.exports = {
             else cb(created);
         });
     },
-    list: (project, cb) => {
-        Task.find({ 'project': project }, cb);
+    list: (project, cb, ordered=true) => {
+        if (ordered) taskChooser.nextTasks(project, cb);
+        else Task.find({ 'project': project }, cb);
     },
-    list_all: (cb) => {
-        Task.find({}, cb);
+    listAll: (cb, ordered=true) => {
+        if (ordered) taskChooser.nextTasks(cb);
+        else Task.find({}, cb);
     },
     getOne: (id, cb) => {
         Task.findOne({'_id': id }, cb);
@@ -82,3 +85,5 @@ module.exports = {
         });
     }
 };
+
+module.exports = exp;
