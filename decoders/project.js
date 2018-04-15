@@ -21,20 +21,20 @@ module.exports = {
                 break;
             case 'remove':
                 controllerProject.removeByCond(obj2, (err, result) => {
-                    if (err) err = "E aí cara, que tal falar um projeto que existe?"
+                    if (result && result.n === 0) err = "E aí cara, que tal falar um projeto que existe?"
                     cb(err, result);
                 });
                 break;
             case 'list':
             case 'show':
                 controllerProject.getByCond(obj2, (err, result) => {
-                    if (err) err = "E aí cara, que tal falar um projeto que existe?"
+                    if (result && result.length === 0) err = "E aí cara, que tal falar um projeto que existe?"
                     cb(err, result);
                 });
                 break;
             case 'update':
                 controllerProject.updateByCond({'name':obj['project']}, obj2, (err, result) => {
-                    if (err) err = "E aí cara, que tal falar um projeto que existe?"
+                    if (result && result.n === 0) err = "E aí cara, que tal falar um projeto que existe?"
                     cb(err, result);
                 });
             default:
