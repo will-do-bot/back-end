@@ -88,6 +88,9 @@ module.exports = {
                             });
                         });
                         break;
+                    default:
+                        cb("Mano, você precisa escolher uma ação", null);
+                        break;
                 }
             }
 
