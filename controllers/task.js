@@ -47,10 +47,10 @@ exp = {
                             startDate: Date.now()
                         }, cb);
                     }
-                    else cb('Já há um time tracker ativo', null);
+                    else cb('Cara... Você sabe que essa tarefa já está rodando... Né?!', null);
                 });
             }
-            else cb('Tarefa inexistente ou finalizada', null);
+            else cb('Maluco, essa tarefa já foi finalizada... Desencana', null);
         })
     },
     pause: (id, cb) => {
@@ -60,10 +60,10 @@ exp = {
                     if (result) {
                         timeTracker.stop(result['_id'], cb);
                     }
-                    else cb('Nenhum time tracker ativo', null);
+                    else cb('Cara... Você sabe que essa tarefa já está rodando... Né?!', null);
                 });
             }
-            else cb('Tarefa inexistente ou finalizada', null);
+            else cb('Maluco, essa tarefa já foi finalizada... Desencana', null);
         });
     },
     finish: (id, cb) => {
@@ -78,10 +78,10 @@ exp = {
                             });
                         });
                     }
-                    else cb('Nenhum time tracker ativo', null);
+                    else cb('Cara... Você sabe que essa tarefa já está rodando... Né?!', null);
                 });
             }
-            else cb('Tarefa inexistente ou finalizada', null);
+            else cb('Maluco, essa tarefa já foi finalizada... Desencana', null);
         });
     }
 };

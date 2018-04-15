@@ -13,7 +13,7 @@ var projects = [];
 
 /**
  * Atualiza lista de projetos. Esta lista é utilizada para verificar se existe projeto com determinado nome
- **/
+ */
 function updateProjectsArray(cb) {
     controllerProject.list(1636208479780756, (err, obj) => {
         projects = obj;
@@ -21,13 +21,13 @@ function updateProjectsArray(cb) {
     });
 }
 
-updateProjectsArray(function() { } );
+updateProjectsArray(function() {  } );
 
 /**
  * Resolve aspas
  * Recebe por parâmetro um vetor de palavras e a posição em que começam as aspas
  * Retorna a posição em que termina, e uma string com as aspas resolvidas
- **/
+ */
 function solveQuot (i, words) {
     let acumulator = [];
     if (words[i].endsWith('"')) return [i, words[i].substring(1, words[i].length-1)];
@@ -44,14 +44,14 @@ function solveQuot (i, words) {
 
 /**
  * Verifica se palavra é reservada para algum comando
- **/
+ */
 function isKeyword(word) {
     return actions.includes(word) || actors.includes(word) || attributes.includes(word);
 }
 
 /**
  * Verifica se existe um projeto com o nome passado por parâmetro
- **/
+ */
 function existsProject(name) {
     var found = false;
     for(var i = 0; i < projects.length; i++) {
@@ -65,7 +65,7 @@ function existsProject(name) {
 
 /**
  * Itera por objeto original gerado no decoder e cria um novo corrigindo nomes dos atributos
- **/
+ */
 function postProcess(obj) {
     let obj2 = { };  // Objeto que será retornado
     for (var property in obj) {
@@ -103,7 +103,7 @@ function postProcess(obj) {
 
 /**
  * Recebe ação gerada pelo decoder e encontra responsável por realizá-la
- **/
+ */
 function apply(obj, cb) {
     let understood = false;  // Define se bot entendeu a entrada do usuário
     var obj2 = { };          // Objeto que será enviado criado/buscado/editado/removido
@@ -139,7 +139,7 @@ const dec = {
 
     /**
      * Entender string e retornar objeto com a ação a ser realizada.
-     **/
+     */
     decode: (string, cb) => {
         console.log("Command: " + string);
         
@@ -222,7 +222,7 @@ const dec = {
             else {
                 // Não está esperando por nenhum atributo
                 
-                // Se estiver esperando por um nome
+                // Se estiver esperando pelo nome
                 if (lendoName) {
                     // Palavra atual irá se referir ao ator
                     // Exemplo:  actor: 'project', project: 'este nome'
@@ -245,8 +245,6 @@ const dec = {
             // Caso palavra atual seja uma ação. Ex: 'create'
             if (actions.includes(word) && !obj['action']) {
                 obj['action'] = word;
-                if (word === 'start' || word === 'pause' || word === 'finish')
-                    obj['actor'] = 'task';
                 continue;
             }
             
@@ -289,11 +287,13 @@ const dec = {
         let result = postProcess(obj);
         console.log(result);
         console.log('----');
-        if (apply(result, (result) => {
+        apply(result, (err, result) => {
             updateProjectsArray();
-            if (cb) cb(result);
-        })) { }
-        else if (cb) cb('Sorry, I did not understand your message');
+            if (cb) {
+                if (err) cb(err);
+                else cb(result);
+            }
+        })
     }
 
 }

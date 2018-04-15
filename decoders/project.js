@@ -7,45 +7,39 @@ module.exports = {
     /**
      * Realiza operação desejada pelo usuário
      * Recebe o objeto com a ação a ser realizada e o objeto a ser utilizado no controller
-     **/
+     */
     apply: function (obj, obj2, cb) {
-        let understood = false;
-        
         // Nome do projeto será igual ao atributo project, caso haja
         if (!obj2['name'] && obj['project']) obj2['name'] = obj['project'];
         
         // Identificando a ação que o usuário deseja realizar
         switch (obj['action']) {
             case 'add':
-                understood = true;
                 controllerProject.create(obj2, (result, err) => {
-                    if (err) cb(err);
-                    else cb(result);
+                    cb(err, result);
                 });
                 break;
             case 'remove':
-                understood = true;
                 controllerProject.removeByCond(obj2, (err, result) => {
-                    if (err) cb(err);
-                    else cb(result);
+                    if (err) err = "E aí cara, que tal falar um projeto que existe?"
+                    cb(err, result);
                 });
                 break;
             case 'list':
             case 'show':
-                understood = true;
                 controllerProject.getByCond(obj2, (err, result) => {
-                    if (err) cb(err);
-                    else cb(result);
+                    if (err) err = "E aí cara, que tal falar um projeto que existe?"
+                    cb(err, result);
                 });
                 break;
             case 'update':
-                understood = true;
                 controllerProject.updateByCond({'name':obj['project']}, obj2, (err, result) => {
-                    if (err) cb(err);
-                    else cb(result);
+                    if (err) err = "E aí cara, que tal falar um projeto que existe?"
+                    cb(err, result);
                 });
+            default:
+                cb("Mano, você precisa escolher uma ação", null);
+                break;
         }
-
-        return understood;
     }
 };
