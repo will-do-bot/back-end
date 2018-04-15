@@ -108,7 +108,8 @@ function apply(obj, cb) {
     let understood = false;  // Define se bot entendeu a entrada do usuário
     var obj2 = { };          // Objeto que será enviado criado/buscado/editado/removido
     
-    // Obj2 receberá todas as propriedades do obj, menos action e actor
+    // Obj é o que foi compreendido da mensagem do usuário, a ação a ser realizada
+    // Enquanto Obj2 é o objeto enviado para ser criado ou comparado
     for (var property in obj) {
         if (obj.hasOwnProperty(property) && property != 'action' && property != 'actor' && property != obj['actor']) {
             obj2[property] = obj[property];
@@ -117,7 +118,6 @@ function apply(obj, cb) {
     
     // Usuário por enquanto é este
     obj2['user'] = 1636208479780756;
-    
     
     // Verifica quem chamar para executar ação
     switch (obj['actor']) {
