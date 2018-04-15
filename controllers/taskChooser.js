@@ -7,11 +7,11 @@ function compare (a, b) {
 }
 
 function ordenar (tasks, cb) {
-    cb(tasks.sort(compare));
+    cb(null, tasks.sort(compare));
 }
 
 module.exports = {
-    nextTasks: function (project=undefined, cb) {
+    nextTasks: function (cb, project=undefined) {
         if (project)
             exp.list(project, (err, tasks) => ordenar(tasks, cb), false)
         else 

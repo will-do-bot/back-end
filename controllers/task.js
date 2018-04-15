@@ -12,7 +12,7 @@ exp = {
         });
     },
     list: (project, cb, ordered=true) => {
-        if (ordered) taskChooser.nextTasks(project, cb);
+        if (ordered) taskChooser.nextTasks(cb, project);
         else Task.find({ 'project': project }, cb);
     },
     listAll: (cb, ordered=true) => {
