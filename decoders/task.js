@@ -78,12 +78,12 @@ module.exports = {
                         break;
                     case 'finish':
                         // Fazendo get na tarefa para poder obter seu id
-                        if (tarefa.length === 0) {
-                            cb("Você não tem nenhuma tarefa com esse nome, otário", null);
-                            return;
-                        }
-                        else controllerTask.getByCond(obj2, (err, tarefa) => {
-                            controllerTask.finish(tarefa[0]['id'], (e, r) => {
+                        controllerTask.getByCond(obj2, (err, tarefa) => {
+                            if (tarefa.length === 0) {
+                                cb("Você não tem nenhuma tarefa com esse nome, otário", null);
+                                return;
+                            }
+                            else controllerTask.finish(tarefa[0]['id'], (e, r) => {
                                 cb(e, r);
                             });
                         });
