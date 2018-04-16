@@ -30,12 +30,14 @@ module.exports = {
                 switch (obj['action']) {
                     case 'add':
                         controllerTask.create(obj2, (result, err) => {
+                            if (!err) result = "Tarefa inserida com sucesso!";
                             cb(err, result);
                         });
                         break;
                     case 'remove':
                         controllerTask.removeByCond(obj2, (err, result) => {
                             if (result && result.n === 0) err = "Você não tem nenhuma tarefa com esse nome, otário";
+                            else if (result.n > 0) result = "Tarefa removida com sucesso!";
                             cb(err, result);
                         });
                         break;
@@ -49,6 +51,7 @@ module.exports = {
                     case 'update':
                         controllerTask.updateByCond({'name':obj['task']}, obj2, (err, result) => {
                             if (result && result.n === 0) err = "Você não tem nenhuma tarefa com esse nome, otário";
+                            else if (result.n > 0) result = "Tarefa atualizada com sucesso!";
                             cb(err, result);
                         });
                         break;
@@ -60,6 +63,7 @@ module.exports = {
                                 return;
                             }
                             else controllerTask.start(tarefa[0]['id'], (e, r) => {
+                                if (r) r = "Tarefa iniciada";
                                 cb(e, r);
                             });
                         });
@@ -72,6 +76,7 @@ module.exports = {
                                 return;
                             }
                             else controllerTask.pause(tarefa[0]['id'], (e, r) => {
+                                if (r) r = "Tarefa pausada";
                                 cb(e, r);
                             });
                         });
@@ -84,6 +89,7 @@ module.exports = {
                                 return;
                             }
                             else controllerTask.finish(tarefa[0]['id'], (e, r) => {
+                                if (r) r = "Tarefa finalizada";
                                 cb(e, r);
                             });
                         });

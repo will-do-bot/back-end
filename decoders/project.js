@@ -16,25 +16,28 @@ module.exports = {
         switch (obj['action']) {
             case 'add':
                 controllerProject.create(obj2, (result, err) => {
+                    if (!err) result = "Projeto inserido com sucesso!";
                     cb(err, result);
                 });
                 break;
             case 'remove':
                 controllerProject.removeByCond(obj2, (err, result) => {
                     if (result && result.n === 0) err = "E aí cara, que tal falar um projeto que existe?"
+                    else if (result.n > 0) result = "Projeto removido com sucesso!";
                     cb(err, result);
                 });
                 break;
             case 'list':
             case 'show':
                 controllerProject.getByCond(obj2, (err, result) => {
-                    if (result && result.length === 0) err = "E aí cara, que tal falar um projeto que existe?"
+                    if (result && result.length === 0) err = "E aí cara, que tal falar um projeto que existe?";
                     cb(err, result);
                 });
                 break;
             case 'update':
                 controllerProject.updateByCond({'name':obj['project']}, obj2, (err, result) => {
-                    if (result && result.n === 0) err = "E aí cara, que tal falar um projeto que existe?"
+                    if (result && result.n === 0) err = "E aí cara, que tal falar um projeto que existe?";
+                    else if (result.n > 0) result = "Projeto atualizado com sucesso!";
                     cb(err, result);
                 });
             default:
