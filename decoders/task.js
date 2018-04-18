@@ -30,28 +30,28 @@ module.exports = {
                 switch (obj['action']) {
                     case 'add':
                         controllerTask.create(obj2, (result, err) => {
-                            if (!err) result = "Tarefa inserida com sucesso!";
+                            if (!err) result = "Task created!";
                             cb(err, result);
                         });
                         break;
                     case 'remove':
                         controllerTask.removeByCond(obj2, (err, result) => {
-                            if (result && result.n === 0) err = "Você não tem nenhuma tarefa com esse nome, otário";
-                            else if (result.n > 0) result = "Tarefa removida com sucesso!";
+                            if (result && result.n === 0) err = "Task not found";
+                            else if (result.n > 0) result = "Taks deleted!";
                             cb(err, result);
                         });
                         break;
                     case 'list':
                     case 'show':
                         controllerTask.getByCond(obj2, (err, result) => {
-                            if (result && result.length === 0) err = "Você não tem nenhuma tarefa com esse nome, otário";
+                            if (result && result.length === 0) err = "Task not found";
                             cb(err, result);
                         });
                         break;
                     case 'update':
                         controllerTask.updateByCond({'name':obj['task']}, obj2, (err, result) => {
-                            if (result && result.n === 0) err = "Você não tem nenhuma tarefa com esse nome, otário";
-                            else if (result.n > 0) result = "Tarefa atualizada com sucesso!";
+                            if (result && result.n === 0) err = "Task not found";
+                            else if (result.n > 0) result = "Task updated!";
                             cb(err, result);
                         });
                         break;
@@ -59,11 +59,11 @@ module.exports = {
                         // Fazendo get na tarefa para poder obter seu id
                         controllerTask.getByCond(obj2, (err, tarefa) => {
                             if (tarefa.length === 0) {
-                                cb("Você não tem nenhuma tarefa com esse nome, otário", null);
+                                cb("Task not found", null);
                                 return;
                             }
                             else controllerTask.start(tarefa[0]['id'], (e, r) => {
-                                if (r) r = "Tarefa iniciada";
+                                if (r) r = "Task started";
                                 cb(e, r);
                             });
                         });
@@ -72,11 +72,11 @@ module.exports = {
                         // Fazendo get na tarefa para poder obter seu id
                         controllerTask.getByCond(obj2, (err, tarefa) => {
                             if (tarefa.length === 0) {
-                                cb("Você não tem nenhuma tarefa com esse nome, otário", null);
+                                cb("Task not found", null);
                                 return;
                             }
                             else controllerTask.pause(tarefa[0]['id'], (e, r) => {
-                                if (r) r = "Tarefa pausada";
+                                if (r) r = "Taskt paused";
                                 cb(e, r);
                             });
                         });
@@ -85,17 +85,17 @@ module.exports = {
                         // Fazendo get na tarefa para poder obter seu id
                         controllerTask.getByCond(obj2, (err, tarefa) => {
                             if (tarefa.length === 0) {
-                                cb("Você não tem nenhuma tarefa com esse nome, otário", null);
+                                cb("Task not found", null);
                                 return;
                             }
                             else controllerTask.finish(tarefa[0]['id'], (e, r) => {
-                                if (r) r = "Tarefa finalizada";
+                                if (r) r = "Task finished";
                                 cb(e, r);
                             });
                         });
                         break;
                     default:
-                        cb("Mano, você precisa escolher uma ação", null);
+                        cb("No action found", null);
                         break;
                 }
             }

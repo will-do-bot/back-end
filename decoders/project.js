@@ -16,32 +16,32 @@ module.exports = {
         switch (obj['action']) {
             case 'add':
                 controllerProject.create(obj2, (result, err) => {
-                    if (!err) result = "Projeto inserido com sucesso!";
+                    if (!err) result = "Project created!";
                     cb(err, result);
                 });
                 break;
             case 'remove':
                 controllerProject.removeByCond(obj2, (err, result) => {
-                    if (result && result.n === 0) err = "E aí cara, que tal falar um projeto que existe?"
-                    else if (result.n > 0) result = "Projeto removido com sucesso!";
+                    if (result && result.n === 0) err = "Project not found"
+                    else if (result.n > 0) result = "Project deleted!";
                     cb(err, result);
                 });
                 break;
             case 'list':
             case 'show':
                 controllerProject.getByCond(obj2, (err, result) => {
-                    if (result && result.length === 0) err = "E aí cara, que tal falar um projeto que existe?";
+                    if (result && result.length === 0) err = "Project not found";
                     cb(err, result);
                 });
                 break;
             case 'update':
                 controllerProject.updateByCond({'name':obj['project']}, obj2, (err, result) => {
-                    if (result && result.n === 0) err = "E aí cara, que tal falar um projeto que existe?";
-                    else if (result.n > 0) result = "Projeto atualizado com sucesso!";
+                    if (result && result.n === 0) err = "Project not found?";
+                    else if (result.n > 0) result = "Project updated!";
                     cb(err, result);
                 });
             default:
-                cb("Mano, você precisa escolher uma ação", null);
+                cb("No action found!", null);
                 break;
         }
     }
