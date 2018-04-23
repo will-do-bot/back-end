@@ -3,7 +3,8 @@ mongoose.Promise = global.Promise
 
 const taskSchema = new mongoose.Schema({
     task: {
-        type: String
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Task'
     },
     startDate: {
         type: Date,

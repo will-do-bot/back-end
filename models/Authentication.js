@@ -6,7 +6,8 @@ const projectSchema = new mongoose.Schema({
         type: String
     },
     user: {
-        type: Number
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
     },
     created: {
         type: Date,

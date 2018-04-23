@@ -6,8 +6,9 @@ const userSchema = new mongoose.Schema({
         type: String
     },
     facebook_id: {
-        type: String
+        type: String,
+        unique: true
     }
-});
+})
 
 module.exports = mongoose.model('User', userSchema)

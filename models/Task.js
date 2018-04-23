@@ -19,22 +19,29 @@ const projectSchema = new mongoose.Schema({
         type: Date
     },
     priority: {
-        type: String,
-        default: "low"
+        type: Number,
+        default: 0
     },
     project: {
-        type: String
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Project'
     },
     difficulty: {
-        type: Number
-    },
-    "type" : {
-        type: String
+        type: Number,
+        default: 0
     },
     finished: {
         type: Boolean,
         default: false
-    }
+    },
+    dependencies: [
+        {
+            dependency: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'Task'
+            }
+        }
+    ]
 })
 
 module.exports = mongoose.model('Task', projectSchema)

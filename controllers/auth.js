@@ -1,24 +1,27 @@
 
 const mongoose = require('mongoose');
 const Auth = mongoose.model('Authentication');
+const User = mongoose.model('User')
 
 module.exports = {
 
-    create: function (user, cb, token = '') {
-        let auth = new Auth({
-            user,
-            token: token || generateToken()
-        })
-        auth.save(function (err, saved) {
-            if (err) console.log(err)
-            cb(saved)
+    save: function (user, cb, token = '') {
+        User.findOne(user, (err, u) => {
+            if (!err && u) {
+                new Auth({
+                    token: token || generateToken(),
+                    user: u._id
+                }).save((err, auth) => {
+                    cb(auth)
+                })
+            }
         })
     },
 
-    getToken: function (token, cb){
-        Auth.findOne({token}, function(err, token){
+    getToken: function (token, cb) {
+        Auth.findOne({ token },['user'], function (err, token) {
             if (err) console.log(err)
-            if(token) cb(true)
+            if (token) cb(token)
             else cb(false)
         })
     }

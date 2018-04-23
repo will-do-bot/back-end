@@ -1,15 +1,22 @@
 const mongoose = require('mongoose');
 const Task = mongoose.model('Task');
+const Project = mongoose.model('Project');
 const timeTracker = require('./time-tracker');
 const taskChooser = require('./taskChooser');
 
 exp = {
-    create: (obj, cb) => {
-        let task = new Task(obj);
-        task.save(function (err, created) {
-            if (err) cb(err);
-            else cb(created);
-        });
+    create: (task, project, cb) => {
+        if (!task.dependencies){
+            Project.findOne(project, (err,p) => {
+            if(!err && p){
+                task.project = p._id
+                new Task(task).save((err, t) => {
+                    if (err) cb(err)
+                    else cb(t)
+                })
+            }
+        })
+        }
     },
     list: (project, cb, ordered=true) => {
         if (ordered) taskChooser.nextTasks(cb, project);

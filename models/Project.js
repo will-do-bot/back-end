@@ -16,11 +16,19 @@ const projectSchema = new mongoose.Schema({
         type: Date
     },
     priority: {
-        type: String,
-        default: 'low'
+        type: Number,
+        default: 0
     },
     user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    },
+    cost: {
         type: Number
+    },
+    finishe: {
+        type: Boolean,
+        default: false
     }
 })
 
