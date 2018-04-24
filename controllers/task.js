@@ -4,23 +4,22 @@ const Project = mongoose.model('Project');
 const timeTracker = require('./time-tracker');
 const taskChooser = require('./taskChooser');
 
-exp = {
+var exp = {
     create: (task, project, cb) => {
         if (!task.dependencies){
             Project.findOne(project, (err,p) => {
-            if(!err && p){
-                task.project = p._id
-                new Task(task).save((err, t) => {
-                    if (err) cb(err)
-                    else cb(t)
-                })
-            }
-        })
+                if(!err && p) {
+                    task.project = p._id
+                    new Task(task).save((err, t) => {
+                        if (err) cb(err)
+                        else cb(null, t)
+                    })
+                } else cb(err);
+            })
         }
     },
-    list: (project, cb, ordered=true) => {
-        if (ordered) taskChooser.nextTasks(cb, project);
-        else Task.find({ 'project': project }, cb);
+    list: (project, cb) => {
+        Task.find({ 'project': project }, cb);
     },
     listAll: (cb, ordered=true) => {
         if (ordered) taskChooser.nextTasks(cb);
@@ -29,8 +28,9 @@ exp = {
     getOne: (id, cb) => {
         Task.findOne({'_id': id }, cb);
     },
-    getByCond: function (cond, cb) {
-        Task.find(cond, cb);
+    getByCond: function (cond, cb, ordered=true) {
+        if (ordered) taskChooser.nextTasks(cb, cond);
+        else Task.find(cond, cb);
     },
     update: (id, newObj, cb) => {
         Task.update({ '_id': id }, newObj, cb);
@@ -46,6 +46,10 @@ exp = {
     },
     start: (id, cb) => {
         Task.findOne({'_id': id}, (err, res) => {
+            if (!res['started']) {
+                res['started'] = true;
+                Task.update({ '_id': id }, res, () => { });
+            }
             if (res && !res['finished']) {
                 timeTracker.getActiveTimeTracker(id, (result) => {
                     if (!result) {

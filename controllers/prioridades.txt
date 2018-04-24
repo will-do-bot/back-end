@@ -1,0 +1,14 @@
+10% de tempo restante  +3
+20% de tempo restante  +2
+50% de tempo restante  +1
+
+Não Iniciada           +3
+Lucrativo              +3
+
+difficulty 10          +3
+difficulty 5           +2
+difficulty 1           +1
+
+Prioridade alta        +3
+Prioridade média       +2
+Prioridade baixa       +1

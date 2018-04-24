@@ -15,13 +15,17 @@ var projects = [];
  * Atualiza lista de projetos. Esta lista é utilizada para verificar se existe projeto com determinado nome
  */
 function updateProjectsArray(cb) {
-    controllerProject.list(1636208479780756, (err, obj) => {
+    controllerProject.list("5adb9bbc01c8433edc1582a8", (err, obj) => {
         projects = obj;
         if (cb) cb();
     });
 }
 
-updateProjectsArray(function() { } );
+updateProjectsArray(function() { 
+    dec.decode('list tasks in tis-3', res => {
+        console.log(res); 
+    }) 
+});
 
 /**
  * Resolve aspas
@@ -54,6 +58,7 @@ function isKeyword(word) {
  */
 function existsProject(name) {
     var found = false;
+    if (!projects) return false;
     for(var i = 0; i < projects.length; i++) {
         if (projects[i]['name'] === name) {
             found = true;
@@ -94,6 +99,8 @@ function postProcess(obj) {
             // Caso tenha sido passado atributo name, mudar para o actor. Exemplo: actor: 'project', project: 'este nome'
             else if (property === 'name' && !obj[obj['actor']])
                 obj2[obj['actor']] = obj['name'];
+            else if (property === 'deadline' || property === 'startDate')
+                obj2[property] = new Date(obj[property]);
             // No caso default, só inserir no novo objeto
             else obj2[property] = obj[property];
         }
@@ -117,7 +124,7 @@ function apply(obj, cb) {
     }
     
     // Usuário por enquanto é este
-    obj2['user'] = 1636208479780756;
+    obj2['user'] = "5adb9bbc01c8433edc1582a8";
     
     // Verifica quem chamar para executar ação
     switch (obj['actor']) {
@@ -219,6 +226,24 @@ const dec = {
             }
             else {
                 // Não está esperando por nenhum atributo
+            
+                // Se palavra atual for o nome de um projeto existente
+                if (existsProject(word)) {
+                    // Se ainda não tiver definido ator, ele será projeto
+                    if (!obj['actor']) obj['actor'] = 'project';
+                    // Projeto será a palavra atual
+                    obj['project'] = word;
+                    continue;
+                }
+                
+                // Se valor temporário for o nome de um projeto existente
+                if (existsProject(temp)) {
+                    // Se ainda não tiver definido ator, ele será projeto
+                    if (!obj['actor']) obj['actor'] = 'project';
+                    // Projeto será o valor temporário
+                    obj['project'] = temp;
+                    continue;
+                }
                 
                 // Se estiver esperando pelo nome
                 if (lendoName) {
@@ -258,24 +283,6 @@ const dec = {
             // Se palavra atual for um atributo. Ex: 'description'
             if (attributes.includes(word)) {
                 expecting = word;
-                continue;
-            }
-            
-            // Se palavra atual for o nome de um projeto existente
-            if (existsProject(word)) {
-                // Se ainda não tiver definido ator, ele será projeto
-                if (!obj['actor']) obj['actor'] = 'project';
-                // Projeto será a palavra atual
-                obj['project'] = word;
-                continue;
-            }
-            
-            // Se valor temporário for o nome de um projeto existente
-            if (existsProject(temp)) {
-                // Se ainda não tiver definido ator, ele será projeto
-                if (!obj['actor']) obj['actor'] = 'project';
-                // Projeto será o valor temporário
-                obj['project'] = temp;
                 continue;
             }
             

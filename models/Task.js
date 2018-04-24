@@ -34,6 +34,10 @@ const projectSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
+    started: {
+        type: Boolean,
+        default: false
+    },
     dependencies: [
         {
             dependency: {
