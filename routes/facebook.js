@@ -21,7 +21,7 @@ module.exports = function (app) {
 				entry.messaging.forEach((event) => {
 					if (event.message && event.message.text) {
 						userController.find(event.sender.id, user => {
-							if (user) {
+							if (!user) {
 								userController.save({facebook_id: event.sender.id}, saved => {
 									sendMessage(event.sender.id, 'Welcome!')
 								})
