@@ -42,6 +42,4 @@ app.controller('calendar', function ($scope) {
         else return 'task'
     };
 
-
-
 });
