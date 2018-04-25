@@ -45,6 +45,8 @@ module.exports = {
                         break;
                     case 'list':
                     case 'show':
+                        // O atributo project será igual ao id do projeto, e não mais o nome
+                        if (obj['project']) obj2['project'] = proj[0]['id'];
                         controllerTask.getByCond(obj2, (err, result) => {
                             if (result && result.length === 0) err = "Task not found";
                             cb(err, result);
@@ -84,7 +86,7 @@ module.exports = {
                                 return;
                             }
                             else controllerTask.pause(tarefa[0]['id'], (e, r) => {
-                                if (r) r = "Taskt paused";
+                                if (r) r = "Task paused";
                                 cb(e, r);
                             });
                         });

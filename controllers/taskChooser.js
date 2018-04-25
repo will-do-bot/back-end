@@ -40,19 +40,24 @@ function checarPrioridade(task) {
 }
 
 function calcularPontos(tasks, cb) {
-    tasks.forEach((task, index) => {
-        let points = 0;
-        points += checarIniciada(task);
-        points += checarLucratividade(task);
-        points += checarPrioridade(task);
-        points += checarTempoRestante(task);
-        tasks[index]['points'] = points;
-    });
-    if (cb) cb();
+    if (tasks) {
+        tasks.forEach((task, index) => {
+            let points = 0;
+            points += checarIniciada(task);
+            points += checarLucratividade(task);
+            points += checarPrioridade(task);
+            points += checarTempoRestante(task);
+            if (task['finished']) points -= 100000;
+            tasks[index]['points'] = points;
+        });
+    }
+    if (cb) cb(tasks);
 }
 
 function sort(tasks, cb) {
-    tasks.sort(function(a, b) { return b['points'] - a['points']; })
+    if (tasks) {
+        tasks.sort(function(a, b) { return b['points'] - a['points']; })
+    }
     cb(null, tasks);
 }
 
@@ -60,12 +65,12 @@ module.exports = {
     nextTasks: function (cb, cond) {
         if (cond) {
             require('./task').getByCond(cond, (err, tasks) => {
-                calcularPontos(tasks, () => sort(tasks, cb) );
+                calcularPontos(tasks, (res) => sort(res, cb) );
             }, false);
         }
         else {
             require('./task').listAll((err, tasks) => {
-                calcularPontos(tasks, () => sort(tasks, cb) );
+                calcularPontos(tasks, (res) => sort(res, cb) );
             }, false);
         }
     },
