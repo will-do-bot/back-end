@@ -26,7 +26,7 @@ const projectSchema = new mongoose.Schema({
     cost: {
         type: Number
     },
-    finishe: {
+    finished: {
         type: Boolean,
         default: false
     }

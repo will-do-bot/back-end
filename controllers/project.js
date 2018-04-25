@@ -8,7 +8,7 @@ module.exports = {
 			if (!err && u) {
 				Project.findOne({ name: project.name, finished: false }, (err, pro) => {
 					if (err) throw err
-					else if (pro) cb({ result: 'There is already one project with this name' })
+					else if (pro) cb({ result: 'There is already a project with this name' })
 					else {
 						project.user = u._id
 						new Project(project).save(function (err, created) {
@@ -21,7 +21,7 @@ module.exports = {
 		})
 	},
 	list: function (user, cb) {
-		Project.find({ 'user': user }, cb);
+		Project.find({ 'user': { '_id': user } }, cb);
 	},
 	getOne: function (id, cb) {
 		Project.findOne({ '_id': id }, cb);

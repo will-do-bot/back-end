@@ -3,6 +3,8 @@ const request = require('request');
 const auth = require('./../middleware/auth');
 const authC = require('./../controllers/auth');
 
+const loggedUser = "5adb9bbc01c8433edc1582a8";
+
 module.exports = function (app) {
 
     app.get('/project/:id', auth.checkAuth, auth.validate, (req, res) => {
@@ -12,14 +14,14 @@ module.exports = function (app) {
     })
 
     app.get('/project', auth.checkAuth,  auth.validate,(req, res) => {
-        controller.list(1636208479780756, function(err, obj) {
+        controller.list(loggedUser, function(err, obj) {
             res.status(200).send(obj);
         })
     })
 
     app.post('/project', auth.checkAuth,  auth.validate,(req, res) => {
-        if (req.body['name'] && 1636208479780756) {
-            controller.create(req.body, (result, err) => {
+        if (req.body['name']) {
+            controller.create(req.body, {'facebook_id': 123}, (result, err) => {
                 if (err)
                     res.status(500).send();
                 else {

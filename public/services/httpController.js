@@ -1,10 +1,10 @@
-
+const auth_key = "9d277d84-665a-4c79-9823-6b1d7d41016e";
 
 app.service('$httpController', ['$http', function($http) {
   this.getProjects = function (cb) {
     $http({
       headers: {
-        auth_key: 'a5f0d15d-cd12-4d33-8212-7ddd9f2cb6b8'
+        auth_key: auth_key
       },
       method: 'GET',
       url: '/project'
@@ -15,7 +15,7 @@ app.service('$httpController', ['$http', function($http) {
   this.getTasksOfProject = function (id, cb) {
     $http({
       headers: {
-        auth_key: 'a5f0d15d-cd12-4d33-8212-7ddd9f2cb6b8'
+        auth_key: auth_key
       },
       method: 'GET',
       url: '/task/project/' + id
@@ -26,7 +26,7 @@ app.service('$httpController', ['$http', function($http) {
   this.getProjectById = function (id, cb) {
     $http({
       headers: {
-        auth_key: 'a5f0d15d-cd12-4d33-8212-7ddd9f2cb6b8'
+        auth_key: auth_key
       },
       method: 'GET',
       url: '/project/' + id
@@ -37,7 +37,7 @@ app.service('$httpController', ['$http', function($http) {
   this.getTasks = function (cb) {
     $http({
       headers: {
-        auth_key: 'a5f0d15d-cd12-4d33-8212-7ddd9f2cb6b8'
+        auth_key: auth_key
       },
       method: 'GET',
       url: '/task'

@@ -43,5 +43,5 @@ require('./routes/time-tracker')(app)
 
 // require('./controllers/user').save({name: 'Matheus', facebook_id: '123'}, response => console.log(response))
 // require('./controllers/auth').save({facebook_id: '123'},response => console.log(response))
-require('./controllers/project').create({name: 'TIS', priority: 1}, {facebook_id: '123'}, response=> console.log(response))
+//require('./controllers/project').create({name: 'TIS', priority: 1}, {facebook_id: '123'}, response=> console.log(response))
 // require('./controllers/task').create({name: 'DB refactoring', priority: 2}, {name: 'TIS'}, response=> console.log(response))
