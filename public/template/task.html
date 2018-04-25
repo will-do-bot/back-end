@@ -5,12 +5,12 @@
         </div>
         <div class="bottom-content">
                 <div class="tasks-panel">
-                    <p class="sub-title">All Tasks</p>
+-                    <p ng-click="teste = !teste" class='green'>+ Create new Task</p>
                     <div class="tasks">
                         <p ng-click='changeContent(x)' ng-repeat="x in tasks" ng-class="getChosen(x)">#{{$index+1}} - {{x.name}}</p>
                     </div>
                 </div>
-                <div class="selected-task">
+                <div class="selected-task" ng-show="teste">
                     <div class="top-selected-task">
                         <p class="sub-title-task">{{chosenTask.name}} - <a ng-href="#!/project/{{chosenTask.project}}">{{chosenTask.project}} </a></p>
                         
@@ -26,6 +26,51 @@
                             <div class="task-buttom-right">
                             </div>      
                         </div>   
+                    </div>
+                </div>
+                <div class='selected-task' ng-show="!teste">
+                    <div class='addTask'>
+
+                            <form>
+                                    
+                                    <div class="group">      
+                                      <input ng-model="task.name" type="text" required>
+                                      <span class="highlight"></span>
+                                      <span class="bar"></span>
+                                      <label>Name</label>
+                                    </div>
+                                      
+                                    <div class="group">      
+                                      <input ng-model="task.description" type="text" required>
+                                      <span class="highlight"></span>
+                                      <span class="bar"></span>
+                                      <label>Description</label>
+                                    </div>
+                                    <div class="group">      
+                                        <input ng-model="task.deadline" type="text" required>
+                                        <span class="highlight"></span>
+                                        <span class="bar"></span>
+                                        <label>Deadline</label>
+                                    </div>
+                                    <div class="group">      
+                                        <input ng-model="task.startDate" type="text" required>
+                                        <span class="highlight"></span>
+                                        <span class="bar"></span>
+                                        <label>Start Date</label>
+                                    </div>  
+                                    <div class="group">      
+                                        <input ng-model="task.priority" type="text" required>
+                                        <span class="highlight"></span>
+                                        <span class="bar"></span>
+                                        <label>Priority</label>
+                                    </div>
+                                    <div class="group">      
+                                            <input ng-model="task.project" type="text" required>
+                                            <span class="highlight"></span>
+                                            <span class="bar"></span>
+                                            <label>Project</label>
+                                        </div>     
+                                    <p id="addButton" ng-click="addTask()" class='green'>Create</p>      
                     </div>
                 </div>
             </div>

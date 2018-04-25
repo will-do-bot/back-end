@@ -14,10 +14,16 @@ app.controller('task', function ($scope, $httpController) {
   $scope.getPriority = function () {
     return "priority " + $scope.chosenTask.priority.toLowerCase()
   }
+  
+  $scope.teste = false
 
   $scope.getChosen = function (x) {
     if ($scope.chosenTask.name == x.name) return 'task selected'
     else return 'task'
+  }
+
+  $scope.addTask = function(){
+    console.log("teste")
   }
 
 })
