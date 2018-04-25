@@ -11,12 +11,11 @@ var exp = {
                 if(!err && p) {
                     task.project = p._id
                     new Task(task).save((err, t) => {
-                        if (err) cb(err)
-                        else cb(null, t)
+                        cb(t, err)
                     })
-                } else cb(err);
+                } else cb(null, err);
             })
-        }
+        } else cb(null, 'You need to solve the dependencies first');
     },
     list: (project, cb) => {
         Task.find({ 'project': project }, cb);
@@ -93,6 +92,38 @@ var exp = {
                 });
             }
             else cb('Maluco, essa tarefa já foi finalizada... Desencana', null);
+        });
+    },
+    generateReport: (id, cb) => {
+        let report = [];
+        Task.find({ }, (err, tasks) => {
+            if (err) cb(err, null);
+            else if (tasks) {
+                // Percorrendo todas as tarefas
+                tasks.forEach((task) => {
+                    timeTracker.list(id, (err, timeTrackers) => {
+                        // Encontrando data de início da tarefa
+                        var dataInicio = timeTrackers.sort(function(a, b) { return a['startDate'] < b['startDate'] })[0];
+                        // Encontrando data de término da tarefa
+                        var dataFim = dataInicio;
+                        timeTrackers.forEach(tt => {
+                            if (!tt['endDate']) {
+                                dataFim = Date.now();
+                                return;
+                            }
+                            else if (tt['endDate'] > dataFim)
+                            dataFim = tt['endDate'];
+                        })
+                        // Verificando se está no prazo
+                        var noPrazo = false;
+                        if (task['finished'] && dataFim <= task['deadline'])
+                            noPrazo = true;
+                        // Adicionando no vetor
+                        report.push({'name': task['name']})
+                    })
+                });
+            }
+            else cb(err, []);
         });
     }
 };
