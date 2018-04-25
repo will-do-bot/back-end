@@ -47,6 +47,7 @@ function calcularPontos(tasks, cb) {
             points += checarLucratividade(task);
             points += checarPrioridade(task);
             points += checarTempoRestante(task);
+            if (task['finished']) points -= 100000;
             tasks[index]['points'] = points;
         });
     }
