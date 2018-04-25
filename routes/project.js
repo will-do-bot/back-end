@@ -3,7 +3,7 @@ const request = require('request');
 const auth = require('./../middleware/auth');
 const authC = require('./../controllers/auth');
 
-const loggedUser = "5adb9bbc01c8433edc1582a8";
+const loggedUser = "5ae0823cf654ff33f8fd253e";
 
 module.exports = function (app) {
 
@@ -21,7 +21,7 @@ module.exports = function (app) {
 
     app.post('/project', auth.checkAuth,  auth.validate,(req, res) => {
         if (req.body['name']) {
-            controller.create(req.body, {'facebook_id': 1636208479780756}, (result, err) => {
+            controller.create(req.body, {'facebook_id': 123}, (result, err) => {
                 if (err)
                     res.status(500).send();
                 else {
