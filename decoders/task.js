@@ -86,7 +86,7 @@ module.exports = {
                                 return;
                             }
                             else controllerTask.pause(tarefa[0]['id'], (e, r) => {
-                                if (r) r = "Taskt paused";
+                                if (r) r = "Task paused";
                                 cb(e, r);
                             });
                         });
