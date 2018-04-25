@@ -6,6 +6,12 @@ app.controller('task', function ($scope, $httpController) {
     $scope.chosenTask = $scope.tasks[0]
   })
 
+  $httpController.getProjects(projects =>{
+    $scope.projects = projects
+  })
+
+  
+
   $scope.changeContent = function (task) {
     $scope.chosenTask = task
     
@@ -22,7 +28,13 @@ app.controller('task', function ($scope, $httpController) {
     else return 'task'
   }
 
-  $scope.addTask = function(){
+  $scope.cancelTask = function(){
+    $scope.showAddTask = !$scope.showAddTask
+  }
+  $scope.addTask = function(task){
+    $httpController.setTask(task,response =>{
+      console.alert("Tarefa "+response.name +" criada com sucesso!");
+    })
     $scope.showAddTask = !$scope.showAddTask
   }
 

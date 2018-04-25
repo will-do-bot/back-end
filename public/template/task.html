@@ -30,9 +30,7 @@
                 </div>
                 <div class='selected-task' ng-show="showAddTask">
                     <div class='addTask'>
-
                             <form>
-                                    
                                     <div class="group">      
                                       <input ng-model="task.name" type="text" required>
                                       <span class="highlight"></span>
@@ -47,17 +45,17 @@
                                       <label>Description</label>
                                     </div>
                                     <div class="group">      
+                                        <input ng-model="task.startDate" type="text" required>
+                                        <span class="highlight"></span>
+                                        <span class="bar"></span>
+                                        <label>Start Date</label>
+                                    </div> 
+                                    <div class="group">      
                                         <input ng-model="task.deadline" type="text" required>
                                         <span class="highlight"></span>
                                         <span class="bar"></span>
                                         <label>Deadline</label>
                                     </div>
-                                    <div class="group">      
-                                        <input ng-model="task.startDate" type="text" required>
-                                        <span class="highlight"></span>
-                                        <span class="bar"></span>
-                                        <label>Start Date</label>
-                                    </div>  
                                     <div class="group">      
                                         <input ng-model="task.priority" type="text" required>
                                         <span class="highlight"></span>
@@ -65,13 +63,19 @@
                                         <label>Priority</label>
                                     </div>
                                     <div class="group">      
-                                            <input ng-model="task.project" type="text" required>
-                                            <span class="highlight"></span>
-                                            <span class="bar"></span>
-                                            <label>Project</label>
-                                        </div>     
-                                    <p id="addButton" ng-click="addTask()" class='green'>Create</p>      
+                                            <select ng-model="task.project" >
+                                                <option value='' disabled selected >Select one project</option>
+                                                <option ng-repeat="project in projects" value="{{project._id}}">{{project.name}}</option>
+                                            </select>
+                                    </div> 
+                                </form>
+                                <div style='float:right'>
+                                        <p id="cancelButton" ng-click="cancelTask()">Cancel</p> 
+                                        <p id="addButton" ng-click="addTask(task)">Create</p>        
+                                </div>
                     </div>
+                   
+                   
                 </div>
             </div>
 </div>

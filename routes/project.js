@@ -21,7 +21,7 @@ module.exports = function (app) {
 
     app.post('/project', auth.checkAuth,  auth.validate,(req, res) => {
         if (req.body['name']) {
-            controller.create(req.body, {'facebook_id': 123}, (result, err) => {
+            controller.create(req.body, {'facebook_id': 1636208479780756}, (result, err) => {
                 if (err)
                     res.status(500).send();
                 else {

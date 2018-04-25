@@ -46,4 +46,20 @@ app.service('$httpController', ['$http', function($http) {
       cb(response.data)
     })
   }
+
+  this.setTask = function(task){
+    $http({
+      headers: {
+        auth_key: auth_key,
+        "Content-Type": "application/json"  
+      },
+      data: task,
+      method: 'POST',
+      url: '/task/'
+    })
+    .then(response => {
+      task(response.data)
+    })
+    
+  }
  }])
