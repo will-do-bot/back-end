@@ -6,7 +6,7 @@
                     <div class="tasks-panel">
                         <p class="sub-title">{{content.sideBar.type}}</p>
                         <div class="tasks">
-                            <p class="sub-title-task">Projects</p>
+                            <p class="sub-title">Projects</p>
                             <div ng-repeat="x in projects" ng-class="getChosen(x)">
                                 <p ng-click='changeContent(x)' style='display:inline'>#{{$index+1}} - {{x.name}}</p>
                             </div>

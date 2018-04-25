@@ -1,4 +1,15 @@
 .search-date {
     font-size: 25px;
-    margin-top: 3.5%;
+}
+
+.chart-button {
+    text-align: center;
+}
+
+.calendar-div {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 2%;
+    text-align: center;
+    margin-bottom: 2em;
 }
