@@ -39,7 +39,7 @@ module.exports = function (app) {
                 res.status(500).send(err);
             else
                 res.status(200).send(obj);
-        });
+        }, false);
     });
 
     app.put('/task/:id', auth.checkAuth, auth.validate, (req, res) => {

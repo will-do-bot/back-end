@@ -64,9 +64,10 @@ module.exports = {
                 calcularPontos(tasks, () => sort(tasks, cb) );
             }, false);
         }
-        else 
-            taskController.listAll((err, tasks) => {
+        else {
+            require('./task').listAll((err, tasks) => {
                 calcularPontos(tasks, () => sort(tasks, cb) );
             }, false);
+        }
     },
 }

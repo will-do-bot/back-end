@@ -40,7 +40,7 @@ app.service('$httpController', ['$http', function($http) {
         auth_key: auth_key
       },
       method: 'GET',
-      url: '/task'
+      url: '/task/'
     })
     .then(response => {
       cb(response.data)
