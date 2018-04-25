@@ -6,7 +6,7 @@ const decoderTask = require('./task');
 
 const actions = ['add', 'build', 'create', 'list', 'show', 'remove', 'delete', 'edit', 'update', 'start', 'pause', 'finish'];
 const actors = ['project', 'projects', 'task', 'tasks'];
-const attributes = ['name', 'named', 'called', 'priority', 'deadline', 'project', 'description', 'about', 'user', 'change', '_id'];
+const attributes = ['name', 'named', 'called', 'priority', 'deadline', 'project', 'description', 'about', 'user', 'change', '_id', 'billable'];
 const ignore = ['and', 'all', 'in', 'new', 'with', 'where', 'of', 'to', 'equal', 'equals', '=', 'is', 'the'];
 
 var projects = [];
