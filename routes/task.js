@@ -6,8 +6,7 @@ const auth_controller = require('./../controllers/auth')
 module.exports = function (app) {
 
     app.post('/task', auth.checkAuth, auth.validate, (req, res) => {
-        console.log(req.body);
-        task_controller.create(req.body, (result, err) => {
+        task_controller.create(req.body, {'_id': req.body['project']}, (result, err) => {
             if (err)
                 res.status(500).send(err);
             else
