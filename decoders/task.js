@@ -22,14 +22,14 @@ module.exports = {
 
             // Caso exista algum projeto que atenda à condição:
             else if (proj[0]) {
-
+                
                 // O atributo project será igual ao id do projeto, e não mais o nome
                 obj2['project'] = proj[0]['id'];
-
+                
                 // Identificando a ação que o usuário deseja realizar
                 switch (obj['action']) {
                     case 'add':
-                        controllerTask.create(obj2, (result, err) => {
+                        controllerTask.create(obj2, {'name': obj['project']}, (err, result) => {
                             if (!err) result = "Task created!";
                             cb(err, result);
                         });
@@ -99,7 +99,6 @@ module.exports = {
                         break;
                 }
             }
-
         });
     }
 }

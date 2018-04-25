@@ -2,6 +2,7 @@ const middle = require('./../controllers/project')
 const request = require('request');
 const passport = require('passport')
 const dec = require('./../decoders/main');
+const userController = require('./../controllers/user')
 module.exports = function (app) {
 
 	/* For Facebook Validation */
@@ -19,7 +20,13 @@ module.exports = function (app) {
 			req.body.entry.forEach((entry) => {
 				entry.messaging.forEach((event) => {
 					if (event.message && event.message.text) {
-						console.log(event)
+						userController.find(event.sender.id, user => {
+							if (!user) {
+								userController.save({facebook_id: event.sender.id}, saved => {
+									sendMessage(event.sender.id, 'Welcome!')
+								})
+							}
+						})
 						dec.decode(event.message.text, (result) => {
 						
 							sendMessage(event.sender.id, JSON.stringify(result))

@@ -15,7 +15,7 @@ module.exports = {
         // Identificando a ação que o usuário deseja realizar
         switch (obj['action']) {
             case 'add':
-                controllerProject.create(obj2, (result, err) => {
+                controllerProject.create(obj2, {facebook_id: '123'}, (result, err) => {
                     if (!err) result = "Project created!";
                     cb(err, result);
                 });
