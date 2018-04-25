@@ -21,7 +21,7 @@ function updateProjectsArray(cb) {
     });
 }
 
-updateProjectsArray( function () { dec.decode('create task lucas in gabriel')} );
+updateProjectsArray( function () { } );
 
 /**
  * Resolve aspas
