@@ -21,7 +21,7 @@ function updateProjectsArray(cb) {
     });
 }
 
-updateProjectsArray();
+updateProjectsArray( function () { dec.decode('list all tasks in projetão', res=>console.log(res)) } );
 
 /**
  * Resolve aspas

@@ -53,8 +53,7 @@ function calcularPontos(tasks, cb) {
 
 function sort(tasks, cb) {
     tasks.sort(function(a, b) { return b['points'] - a['points']; })
-    console.log(tasks);
-    cb();
+    cb(null, tasks);
 }
 
 module.exports = {

@@ -23,8 +23,13 @@ const projectSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
+    billable: {
+        type: Boolean,
+        default: false
+    },
     cost: {
-        type: Number
+        type: Number,
+        default: 0
     },
     finished: {
         type: Boolean,
