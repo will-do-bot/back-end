@@ -15,7 +15,7 @@ app.controller('task', function ($scope, $httpController) {
     return "priority " + $scope.chosenTask.priority.toLowerCase()
   }
   
-  $scope.teste = false
+  $scope.showAddTask = false
 
   $scope.getChosen = function (x) {
     if ($scope.chosenTask.name == x.name) return 'task selected'
@@ -23,7 +23,7 @@ app.controller('task', function ($scope, $httpController) {
   }
 
   $scope.addTask = function(){
-    console.log("teste")
+    $scope.showAddTask = !$scope.showAddTask
   }
 
 })

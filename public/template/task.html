@@ -5,12 +5,12 @@
         </div>
         <div class="bottom-content">
                 <div class="tasks-panel">
--                    <p ng-click="teste = !teste" class='green'>+ Create new Task</p>
+-                    <p ng-click="showAddTask=!showAddTask" class='green'>+ Create new Task</p>
                     <div class="tasks">
                         <p ng-click='changeContent(x)' ng-repeat="x in tasks" ng-class="getChosen(x)">#{{$index+1}} - {{x.name}}</p>
                     </div>
                 </div>
-                <div class="selected-task" ng-show="teste">
+                <div class="selected-task" ng-show="!showAddTask">
                     <div class="top-selected-task">
                         <p class="sub-title-task">{{chosenTask.name}} - <a ng-href="#!/project/{{chosenTask.project}}">{{chosenTask.project}} </a></p>
                         
@@ -28,7 +28,7 @@
                         </div>   
                     </div>
                 </div>
-                <div class='selected-task' ng-show="!teste">
+                <div class='selected-task' ng-show="showAddTask">
                     <div class='addTask'>
 
                             <form>
