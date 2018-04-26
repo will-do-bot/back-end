@@ -6,7 +6,7 @@
         <div class="calendar-div">
             <p class="search-date">Date: </p>
             <p class="search-date">{{diaAtual}}</p>
-           <!-- <input type="text" id="calendario" ng-value="diaAtual" placeholder="26/04/2018"/>-->
+            <!-- <input type="text" id="calendario" ng-value="diaAtual" placeholder="26/04/2018"/>-->
             <!--<a class='button chart-button' href="#!timetracker">Search</a>-->
         </div>
 
@@ -14,13 +14,12 @@
             <div class="tasks-panel">
                 <p class="sub-title">Tasks</p>
                 <div class="tasks">
-                    <p ng-click='changeContent(x)' ng-repeat="x in tasks.tasks" ng-class="getChosen(x)">#{{$index+1}} - {{x.name}}</p>
+                    <p ng-click='changeContent(x)' ng-repeat="x in tasks" ng-class="getChosen(x)">#{{$index+1}} - {{x.name}}</p>
                 </div>
             </div>
             <div class="selected-task">
                 <div class="top-selected-task">
                     <p class="sub-title-task">{{chosenTask.name}}</p>
-                    <p ng-class="getPriority()">{{chosenTask.priority}} Priority</p>
                 </div>
                 <div class="task-attribute">
                     <p class="description">{{chosenTask.description}}</p>
