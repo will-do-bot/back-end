@@ -4,6 +4,37 @@ const Project = mongoose.model('Project');
 const timeTracker = require('./time-tracker');
 const taskChooser = require('./taskChooser');
 
+function tt(i=0, report, tasks, cb) {
+    // Percorrendo todas as tarefas
+    let task = tasks[i];
+    let id = task['id'];
+    timeTracker.list(id, (err, timeTrackers) => {
+        // Encontrando data de início da tarefa
+        var dataInicio = timeTrackers.sort(function(a, b) { return a['startDate'] < b['startDate'] })[0];
+        // Encontrando data de término da tarefa
+        var dataFim = dataInicio;
+        timeTrackers.forEach(tt => {
+            if (!tt['endDate']) {
+                dataFim = Date.now();
+                return;
+            }
+            else if (tt['endDate'] > dataFim)
+            dataFim = tt['endDate'];
+        })
+        // Verificando se está no prazo
+        var noPrazo = false;
+        if (task['finished'] && dataFim <= task['deadline'])
+            noPrazo = true;
+        // Adicionando no vetor
+        if (task['finished'] || Date.now() > task['deadline'])
+            report.push({'name': task['name'], 'noPrazo': noPrazo})
+
+        // Chamada recursiva
+        if (i === tasks.length - 1) cb(report);
+        else tt(i+1, report, tasks, cb);
+    })
+}
+
 var exp = {
     create: (task, project, cb) => {
         if (!task.dependencies){
@@ -11,12 +42,11 @@ var exp = {
                 if(!err && p) {
                     task.project = p._id
                     new Task(task).save((err, t) => {
-                        if (err) cb(err)
-                        else cb(null, t)
+                        cb(t, err)
                     })
-                } else cb(err);
+                } else cb(null, err);
             })
-        }
+        } else cb(null, 'You need to solve the dependencies first');
     },
     list: (project, cb) => {
         Task.find({ 'project': project }, cb);
@@ -93,6 +123,18 @@ var exp = {
                 });
             }
             else cb('Maluco, essa tarefa já foi finalizada... Desencana', null);
+        });
+    },
+    generateReport: (proj_id, cb) => {
+        let report = [];
+        Task.find({ 'project': proj_id }, (err, tasks) => {
+            if (err) cb(err, null);
+            else if (tasks) {
+                tt(0, [], tasks, (report) => {
+                    cb(null, report);
+                })
+            }
+            else cb(err, []);
         });
     }
 };

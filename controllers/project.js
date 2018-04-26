@@ -7,17 +7,16 @@ module.exports = {
 		User.findOne(user, (err, u) => {
 			if (!err && u) {
 				Project.findOne({ name: project['name'], finished: false }, (err, pro) => {
-					if (err) throw err
-					else if (pro) cb({ result: 'There is already a project with this name' })
+					if (err) cb(null, err);
+					else if (pro) cb(null, { result: 'There is already a project with this name' })
 					else {
-						project.user = u._id
+						project.user = u._id;
 						new Project(project).save(function (err, created) {
-							if (err) cb(err);
-							else cb(created);
+							cb(created, err);
 						})
 					}
 				})
-			}
+			} else cb(null, err);
 		})
 	},
 	list: function (user, cb) {
