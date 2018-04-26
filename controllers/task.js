@@ -65,7 +65,7 @@ var exp = {
     },
     listAll: (user, cb, ordered = true) => {
         // if (ordered) taskChooser.nextTasks(cb);
-         Task.find(user).populate('project').exec(cb);
+         Task.find({'user': user}).populate('project').exec(cb);
     },
     getOne: (id, cb) => {
         Task.findOne({ '_id': id }, cb);
