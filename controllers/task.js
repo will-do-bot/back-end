@@ -1,16 +1,16 @@
 const mongoose = require('mongoose');
 const Task = mongoose.model('Task');
+const User = mongoose.model('User');
 const Project = mongoose.model('Project');
 const timeTracker = require('./time-tracker');
 const taskChooser = require('./taskChooser');
-
-function tt(i=0, report, tasks, cb) {
+function tt(i = 0, report, tasks, cb) {
     // Percorrendo todas as tarefas
     let task = tasks[i];
     let id = task['id'];
     timeTracker.list(id, (err, timeTrackers) => {
         // Encontrando data de início da tarefa
-        var dataInicio = timeTrackers.sort(function(a, b) { return a['startDate'] < b['startDate'] })[0];
+        var dataInicio = timeTrackers.sort(function (a, b) { return a['startDate'] < b['startDate'] })[0];
         // Encontrando data de término da tarefa
         var dataFim = dataInicio;
         timeTrackers.forEach(tt => {
@@ -19,7 +19,7 @@ function tt(i=0, report, tasks, cb) {
                 return;
             }
             else if (tt['endDate'] > dataFim)
-            dataFim = tt['endDate'];
+                dataFim = tt['endDate'];
         })
         // Verificando se está no prazo
         var noPrazo = false;
@@ -27,38 +27,43 @@ function tt(i=0, report, tasks, cb) {
             noPrazo = true;
         // Adicionando no vetor
         if (task['finished'] || Date.now() > task['deadline'])
-            report.push({'name': task['name'], 'noPrazo': noPrazo})
+            report.push({ 'name': task['name'], 'noPrazo': noPrazo })
 
         // Chamada recursiva
         if (i === tasks.length - 1) cb(report);
-        else tt(i+1, report, tasks, cb);
+        else tt(i + 1, report, tasks, cb);
     })
 }
 
 var exp = {
-    create: (task, project, cb) => {
-        if (!task.dependencies){
-            Project.findOne(project, (err,p) => {
-                if(!err && p) {
-                    task.project = p._id
-                    new Task(task).save((err, t) => {
-                        cb(t, err)
-                    })
-                } else cb(null, err);
+    create: (task, project, user, cb) => {
+        if (!task.dependencies) {
+            User.findOne(user, (err, u) => {
+
+                Project.findOne(project, (err, p) => {
+                    if (!err && p) {
+                        task.project = p._id
+                        task.user = u._id
+                        new Task(task).save((err, t) => {
+                            cb(t, err)
+                        })
+                    } else cb(null, err);
+                })
             })
+
         } else cb(null, 'You need to solve the dependencies first');
     },
-    list: (project, cb) => {
+    list: (project, cb ) => {
         Task.find({ 'project': project }, cb);
     },
-    listAll: (cb, ordered=true) => {
+    listAll: (user, cb, ordered = true) => {
         if (ordered) taskChooser.nextTasks(cb);
-        else Task.find({}).populate('project').exec(cb);
+        else Task.find(user).populate('project').exec(cb);
     },
     getOne: (id, cb) => {
-        Task.findOne({'_id': id }, cb);
+        Task.findOne({ '_id': id }, cb);
     },
-    getByCond: function (cond, cb, ordered=true) {
+    getByCond: function (cond, cb, ordered = true) {
         if (ordered) taskChooser.nextTasks(cb, cond);
         else Task.find(cond, cb);
     },
@@ -75,7 +80,7 @@ var exp = {
         Task.remove(cond, cb);
     },
     start: (id, cb) => {
-        Task.findOne({'_id': id}, (err, res) => {
+        Task.findOne({ '_id': id }, (err, res) => {
             if (!res['started']) {
                 res['started'] = true;
                 Task.update({ '_id': id }, res, () => { });
@@ -95,7 +100,7 @@ var exp = {
         })
     },
     pause: (id, cb) => {
-        Task.findOne({'_id': id}, (err, res) => {
+        Task.findOne({ '_id': id }, (err, res) => {
             if (res && !res['finished']) {
                 timeTracker.getActiveTimeTracker(id, (result) => {
                     if (result) {
@@ -108,14 +113,14 @@ var exp = {
         });
     },
     finish: (id, cb) => {
-        Task.findOne({'_id': id}, (err, res) => {
+        Task.findOne({ '_id': id }, (err, res) => {
             if (res && !res['finished']) {
                 timeTracker.getActiveTimeTracker(id, (result) => {
                     if (result) {
                         timeTracker.stop(result['_id'], () => {
-                            Task.findOne({'_id': id}, (err, res) => {
+                            Task.findOne({ '_id': id }, (err, res) => {
                                 res['finished'] = true;
-                                Task.update({'_id': id }, res, cb);
+                                Task.update({ '_id': id }, res, cb);
                             });
                         });
                     }
