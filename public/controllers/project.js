@@ -7,9 +7,13 @@ app.controller('project', function ($scope, $httpController, $http) {
     $httpController.getProjects(projects => {
       $scope.projects = projects;
       $scope.chosenProject = projects[0];
-      $scope.getPriority = `priority ${$scope.chosenProject.priority.toLowerCase()}`
+      // $scope.getPriority = `priority ${$scope.chosenProject.priority.toLowerCase()}`
       for (let i = 0; i < $scope.projects.length; i++) $scope.getTasks(i);
     })
+  }
+
+  $scope.addProject = function (project) {
+    $httpController.setProject(project)
   }
 
   $scope.getTasks = function (i) {
