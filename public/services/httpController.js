@@ -104,6 +104,19 @@ app.service('$httpController', ['$http', function($http) {
     })  
   }
 
+  this.deleteTask = function(id){
+    $http({
+      headers: {
+        auth_key: auth_key
+      },
+      method: 'DELETE',
+      url: '/task/' + id
+    })
+      .then(response => {
+        response
+      })
+  }
+
   this.setProject = function(project, cb){
     $http({
       headers: {

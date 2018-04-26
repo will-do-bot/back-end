@@ -7,7 +7,9 @@
             -
             <p ng-click="showAddTask=!showAddTask" class='green'>+ Create new Task</p>
             <div class="tasks">
-                <p ng-click='changeContent(x)' ng-repeat="x in tasks" ng-class="getChosen(x)">#{{$index+1}} - {{x.name}}</p>
+                <div ng-click='changeContent(x)' ng-repeat="x in tasks" ng-class="getChosen(x)">#{{$index+1}} - {{x.name}}
+                    <p class="float-right" ng-click="deleteTask(x._id)">X</p>
+                </div>
             </div>
         </div>
         <div class="selected-task" ng-show="!showAddTask">

@@ -34,6 +34,15 @@ app.controller('task', function ($scope, $httpController) {
     else return 'task'
   }
 
+  $scope.deleteTask = function (id) {
+    console.log(id)
+    $httpController.deleteTask(id,response=>{
+      $httpController.getTasks(response=>{
+        console.log(response)
+      })
+    })
+    
+  }
   $scope.cancelTask = function(){
     $scope.showAddTask = !$scope.showAddTask
   }
