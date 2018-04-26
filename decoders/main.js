@@ -21,7 +21,7 @@ function updateProjectsArray(cb) {
     });
 }
 
-updateProjectsArray( function () { } );
+updateProjectsArray( function () { dec.decode('list all projects', res=>console.log(res)) } );
 
 /**
  * Resolve aspas
@@ -120,7 +120,7 @@ function apply(obj, cb) {
     }
     
     // Usuário por enquanto é este
-    obj2['user'] = "5adb9bbc01c8433edc1582a8";
+    obj2['user'] = "5ae0823cf654ff33f8fd253e";
     
     // Verifica quem chamar para executar ação
     switch (obj['actor']) {

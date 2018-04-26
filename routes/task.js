@@ -88,8 +88,8 @@ module.exports = function (app) {
         })
     })
 
-    app.get('/task/reports/', auth.checkAuth, auth.validate, (req, res) => {
-        task_controller.generateReport((err, result) => {
+    app.get('/task/:id/reports/', auth.checkAuth, auth.validate, (req, res) => {
+        task_controller.generateReport(req.params.id, (err, result) => {
             if (err)
                 res.status(500).send(err);
             else
