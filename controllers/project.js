@@ -39,9 +39,9 @@ module.exports = {
 	remove: function (id, cb) {
 		Project.remove({ '_id': id }, cb);
 	},
-	removeByCond: function (cond, cb) {
+	removeByCond: function (cond,type cb) {
 		
-		Project.find(cond, (err, res) => {
+		Project.find({type: cond}, (err, res) => {
 			if(res && !err){
 				id_proj = res[0]['id'];
 

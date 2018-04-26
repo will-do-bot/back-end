@@ -56,6 +56,7 @@ const projectSchema = new mongoose.Schema({
 projectSchema.pre('remove', function(next) {
     // 'this' is the client being removed. Provide callbacks here if you want
     // to be notified of the calls' result.
+    console.log('aasdiaisd')
     TimeTracker.remove({task: this._id}).exec();
     next();
 });
