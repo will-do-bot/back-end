@@ -125,7 +125,7 @@ app.service('$httpController', ['$http', function($http) {
         auth_key: auth_key,
         "Content-Type": "application/json"  
       },
-      data: { },
+      data: { task},
       method: 'POST',
       url: '/allTime'
     })
