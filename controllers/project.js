@@ -6,6 +6,7 @@ module.exports = {
 	create: function (project, user, cb) {
 		User.findOne(user, (err, u) => {
 			if (!err && u) {
+				project['name'] = project['name'].toLowerCase();
 				Project.findOne({ name: project['name'], finished: false }, (err, pro) => {
 					if (err) cb(null, err);
 					else if (pro) cb(null, { result: 'There is already a project with this name' })
