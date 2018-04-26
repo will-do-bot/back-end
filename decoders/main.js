@@ -21,7 +21,7 @@ function updateProjectsArray(cb) {
     });
 }
 
-updateProjectsArray( function () { dec.decode('list all projects', res=>console.log(res)) } );
+updateProjectsArray( function () { dec.decode('show task alo in test', res=>console.log(res)) } );
 
 /**
  * Resolve aspas
