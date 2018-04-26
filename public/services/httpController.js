@@ -1,4 +1,4 @@
-const auth_key = "9d277d84-665a-4c79-9823-6b1d7d41016e";
+const auth_key = "eb016aa2-d250-47b1-b715-2714666fcb25";
 
 app.service('$httpController', ['$http', function($http) {
   this.getProjects = function (cb) {
@@ -47,7 +47,7 @@ app.service('$httpController', ['$http', function($http) {
     })
   }
 
-  this.setTask = function(task){
+  this.setTask = function(task, cb){
     $http({
       headers: {
         auth_key: auth_key,
@@ -59,7 +59,21 @@ app.service('$httpController', ['$http', function($http) {
     })
     .then(response => {
       task(response.data)
+    })  
+  }
+
+  this.setProject = function(project, cb){
+    $http({
+      headers: {
+        auth_key: auth_key,
+        "Content-Type": "application/json"  
+      },
+      data: project,
+      method: 'POST',
+      url: '/project'
     })
-    
+    .then(response => {
+      cb(response.data)
+    })  
   }
  }])

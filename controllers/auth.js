@@ -19,7 +19,8 @@ module.exports = {
     },
 
     getToken: function (token, cb) {
-        Auth.findOne({ token },['user'], function (err, token) {
+        Auth.findOne({ token }).populate('user').exec(function (err, token) {
+            console.log(token)
             if (err) console.log(err)
             if (token) cb(token)
             else cb(false)

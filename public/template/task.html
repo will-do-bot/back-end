@@ -12,7 +12,7 @@
                 </div>
                 <div class="selected-task" ng-show="!showAddTask">
                     <div class="top-selected-task">
-                        <p class="sub-title-task">{{chosenTask.name}} - <a ng-href="#!/project/{{chosenTask.project}}">{{chosenTask.project}} </a></p>
+                        <p class="sub-title-task">{{chosenTask.name}} - <a ng-href="#!/project/{{chosenTask.project._id}}">{{chosenTask.project.name}} </a></p>
                         
                         <p ng-class="getPriority()">{{chosenTask.priority}} Priority</p>
                     </div>
