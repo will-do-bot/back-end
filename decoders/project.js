@@ -2,6 +2,8 @@ const main = require('./main');
 const controllerProject = require('./../controllers/project');
 const controllerTask = require('./../controllers/task');
 
+const facebook_id = "1636208479780756";
+
 module.exports = { 
 
     /**
@@ -15,7 +17,7 @@ module.exports = {
         // Identificando a ação que o usuário deseja realizar
         switch (obj['action']) {
             case 'add':
-                controllerProject.create(obj2, {facebook_id: '123'}, (result, err) => {
+                controllerProject.create(obj2, {facebook_id: facebook_id}, (result, err) => {
                     if (!err) result = "Project created!";
                     cb(err, result);
                 });

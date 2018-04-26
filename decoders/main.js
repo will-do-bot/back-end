@@ -11,17 +11,20 @@ const ignore = ['and', 'all', 'in', 'new', 'with', 'where', 'of', 'to', 'equal',
 
 var projects = [];
 
+const user = "5ae07f69e0e69200143f9030";
+
 /**
  * Atualiza lista de projetos. Esta lista é utilizada para verificar se existe projeto com determinado nome
  */
+
 function updateProjectsArray(cb) {
-    controllerProject.list("5ae0823cf654ff33f8fd253e", (err, obj) => {
+    controllerProject.list(user, (err, obj) => {
         projects = obj;
         if (cb) cb();
     });
 }
 
-updateProjectsArray( function () {  } );
+updateProjectsArray( function () { } );
 
 /**
  * Resolve aspas
@@ -120,7 +123,7 @@ function apply(obj, cb) {
     }
     
     // Usuário por enquanto é este
-    obj2['user'] = "5ae0823cf654ff33f8fd253e";
+    obj2['user'] = user;
     
     // Verifica quem chamar para executar ação
     switch (obj['actor']) {
