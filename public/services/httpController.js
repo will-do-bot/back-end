@@ -62,6 +62,48 @@ app.service('$httpController', ['$http', function($http) {
     })  
   }
 
+  this.startTask = function(id){
+    $http({
+      headers: {
+        auth_key: auth_key,
+        "Content-Type": "application/json"  
+      },
+      method: 'POST',
+      url: '/task/start/'+ id
+    })
+    .then(response => {
+      task(response.data)
+    })  
+  }
+
+  this.pauseTask = function(id){
+    $http({
+      headers: {
+        auth_key: auth_key,
+        "Content-Type": "application/json"  
+      },
+      method: 'POST',
+      url: '/task/pause/'+ id
+    })
+    .then(response => {
+      task(response.data)
+    })  
+  }
+
+  this.finishTask = function(id){
+    $http({
+      headers: {
+        auth_key: auth_key,
+        "Content-Type": "application/json"  
+      },
+      method: 'POST',
+      url: '/task/finish/'+ id
+    })
+    .then(response => {
+      task(response.data)
+    })  
+  }
+
   this.setProject = function(project, cb){
     $http({
       headers: {
