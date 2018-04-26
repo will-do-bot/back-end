@@ -15,13 +15,13 @@ var projects = [];
  * Atualiza lista de projetos. Esta lista é utilizada para verificar se existe projeto com determinado nome
  */
 function updateProjectsArray(cb) {
-    controllerProject.list("5adb9bbc01c8433edc1582a8", (err, obj) => {
+    controllerProject.list("5ae0823cf654ff33f8fd253e", (err, obj) => {
         projects = obj;
         if (cb) cb();
     });
 }
 
-updateProjectsArray( function () {  } );
+updateProjectsArray( function () { } );
 
 /**
  * Resolve aspas

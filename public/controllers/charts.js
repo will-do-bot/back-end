@@ -1,4 +1,4 @@
-app.controller('chart', function ($scope) {
+app.controller('chart', function ($scope, $httpController, $http) {
 
     console.log('charts');
 
@@ -17,54 +17,94 @@ app.controller('chart', function ($scope) {
         ]
     };
 
-    var myChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ["No prazo", "Atrasadas"],
-            datasets: [{
-                label: 'Time Tracking (Tarefas)',
-                data: [4, 10],
-                backgroundColor: [
-                    '#f8bbd0',
-                    '#e91e63'
-                ],
-                borderColor: [
-                    'rgba(255,99,132,1)',
-                    'rgba(54, 162, 235, 1)'
-                ],
-                borderWidth: 0
-            }]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero:true
-                    }
-                }]
-            },
-            legend: {
-                display: false
-            },
-            title: {
-                display: true,
-                text: 'Time Tracking - Conclusão das tarefas'
-            }
-        }
-    });
+    getProjects()
 
-    $scope.chosenTask = $scope.tasks.tasks[0]
+    function getProjects() {
+        $httpController.getProjects(projects => {
+            $scope.projects = projects;
+            $scope.chosenProject = projects[0];
 
-    $scope.changeContent = function (task) {
-        $scope.chosenTask = task
+            $httpController.getTasksOfProject($scope.projects[0]['_id'], tasks => {
+                $scope.projects[0].tasks = tasks;
+                $scope.projects[0].prazo = tasks.length;
+                $scope.projects[0].foraPrazo = tasks.length + 2;
+                $scope.createChart(0);
+            });
+
+            for (let i = 0; i < $scope.projects.length; i++) $scope.getTasks(i);
+        });
+    }
+
+    $scope.getTasks = function (i) {
+        $httpController.getTasksOfProject($scope.projects[i]['_id'], tasks => {
+            $scope.projects[i].tasks = tasks;
+
+            if(!$scope.projects[i].prazo)
+                $scope.projects[i].prazo = tasks.length;
+            
+            if(!$scope.projects[i].foraPrazo)
+                $scope.projects[i].foraPrazo = tasks.length + 2;
+        });
     };
 
-    $scope.getPriority = function () {
-        return "priority " + $scope.chosenTask.priority.toLowerCase()
+    $scope.chosenTask = $scope.tasks.tasks[0];
+
+    $scope.createChart = function (i) {
+        console.log($scope.projects[i]);
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ["No prazo", "Atrasadas"],
+                datasets: [{
+                    label: 'Time Tracking (Tarefas)',
+                    data: [$scope.projects[i].prazo, $scope.projects[i].foraPrazo],
+                    backgroundColor: [
+                        '#f8bbd0',
+                        '#e91e63'
+                    ],
+                    borderColor: [
+                        'rgba(255,99,132,1)',
+                        'rgba(54, 162, 235, 1)'
+                    ],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero:true
+                        }
+                    }]
+                },
+                legend: {
+                    display: false
+                },
+                title: {
+                    display: true,
+                    text: 'Time Tracking - Conclusão das tarefas'
+                }
+            }
+        });
     };
 
     $scope.getChosen = function(x){
-        if($scope.chosenTask.name == x.name) return 'task selected'
-        else return 'task'
+        let resposta;
+
+        if($scope.chosenProject.name === x.name) {
+            resposta = 'task selected';
+        }
+        else {
+            resposta = 'task';
+        }
+
+        return resposta;
+
     };
+
+    $scope.changeContent = (x) => {
+        $scope.chosenProject = x;
+        console.log(x);
+        $scope.createChart(1);
+    }
 });
