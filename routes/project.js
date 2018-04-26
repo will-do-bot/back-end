@@ -2,6 +2,7 @@ const controller = require('./../controllers/project');
 const request = require('request');
 const auth = require('./../middleware/auth');
 const authC = require('./../controllers/auth');
+const task_controller = require('./../controllers/task');
 
 module.exports = function (app) {
 
@@ -13,7 +14,10 @@ module.exports = function (app) {
 
     app.get('/project', auth.checkAuth,  auth.validate,(req, res) => {
         controller.list(req.token.user._id, function(err, obj) {
-            res.status(200).send(obj);
+            if (err)
+                res.status(500).send(err);
+            else
+                res.status(200).send(obj);
         })
     })
 
