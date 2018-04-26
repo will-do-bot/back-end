@@ -3,11 +3,6 @@ const request = require('request');
 const auth = require('./../middleware/auth');
 const authC = require('./../controllers/auth');
 
-<<<<<<< HEAD
-=======
-const loggedUser = "5ae0823cf654ff33f8fd253e";
-
->>>>>>> 9e8ddf35509028351fb02b40a3ce8c28f6457a4a
 module.exports = function (app) {
 
     app.get('/project/:id', auth.checkAuth, auth.validate, (req, res) => {
@@ -24,12 +19,8 @@ module.exports = function (app) {
 
     app.post('/project', auth.checkAuth,  auth.validate,(req, res) => {
         if (req.body['name']) {
-<<<<<<< HEAD
             console.log(req.token)
             controller.create(req.body,req.token.user , (result, err) => {
-=======
-            controller.create(req.body, {'facebook_id': 123}, (result, err) => {
->>>>>>> 9e8ddf35509028351fb02b40a3ce8c28f6457a4a
                 if (err)
                     res.status(500).send();
                 else {
