@@ -23,7 +23,7 @@ module.exports = {
                 });
                 break;
             case 'remove':
-                controllerProject.removeByCond(obj2, (err, result) => {
+                controllerProject.removeByCond(obj2,'name', (err, result) => {
                     if (result && result.n === 0) err = "Project not found"
                     else if (result.n > 0) result = "Project deleted!";
                     cb(err, result);

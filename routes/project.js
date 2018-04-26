@@ -48,7 +48,7 @@ module.exports = function (app) {
 
     app.delete('/project/:id', auth.checkAuth,  auth.validate,(req, res) => {
         if (req.params.id) {
-            controller.remove(req.params.id, (err, result) => {
+            controller.remove(req.params.id,'_id', (err, result) => {
                 if (err)
                     res.status(500).send();
                 else {
