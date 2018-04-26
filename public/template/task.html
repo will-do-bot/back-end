@@ -1,81 +1,84 @@
-
 <div class="content">
-        <div class="top-content">
-                <p class="title">Tasks</p>
+    <div class="top-content">
+        <p class="title">Tasks</p>
+    </div>
+    <div class="bottom-content">
+        <div class="tasks-panel">
+            -
+            <p ng-click="showAddTask=!showAddTask" class='green'>+ Create new Task</p>
+            <div class="tasks">
+                <p ng-click='changeContent(x)' ng-repeat="x in tasks" ng-class="getChosen(x)">#{{$index+1}} - {{x.name}}</p>
+            </div>
         </div>
-        <div class="bottom-content">
-                <div class="tasks-panel">
--                    <p ng-click="showAddTask=!showAddTask" class='green'>+ Create new Task</p>
-                    <div class="tasks">
-                        <p ng-click='changeContent(x)' ng-repeat="x in tasks" ng-class="getChosen(x)">#{{$index+1}} - {{x.name}}</p>
+        <div class="selected-task" ng-show="!showAddTask">
+            <div class="top-selected-task">
+                <p class="sub-title-task">{{chosenTask.name}} -
+                    <a ng-href="#!/project/{{chosenTask.project._id}}">{{chosenTask.project.name}} </a>
+                </p>
+
+                <p ng-class="getPriority()">{{chosenTask.priority}} Priority</p>
+            </div>
+            <div class="task-attribute">
+                <p class="description">{{chosenTask.description}}</p>
+                <div class="task-button">
+                    <div class="task-buttom-left">
+                        <a class='button'> There's {{chosenTask.days}} days left </a>
+                        <a class='button' href="#!chart"> Chart</a>
                     </div>
-                </div>
-                <div class="selected-task" ng-show="!showAddTask">
-                    <div class="top-selected-task">
-                        <p class="sub-title-task">{{chosenTask.name}} - <a ng-href="#!/project/{{chosenTask.project._id}}">{{chosenTask.project.name}} </a></p>
-                        
-                        <p ng-class="getPriority()">{{chosenTask.priority}} Priority</p>
+                    <div class="task-buttom-right">
                     </div>
-                    <div class="task-attribute">
-                        <p class="description">{{chosenTask.description}}</p>
-                        <div class="task-button">
-                            <div class="task-buttom-left">
-                                <a class='button' href="#!timetracker"> Time Tracker</a>
-                                <a class='button' href="#!chart"> Chart</a>
-                            </div>
-                            <div class="task-buttom-right">
-                            </div>      
-                        </div>   
-                    </div>
-                </div>
-                <div class='selected-task' ng-show="showAddTask">
-                    <div class='addTask'>
-                            <form>
-                                    <div class="group">      
-                                      <input ng-model="task.name" type="text" required>
-                                      <span class="highlight"></span>
-                                      <span class="bar"></span>
-                                      <label>Name</label>
-                                    </div>
-                                      
-                                    <div class="group">      
-                                      <input ng-model="task.description" type="text" required>
-                                      <span class="highlight"></span>
-                                      <span class="bar"></span>
-                                      <label>Description</label>
-                                    </div>
-                                    <div class="group">      
-                                        <input ng-model="task.startDate" type="text" required>
-                                        <span class="highlight"></span>
-                                        <span class="bar"></span>
-                                        <label>Start Date</label>
-                                    </div> 
-                                    <div class="group">      
-                                        <input ng-model="task.deadline" type="text" required>
-                                        <span class="highlight"></span>
-                                        <span class="bar"></span>
-                                        <label>Deadline</label>
-                                    </div>
-                                    <div class="group">      
-                                        <input ng-model="task.priority" type="text" required>
-                                        <span class="highlight"></span>
-                                        <span class="bar"></span>
-                                        <label>Priority</label>
-                                    </div>
-                                    <div class="group">      
-                                            <select ng-model="task.project" >
-                                                <option value='' disabled selected >Select one project</option>
-                                                <option ng-repeat="project in projects" value="{{project._id}}">{{project.name}}</option>
-                                            </select>
-                                    </div> 
-                                </form>
-                                <div style='float:right'>
-                                        <p id="cancelButton" ng-click="cancelTask()">Cancel</p> 
-                                        <p id="addButton" ng-click="addTask(task)">Create</p>        
-                                </div>
-                    </div>
-                   
-                   
                 </div>
             </div>
+        </div>
+        <div class='selected-task' ng-show="showAddTask">
+            <div class='addTask'>
+                <p class="sub-title-task">Create Task</p>
+                <form>
+                    <div class="group">
+                        <input ng-model="task.name" type="text" required>
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label>Name</label>
+                    </div>
+
+                    <div class="group">
+                        <input ng-model="task.description" type="text" required>
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label>Description</label>
+                    </div>
+                    <div class="group">
+                        <input ng-model="task.startDate" type="text" required>
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label>Start Date</label>
+                    </div>
+                    <div class="group">
+                        <input ng-model="task.deadline" type="text" required>
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label>Deadline</label>
+                    </div>
+                    <div class="group">
+                        <input ng-model="task.priority" type="text" required>
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label>Priority</label>
+                    </div>
+                    <div class="group">
+                        <select ng-model="task.project">
+                            <option value='' disabled selected>Select one project</option>
+                            <option ng-repeat="project in projects" value="{{project._id}}">{{project.name}}</option>
+                        </select>
+                    </div>
+                </form>
+                <div style='float:right'>
+                    <p id="cancelButton" ng-click="cancelTask()">Cancel</p>
+                    <p id="addButton" ng-click="addTask(task)">Create</p>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
 </div>

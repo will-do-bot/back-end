@@ -76,4 +76,19 @@ app.service('$httpController', ['$http', function($http) {
       cb(response.data)
     })  
   }
+
+  this.getDays = function (task, cb) {
+    $http({
+      headers: {
+        auth_key: auth_key,
+        "Content-Type": "application/json"  
+      },
+      data: { },
+      method: 'POST',
+      url: '/allTime'
+    })
+    .then(response => {
+      cb(response.data)
+    })  
+  }
  }])
