@@ -4,7 +4,8 @@ const User = mongoose.model('User');
 const Project = mongoose.model('Project');
 const timeTracker = require('./time-tracker');
 const taskChooser = require('./taskChooser');
-function tt(i = 0, report, tasks, cb) {
+
+function tt(i = 0, np = 0, fp = 0, report=[], tasks, cb) {
     // Percorrendo todas as tarefas
     let task = tasks[i];
     let id = task['id'];
@@ -29,11 +30,15 @@ function tt(i = 0, report, tasks, cb) {
             noPrazo = true;
         // Adicionando no vetor
         if ((task['finished'] && task['deadline']) || Date.now() > task['deadline'])
-            report.push({'name': task['name'], 'noPrazo': noPrazo})
-
+            if (noPrazo)
+                np++;
+            else fp++;
         // Chamada recursiva
-        if (i === tasks.length - 1) cb(report);
-        else tt(i + 1, report, tasks, cb);
+        if (i === tasks.length - 1) {
+            report = {'name': task['name'], 'prazo': np, 'foraPrazo': fp};
+            cb(report);
+        }
+        else tt(i + 1, np, fp, report, tasks, cb);
     })
 }
 
@@ -137,7 +142,7 @@ var exp = {
         Task.find({ 'project': proj_id }, (err, tasks) => {
             if (err) cb(err, null);
             else if (tasks) {
-                tt(0, [], tasks, (report) => {
+                tt(0, 0, 0, [], tasks, (report) => {
                     cb(null, report);
                 })
             }
