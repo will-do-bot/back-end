@@ -99,10 +99,10 @@ var exp = {
                             startDate: Date.now()
                         }, cb);
                     }
-                    else cb('Cara... Você sabe que essa tarefa já está rodando... Né?!', null);
+                    else cb('This task is already running', null);
                 });
             }
-            else cb('Maluco, essa tarefa já foi finalizada... Desencana', null);
+            else cb('The desired task is finished', null);
         })
     },
     pause: (id, cb) => {
@@ -112,10 +112,10 @@ var exp = {
                     if (result) {
                         timeTracker.stop(result['_id'], cb);
                     }
-                    else cb('Cara... Você sabe que essa tarefa já está rodando... Né?!', null);
+                    else cb('This task is already running', null);
                 });
             }
-            else cb('Maluco, essa tarefa já foi finalizada... Desencana', null);
+            else cb('The desired task is finished', null);
         });
     },
     finish: (id, cb) => {
@@ -130,10 +130,10 @@ var exp = {
                             });
                         });
                     }
-                    else cb('Cara... Você sabe que essa tarefa já está rodando... Né?!', null);
+                    else cb('This task is already running', null);
                 });
             }
-            else cb('Maluco, essa tarefa já foi finalizada... Desencana', null);
+            else cb('The desired task is finished', null);
         });
     },
     generateReport: (proj_id, cb) => {

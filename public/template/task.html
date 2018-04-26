@@ -24,6 +24,9 @@
                     <div class="task-buttom-left">
                         <a class='button'> There's {{chosenTask.days}} days left </a>
                         <a class='button' href="#!chart"> Chart</a>
+                        <a ng-click="startTask(chosenTask._id)" class='button'> Start task</a>
+                        <a ng-click="pauseTask(chosenTask._id)" class='button'> Pause task</a>
+                        <a ng-click="finishTask(chosenTask._id)" class='button'> Finish task</a>
                     </div>
                     <div class="task-buttom-right">
                     </div>
