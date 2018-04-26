@@ -2,6 +2,8 @@ const main = require('./main');
 const controllerProject = require('./../controllers/project');
 const controllerTask = require('./../controllers/task');
 
+const facebook_id = "1636208479780756";
+
 module.exports = { 
 
     /**
@@ -29,7 +31,7 @@ module.exports = {
                     case 'add':
                         // O atributo project será igual ao id do projeto, e não mais o nome
                         obj2['project'] = proj[0]['id'];
-                        controllerTask.create(obj2, {'name': obj['project']}, (err, result) => {
+                        controllerTask.create(obj2, {'name': obj['project']}, {'facebook_id': facebook_id}, (err, result) => {
                             if (!err) result = "Task created!";
                             cb(err, result);
                         });

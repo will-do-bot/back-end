@@ -24,7 +24,7 @@ function updateProjectsArray(cb) {
     });
 }
 
-updateProjectsArray( function () {  } );
+updateProjectsArray( function () { } );
 
 /**
  * Resolve aspas

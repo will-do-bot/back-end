@@ -46,7 +46,6 @@ var exp = {
     create: (task, project, user, cb) => {
         if (!task.dependencies) {
             User.findOne(user, (err, u) => {
-
                 Project.findOne(project, (err, p) => {
                     if (!err && p) {
                         task.project = p._id
