@@ -1,4 +1,4 @@
-const auth_key = "eb016aa2-d250-47b1-b715-2714666fcb25";
+const auth_key = "9058c038-5e57-43ab-ad56-24dd603e89b0";
 
 app.service('$httpController', ['$http', function($http) {
   this.getProjects = function (cb) {
