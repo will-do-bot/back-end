@@ -34,6 +34,15 @@ app.controller('task', function ($scope, $httpController) {
     else return 'task'
   }
 
+  $scope.deleteTask = function (id) {
+    console.log(id)
+    $httpController.deleteTask(id,response=>{
+      $httpController.getTasks(response=>{
+        console.log(response)
+      })
+    })
+    
+  }
   $scope.cancelTask = function(){
     $scope.showAddTask = !$scope.showAddTask
   }
@@ -43,5 +52,21 @@ app.controller('task', function ($scope, $httpController) {
     })
     $scope.showAddTask = !$scope.showAddTask
   }
+
+  $scope.startTask = function(id){
+   $httpController.startTask(id,response=>{
+      console.log(response)
+    })
+  }
+  $scope.pauseTask = function(id){
+    $httpController.pauseTask(id,response=>{
+       console.log(response)
+     })
+   }
+   $scope.finishTask = function(id){
+    $httpController.finishTask(id,response=>{
+       console.log(response)
+     })
+   }
 
 })

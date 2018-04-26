@@ -7,7 +7,9 @@
             -
             <p ng-click="showAddTask=!showAddTask" class='green'>+ Create new Task</p>
             <div class="tasks">
-                <p ng-click='changeContent(x)' ng-repeat="x in tasks" ng-class="getChosen(x)">#{{$index+1}} - {{x.name}}</p>
+                <div ng-click='changeContent(x)' ng-repeat="x in tasks" ng-class="getChosen(x)">#{{$index+1}} - {{x.name}}
+                    <p class="float-right" ng-click="deleteTask(x._id)">X</p>
+                </div>
             </div>
         </div>
         <div class="selected-task" ng-show="!showAddTask">
@@ -24,6 +26,9 @@
                     <div class="task-buttom-left">
                         <a class='button'> There's {{chosenTask.days}} days left </a>
                         <a class='button' href="#!chart"> Chart</a>
+                        <a ng-click="startTask(chosenTask._id)" class='button'> Start task</a>
+                        <a ng-click="pauseTask(chosenTask._id)" class='button'> Pause task</a>
+                        <a ng-click="finishTask(chosenTask._id)" class='button'> Finish task</a>
                     </div>
                     <div class="task-buttom-right">
                     </div>

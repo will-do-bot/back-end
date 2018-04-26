@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Project = mongoose.model('Project');
-const User = mongoose.model('User')
+const User = mongoose.model('User');
+const Task = mongoose.model('Task');
 
 module.exports = {
 	create: function (project, user, cb) {
@@ -39,6 +40,15 @@ module.exports = {
 		Project.remove({ '_id': id }, cb);
 	},
 	removeByCond: function (cond, cb) {
-		Project.remove(cond, cb);
+		
+		Project.find(cond, (err, res) => {
+			if(res && !err){
+				id_proj = res[0]['id'];
+
+				Task.remove({'project': id_proj}, (err, res) => {
+					if(!err) Project.remove(cond, cb);
+				});
+			}
+		})
 	}
 };
