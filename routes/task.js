@@ -6,7 +6,7 @@ const auth_controller = require('./../controllers/auth')
 module.exports = function (app) {
 
     app.post('/task', auth.checkAuth, auth.validate, (req, res) => {
-        task_controller.create(req.body, {'_id': req.body['project']}, (result, err) => {
+        task_controller.create(req.body, {'_id': req.body['project']}, req.token.user._id, (result, err) => {
             if (err)
                 res.status(500).send(err);
             else
@@ -34,7 +34,7 @@ module.exports = function (app) {
     });
 
     app.get('/task', auth.checkAuth, auth.validate, (req, res) => {
-        task_controller.listAll((err, obj) => {
+        task_controller.listAll(req.token.user.id,(err, obj) => {
             if (err)
                 res.status(500).send(err);
             else
@@ -88,8 +88,8 @@ module.exports = function (app) {
         })
     })
 
-    app.get('/task/reports/', auth.checkAuth, auth.validate, (req, res) => {
-        task_controller.generateReport((err, result) => {
+    app.get('/task/:id/reports/', auth.checkAuth, auth.validate, (req, res) => {
+        task_controller.generateReport(req.params.id, (err, result) => {
             if (err)
                 res.status(500).send(err);
             else

@@ -6,14 +6,14 @@
         <div class="tasks-panel">
             <p class="sub-title">{{content.sideBar.type}}</p>
             <div class="tasks">
-                <p ng-click="modal()" class='green'>+ Create new Project</p>
+                <p ng-click="showAddProject = !showAddProject" class='green'>+ Create new Project</p>
                 <div ng-repeat="x in projects" ng-class="getChosen(x)">
                     <p ng-click='changeContent(x)' style='display:inline'>#{{$index+1}} - {{x.name}}</p>
                     <p class="float-right" ng-click="deleteProject(x)">X</p>
                 </div>
             </div>
         </div>
-        <div class="selected-task">
+        <div class="selected-task" ng-show="!showAddProject">
             <div class="top-selected-task">
                 <p class="sub-title-task">{{chosenProject.name}}</p>
                 <p ng-class="getPriority">Priority: {{chosenProject.priority}}</p>
@@ -28,6 +28,49 @@
                         <a class='button' ng-href="#!/project/{{chosenProject._id}}">Tasks Details</a>
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class='selected-task' ng-show="showAddProject">
+            <div class='addTask'>
+                <p class="sub-title-task">Create Project</p>
+                    <form>
+                            <div class="group">      
+                              <input ng-model="task.name" type="text" required>
+                              <span class="highlight"></span>
+                              <span class="bar"></span>
+                              <label>Name</label>
+                            </div>
+                              
+                            <div class="group">      
+                              <input ng-model="task.description" type="text" required>
+                              <span class="highlight"></span>
+                              <span class="bar"></span>
+                              <label>Description</label>
+                            </div>
+                            <div class="group">      
+                                <input ng-model="task.startDate" type="text" required>
+                                <span class="highlight"></span>
+                                <span class="bar"></span>
+                                <label>Start Date</label>
+                            </div> 
+                            <div class="group">      
+                                <input ng-model="task.deadline" type="text" required>
+                                <span class="highlight"></span>
+                                <span class="bar"></span>
+                                <label>Deadline</label>
+                            </div>
+                            <div class="group">      
+                                <input ng-model="task.priority" type="text" required>
+                                <span class="highlight"></span>
+                                <span class="bar"></span>
+                                <label>Priority</label>
+                            </div>
+                            
+                        </form>
+                        <div style='float:right'>
+                                <p id="cancelButton" >Cancel</p> 
+                                <p id="addButton" ng-click="addProject(task)">Create</p>        
+                        </div>
             </div>
         </div>
     </div>
