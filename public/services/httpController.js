@@ -34,6 +34,17 @@ app.service('$httpController', ['$http', function($http) {
     .then(response => cb(response.data))
   }
 
+  this.getReports = function (id, cb) {
+    $http({
+      headers: {
+        auth_key: auth_key
+      },
+      method: 'GET',
+      url: '/task/' + id + '/reports'
+    })
+    .then(response => cb(response.data))
+  }
+
   this.getTasks = function (cb) {
     $http({
       headers: {

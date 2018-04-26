@@ -4,8 +4,13 @@ const User = mongoose.model('User');
 const Project = mongoose.model('Project');
 const timeTracker = require('./time-tracker');
 const taskChooser = require('./taskChooser');
+const controllerProject = require('./project');
 
-function tt(i = 0, np = 0, fp = 0, report=[], tasks, cb) {
+function tt(i = 0, np = 0, fp = 0, report=[], tasks, proj_id, cb) {
+    if (!tasks[i]) {
+        cb([]);
+        return;
+    }
     // Percorrendo todas as tarefas
     let task = tasks[i];
     let id = task['id'];
@@ -35,10 +40,12 @@ function tt(i = 0, np = 0, fp = 0, report=[], tasks, cb) {
             else fp++;
         // Chamada recursiva
         if (i === tasks.length - 1) {
-            report = {'name': task['name'], 'prazo': np, 'foraPrazo': fp};
-            cb(report);
+            controllerProject.getOne(proj_id, (err, project) => {
+                report = {'name': project['name'], 'prazo': np, 'foraPrazo': fp};
+                cb(report);
+            })
         }
-        else tt(i + 1, np, fp, report, tasks, cb);
+        else tt(i + 1, np, fp, report, tasks, proj_id, cb);
     })
 }
 
@@ -141,7 +148,7 @@ var exp = {
         Task.find({ 'project': proj_id }, (err, tasks) => {
             if (err) cb(err, null);
             else if (tasks) {
-                tt(0, 0, 0, [], tasks, (report) => {
+                tt(0, 0, 0, [], tasks, proj_id, (report) => {
                     cb(null, report);
                 })
             }
