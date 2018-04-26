@@ -26,6 +26,8 @@ app.controller('chart', function ($scope, $httpController, $http) {
 
             $httpController.getTasksOfProject($scope.projects[0]['_id'], tasks => {
                 $scope.projects[0].tasks = tasks;
+                $scope.projects[0].prazo = tasks.length;
+                $scope.projects[0].foraPrazo = tasks.length + 2;
                 $scope.createChart(0);
             });
 
@@ -36,19 +38,26 @@ app.controller('chart', function ($scope, $httpController, $http) {
     $scope.getTasks = function (i) {
         $httpController.getTasksOfProject($scope.projects[i]['_id'], tasks => {
             $scope.projects[i].tasks = tasks;
+
+            if(!$scope.projects[i].prazo)
+                $scope.projects[i].prazo = tasks.length;
+            
+            if(!$scope.projects[i].foraPrazo)
+                $scope.projects[i].foraPrazo = tasks.length + 2;
         });
     };
 
     $scope.chosenTask = $scope.tasks.tasks[0];
 
     $scope.createChart = function (i) {
+        console.log($scope.projects[i]);
         var myChart = new Chart(ctx, {
             type: 'bar',
             data: {
                 labels: ["No prazo", "Atrasadas"],
                 datasets: [{
                     label: 'Time Tracking (Tarefas)',
-                    data: [$scope.projects[i].tasks.length, $scope.projects[i].tasks.length+3],
+                    data: [$scope.projects[i].prazo, $scope.projects[i].foraPrazo],
                     backgroundColor: [
                         '#f8bbd0',
                         '#e91e63'
