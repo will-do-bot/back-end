@@ -134,7 +134,7 @@ function apply(obj, cb) {
             understood = decoderTask.apply(obj, obj2, cb);
             break;
         default:
-            cb('Fala direito o que você quer e para de encher o saco', null);
+            cb('Sorry, I did not understand your message', null);
             break;
     }
 }
