@@ -56,19 +56,17 @@ module.exports = function (app) {
     })
 
     app.post('/allTime', (req, res) => {
-        var time
-        controller.list(req.body.task, resposta => {
+        var time = 0
+        controller.list(req.body.task, (err, resposta) => {
             if (resposta) {
-                resposta.forEach(element => {
-                    var timeDiff = Math.abs(element.endDate.getTime() - element.startDate.endgetTime())
+                for (const element of resposta) {
+                    var endDate = element.endDate || new Date()
+                    var timeDiff = Math.abs(endDate.getTime() - element.startDate.getTime())
                     var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
                     time = time + diffDays
-                });
+                }
             }
+                res.send({ diffDays: time })
         })
-        var date2 =  new Date(2019, 12,12)        
-        var timeDiff = Math.abs(new Date().getTime() - date2.getTime())
-        var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
-        res.send({diffDays})
     })
 }
