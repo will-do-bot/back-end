@@ -3,12 +3,18 @@ app.controller('task', function ($scope, $httpController) {
   $httpController.getTasks(tasks => {
     console.log(tasks)
     $scope.tasks = tasks
+    $scope.tasks.forEach(element => {
+      $httpController.getDays(element._id, resp => {
+        element.days = resp.diffDays
+      })
+    });
     $scope.chosenTask = $scope.tasks[0]
   })
 
   $httpController.getProjects(projects =>{
     $scope.projects = projects
   })
+
 
   
 
