@@ -10,7 +10,9 @@ function tt(i = 0, report, tasks, cb) {
     let id = task['id'];
     timeTracker.list(id, (err, timeTrackers) => {
         // Encontrando data de início da tarefa
-        var dataInicio = timeTrackers.sort(function (a, b) { return a['startDate'] < b['startDate'] })[0];
+        var ultimoTT = timeTrackers.sort(function(a, b) { return a['startDate'] < b['startDate'] })[0];
+        var dataInicio;
+        if (ultimoTT && ultimoTT[0]) dataInicio = ultimoTT[0];
         // Encontrando data de término da tarefa
         var dataFim = dataInicio;
         timeTrackers.forEach(tt => {
@@ -26,8 +28,8 @@ function tt(i = 0, report, tasks, cb) {
         if (task['finished'] && dataFim <= task['deadline'])
             noPrazo = true;
         // Adicionando no vetor
-        if (task['finished'] || Date.now() > task['deadline'])
-            report.push({ 'name': task['name'], 'noPrazo': noPrazo })
+        if ((task['finished'] && task['deadline']) || Date.now() > task['deadline'])
+            report.push({'name': task['name'], 'noPrazo': noPrazo})
 
         // Chamada recursiva
         if (i === tasks.length - 1) cb(report);
