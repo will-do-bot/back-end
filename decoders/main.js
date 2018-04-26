@@ -11,7 +11,7 @@ const ignore = ['and', 'all', 'in', 'new', 'with', 'where', 'of', 'to', 'equal',
 
 var projects = [];
 
-const user = "5ae07f69e0e69200143f9030";
+const user = "5ae1c9d93b5ebb00140c497d";
 
 /**
  * Atualiza lista de projetos. Esta lista é utilizada para verificar se existe projeto com determinado nome
