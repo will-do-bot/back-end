@@ -33,7 +33,7 @@ app.controller('task', function ($scope, $httpController) {
   }
 
   $scope.showAddTask = false
-
+  
   $scope.getChosen = function (x) {
     if ($scope.chosenTask.name == x.name) return 'task selected'
     else return 'task'
@@ -48,14 +48,38 @@ app.controller('task', function ($scope, $httpController) {
     })
 
   }
+
+  $scope.showCreateTask = function(){
+    $scope.showAddTask = true
+    $scope.updateButton = false
+    $scope.createButton = true
+    $scope.subTitleTask = 'Create Task'
+    $scope.selectProject = true
+  }
+  $scope.showUpdateTask = function(task){
+    $scope.showAddTask = true
+    $scope.updateButton = true
+    $scope.createButton = false
+    $scope.subTitleTask = 'Update Task'
+    $scope.selectProject = false
+  }
+
+
   $scope.cancelTask = function () {
     $scope.showAddTask = !$scope.showAddTask
   }
+
   $scope.addTask = function (task) {
     $httpController.setTask(task, response => {
       console.alert("Tarefa " + response.name + " criada com sucesso!");
     })
     $scope.showAddTask = !$scope.showAddTask
+  }
+
+  $scope.updateTask = function (task,taskId) {
+    $httpController.updateTask(task,taskId, response => {
+     console.log(response)
+    })
   }
 
   $scope.startTask = function (id) {
@@ -68,6 +92,7 @@ app.controller('task', function ($scope, $httpController) {
       console.log(response)
     })
   }
+  
   $scope.finishTask = function (id) {
     $httpController.finishTask(id, response => {
       console.log(response)
@@ -75,3 +100,4 @@ app.controller('task', function ($scope, $httpController) {
   }
 
 })
+
