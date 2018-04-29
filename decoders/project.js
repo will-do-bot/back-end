@@ -42,6 +42,7 @@ module.exports = {
                     else if (result.n > 0) result = "Project updated!";
                     cb(err, result);
                 });
+                break;
             default:
                 cb("No action found!", null);
                 break;
