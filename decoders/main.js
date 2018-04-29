@@ -4,8 +4,8 @@ const controllerTask = require('./../controllers/task');
 const decoderProject = require('./project');
 const decoderTask = require('./task');
 
-const actions = ['add', 'build', 'create', 'list', 'show', 'remove', 'delete', 'edit', 'update', 'start', 'pause', 'finish'];
-const actors = ['project', 'projects', 'task', 'tasks'];
+const actions = ['add', 'build', 'create', 'list', 'show', 'remove', 'delete', 'edit', 'update', 'start', 'pause', 'finish', 'visit'];
+const actors = ['project', 'projects', 'task', 'tasks', 'interface'];
 const attributes = ['name', 'named', 'called', 'priority', 'deadline', 'project', 'description', 'about', 'user', 'change', '_id', 'billable'];
 const ignore = ['and', 'all', 'in', 'new', 'with', 'where', 'of', 'to', 'equal', 'equals', '=', 'is', 'the'];
 
@@ -132,6 +132,12 @@ function apply(obj, cb) {
             break;
         case 'task':
             understood = decoderTask.apply(obj, obj2, cb);
+            break;
+        case 'interface':
+            if (obj['action'] === 'visit') {
+                understood = true;
+                cb(null, 'https://willdomessenger.herokuapp.com/');
+            }
             break;
         default:
             cb('Sorry, I did not understand your message', null);
