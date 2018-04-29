@@ -21,14 +21,13 @@ function tt(i = 0, np = 0, fp = 0, report=[], tasks, proj_id, cb) {
         if (ultimoTT && ultimoTT[0]) dataInicio = ultimoTT[0];
         // Encontrando data de término da tarefa
         var dataFim = dataInicio;
-        timeTrackers.forEach(tt => {
-            if (!tt['endDate']) {
-                dataFim = Date.now();
-                return;
-            }
-            else if (tt['endDate'] > dataFim)
+        for (let i = 0; i < timeTrackers.length; i++) {
+            let tt = timeTrackers[i];
+            if (!dataFim || tt['endDate'] > dataFim)
                 dataFim = tt['endDate'];
-        })
+        }
+        if (!dataFim)
+            dataFim = Date.now();
         // Verificando se está no prazo
         var noPrazo = false;
         if (task['finished'] && dataFim <= task['deadline'])

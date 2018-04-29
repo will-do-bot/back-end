@@ -25,7 +25,7 @@ module.exports = function (app) {
     });
 
     app.get('/task/project/:id', auth.checkAuth, auth.validate, (req, res) => {
-        task_controller.list(req.params.id, (err, obj) => {
+        task_controller.getByCond({'project': req.params.id}, (err, obj) => {
             if (err)
                 res.status(500).send(err);
             else
@@ -34,7 +34,7 @@ module.exports = function (app) {
     });
 
     app.get('/task', auth.checkAuth, auth.validate, (req, res) => {
-        task_controller.listAll(req.token.user.id,(err, obj) => {
+        task_controller.getByCond({'user': req.token.user.id},(err, obj) => {
             if (err)
                 res.status(500).send(err);
             else
