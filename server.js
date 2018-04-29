@@ -40,6 +40,7 @@ require('./routes/facebook')(app)
 require('./routes/task')(app)
 require('./routes/project')(app)
 require('./routes/time-tracker')(app)
+require('./controllers/reminder')();
 
 //require('./controllers/user').save({name: 'Matheus', facebook_id: '123'}, response => console.log(response))
 //require('./controllers/auth').save({facebook_id: '123'},response => console.log(response))
