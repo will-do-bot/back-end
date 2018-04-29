@@ -32,8 +32,9 @@ module.exports = function (app) {
 								}
 							})
 							dec.decode(event.message.text, (result) => {
-							
-								controller.sendMessage(event.sender.id, JSON.stringify(result))
+								if (result instanceof Object)
+									controller.sendMessage(event.sender.id, JSON.stringify(result));
+								else controller.sendMessage(event.sender.id, result);
 							});
 						}
 					});
