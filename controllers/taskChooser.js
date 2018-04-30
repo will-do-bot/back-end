@@ -21,10 +21,9 @@ function checarTempoRestante(task) {
 }
 
 function checarDataInicio(task) {
-    if (!task['startDate'])
-        return 0;
     if (Date.now() >= task['startDate'])
         return 100;
+    return 0;
 }
 
 function checarIniciada(task) {
