@@ -20,6 +20,12 @@ function checarTempoRestante(task) {
     return 0;
 }
 
+function checarDataInicio(task) {
+    if (Date.now() >= task['startDate'])
+        return 100;
+    return 0;
+}
+
 function checarIniciada(task) {
     if (!task['started']) return 3;
     else return 0;
@@ -29,20 +35,22 @@ function checarLucratividade(task) {
     return 3;
 }
 
-function checarPrioridade(task) {
+function checarPrioridade(task, cb) {
+    let points = 0;
     if (task['priority'] === 10)
-        return 3;
+        points += 3;
     else if (task['priority'] >= 7)
-        return 2;
+        points += 2;
     else if (task['priority'] >= 3)
-        return 1;
-    else return 0;
+        points += 1;
+    return points;
 }
 
 function calcularPontos(tasks, cb) {
     if (tasks) {
         tasks.forEach((task, index) => {
             let points = 0;
+            points += checarDataInicio(task);
             points += checarIniciada(task);
             points += checarLucratividade(task);
             points += checarPrioridade(task);

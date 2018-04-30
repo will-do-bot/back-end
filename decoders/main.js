@@ -4,8 +4,8 @@ const controllerTask = require('./../controllers/task');
 const decoderProject = require('./project');
 const decoderTask = require('./task');
 
-const actions = ['add', 'build', 'create', 'list', 'show', 'remove', 'delete', 'edit', 'update', 'start', 'pause', 'finish'];
-const actors = ['project', 'projects', 'task', 'tasks'];
+const actions = ['add', 'build', 'create', 'list', 'show', 'remove', 'delete', 'edit', 'update', 'start', 'pause', 'finish', 'visit', 'help'];
+const actors = ['project', 'projects', 'task', 'tasks', 'interface'];
 const attributes = ['name', 'named', 'called', 'priority', 'deadline', 'project', 'description', 'about', 'user', 'change', '_id', 'billable'];
 const ignore = ['and', 'all', 'in', 'new', 'with', 'where', 'of', 'to', 'equal', 'equals', '=', 'is', 'the'];
 
@@ -133,8 +133,35 @@ function apply(obj, cb) {
         case 'task':
             understood = decoderTask.apply(obj, obj2, cb);
             break;
+        case 'interface':
+            if (obj['action'] === 'visit') {
+                understood = true;
+                cb(null, 'https://willdomessenger.herokuapp.com/');
+            }
+            break;
         default:
-            cb('Sorry, I did not understand your message', null);
+            if (obj['action'] === 'help') {
+                let commands = `You can use the following commands: \u000A
+                -- Projects -- \u000A
+                create project My Project \u000A
+                edit project My Project \u000A
+                show project My Project \u000A
+                remove project My Project \u000A
+                -- Tasks -- \u000A
+                create task My Task in My Project \u000A
+                edit task My Task in My Project \u000A
+                show task My Task in My Project \u000A
+                remove task My Task in My Project \u000A
+                start task My Task in My Project \u000A
+                pause task My Task in My Project \u000A
+                finish task My Task in My Project \u000A
+                -- Visiting Interface -- \u000A
+                visit interface
+                `;
+                understood = true;
+                cb(null, commands);
+            }
+            else cb('Sorry, I did not understand your message', null);
             break;
     }
 }

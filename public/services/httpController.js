@@ -72,6 +72,20 @@ app.service('$httpController', ['$http', function($http) {
       task(response.data)
     })  
   }
+  this.updateTask = function(task,taskId){
+    $http({
+      headers: {
+        auth_key: auth_key,
+        "Content-Type": "application/json"  
+      },
+      data: task,
+      method: 'PUT',
+      url: '/task/'+ taskId 
+    })
+    .then(response => {
+      task(response.data)
+    })  
+  }
 
   this.startTask = function(id){
     $http({

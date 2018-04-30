@@ -8,45 +8,48 @@ const controllerProject = require('./project');
 
 function tt(i = 0, np = 0, fp = 0, report=[], tasks, proj_id, cb) {
     if (!tasks[i]) {
-        cb([]);
-        return;
+        controllerProject.getOne(proj_id, (err, project) => {
+            report = {'name': project['name'], 'prazo': 0, 'foraPrazo': 0};
+            cb(report);
+        });
     }
-    // Percorrendo todas as tarefas
-    let task = tasks[i];
-    let id = task['id'];
-    timeTracker.list(id, (err, timeTrackers) => {
-        // Encontrando data de início da tarefa
-        var ultimoTT = timeTrackers.sort(function(a, b) { return a['startDate'] < b['startDate'] })[0];
-        var dataInicio;
-        if (ultimoTT && ultimoTT[0]) dataInicio = ultimoTT[0];
-        // Encontrando data de término da tarefa
-        var dataFim = dataInicio;
-        timeTrackers.forEach(tt => {
-            if (!tt['endDate']) {
-                dataFim = Date.now();
-                return;
+    else {
+        // Percorrendo todas as tarefas
+        let task = tasks[i];
+        let id = task['id'];
+        timeTracker.list(id, (err, timeTrackers) => {
+            // Encontrando data de início da tarefa
+            var ultimoTT = timeTrackers.sort(function(a, b) { return a['startDate'] < b['startDate'] })[0];
+            var dataInicio;
+            if (ultimoTT && ultimoTT[0]) dataInicio = ultimoTT[0];
+            // Encontrando data de término da tarefa
+            var dataFim = dataInicio;
+            for (let i = 0; i < timeTrackers.length; i++) {
+                let tt = timeTrackers[i];
+                if (!dataFim || tt['endDate'] > dataFim)
+                    dataFim = tt['endDate'];
             }
-            else if (tt['endDate'] > dataFim)
-                dataFim = tt['endDate'];
+            if (!dataFim)
+                dataFim = Date.now();
+            // Verificando se está no prazo
+            var noPrazo = false;
+            if (task['finished'] && dataFim <= task['deadline'])
+                noPrazo = true;
+            // Adicionando no vetor
+            if ((task['finished'] && task['deadline']) || Date.now() > task['deadline'])
+                if (noPrazo)
+                    np++;
+                else fp++;
+            // Chamada recursiva
+            if (i === tasks.length - 1 || tasks.length === 0) {
+                controllerProject.getOne(proj_id, (err, project) => {
+                    report = {'name': project['name'], 'prazo': np, 'foraPrazo': fp};
+                    cb(report);
+                })
+            }
+            else tt(i + 1, np, fp, report, tasks, proj_id, cb);
         })
-        // Verificando se está no prazo
-        var noPrazo = false;
-        if (task['finished'] && dataFim <= task['deadline'])
-            noPrazo = true;
-        // Adicionando no vetor
-        if ((task['finished'] && task['deadline']) || Date.now() > task['deadline'])
-            if (noPrazo)
-                np++;
-            else fp++;
-        // Chamada recursiva
-        if (i === tasks.length - 1) {
-            controllerProject.getOne(proj_id, (err, project) => {
-                report = {'name': project['name'], 'prazo': np, 'foraPrazo': fp};
-                cb(report);
-            })
-        }
-        else tt(i + 1, np, fp, report, tasks, proj_id, cb);
-    })
+    }
 }
 
 var exp = {
