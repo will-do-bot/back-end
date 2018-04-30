@@ -1,8 +1,7 @@
 app.controller('task', function ($scope, $httpController) {
-
-
   getTask()
   function getTask() {
+    console.log('getting tasks')
     $httpController.getTasks(tasks => {
       console.log(tasks)
       $scope.tasks = tasks
@@ -20,12 +19,8 @@ app.controller('task', function ($scope, $httpController) {
     $scope.projects = projects
   })
 
-
-
-
   $scope.changeContent = function (task) {
     $scope.chosenTask = task
-
   }
 
   $scope.getPriority = function () {
@@ -40,11 +35,8 @@ app.controller('task', function ($scope, $httpController) {
   }
 
   $scope.deleteTask = function (id) {
-    console.log(id)
     $httpController.deleteTask(id, response => {
-      $httpController.getTasks(response => {
-        getTask()
-      })
+      getTask()
     })
 
   }

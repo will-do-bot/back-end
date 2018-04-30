@@ -115,7 +115,7 @@ app.service('$httpController', ['$http', function($http) {
     })  
   }
 
-  this.deleteTask = function(id){
+  this.deleteTask = function(id, cb){
     $http({
       headers: {
         auth_key: auth_key
@@ -123,9 +123,7 @@ app.service('$httpController', ['$http', function($http) {
       method: 'DELETE',
       url: '/task/' + id
     })
-      .then(response => {
-        response
-      })
+      .then(response => cb(response.data))
   }
 
   this.setProject = function(project, cb){
