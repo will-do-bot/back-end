@@ -18,7 +18,9 @@ app.controller('projectTasks', function ($scope, $routeParams, $httpController){
 
 
   $scope.getChosen = function (x) {
-    if ($scope.chosenTask.name == x.name) return 'task selected'
-    else return 'task'
+    let c = 'task';
+    if (x.finished) c += ' finished';
+    if ($scope.chosenTask.name == x.name) c += ' selected'
+    return c;
   }
 })

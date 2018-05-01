@@ -124,13 +124,20 @@ p {
     padding-right: 10px;
 }
 
-.task:hover:not(.selected) {
+.task:hover:not(.selected):not(.finished) {
     background-color: rgba(105, 91, 91, 0.253);
 }
 
 .selected{
     background-color: #333;
     color:white;
+}
+
+.finished:not(.selected) {
+    background-color: lightgreen;
+}
+.finished.selected {
+    color: lightgreen;
 }
 
 .sub-title-task{
