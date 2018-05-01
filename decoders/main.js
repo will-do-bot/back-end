@@ -24,7 +24,7 @@ function updateProjectsArray(cb) {
     });
 }
 
-updateProjectsArray( function () { } );
+updateProjectsArray( function () {  } );
 
 /**
  * Resolve aspas
@@ -67,6 +67,19 @@ function existsProject(name) {
     return found;
 }
 
+function createDate(obj, property) {
+    let input = obj[property];
+    let date = new Date(Date.now());
+    if (input === 'tomorrow')
+        date.setDate(date.getDate() + 1);
+    else if (input.includes(" day")) {
+        let number = parseInt(input.split(" ")[0]);
+        date.setDate(date.getDate() + number);
+    }
+    else date = new Date(obj[property]);
+    return date;
+}
+
 /**
  * Itera por objeto original gerado no decoder e cria um novo corrigindo nomes dos atributos
  */
@@ -98,8 +111,9 @@ function postProcess(obj) {
             // Caso tenha sido passado atributo name, mudar para o actor. Exemplo: actor: 'project', project: 'este nome'
             else if (property === 'name' && !obj[obj['actor']])
                 obj2[obj['actor']] = obj['name'];
+            // Caso seja uma data
             else if (property === 'deadline' || property === 'startDate')
-                obj2[property] = new Date(obj[property]);
+                obj2[property] = createDate(obj, property);
             // No caso default, só inserir no novo objeto
             else obj2[property] = obj[property];
         }
