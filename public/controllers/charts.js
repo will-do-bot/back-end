@@ -29,15 +29,18 @@ app.controller('chart', function ($scope, $httpController, $http) {
 
     function getReports() {
         let p = [];
+        let count = 0;
         for (let i = 0; i < $scope.projects.length; i++) {
             $httpController.getReports($scope.projects[i]._id, (project) => {
                 if (project) p.push(project);
-                $scope.createChart(p);
+                count++;
+                if (count === $scope.projects.length) {
+                    $scope.projects = p; 
+                    $scope.chosenProject = p[0];
+                    $scope.createChart(p[0]);
+                }
             })
         }
-        console.log("...");
-        console.log(p);
-        $scope.projects = p;
     }
 
     $scope.getTasks = function (i) {
