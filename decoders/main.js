@@ -76,6 +76,18 @@ function createDate(obj, property) {
         let number = parseInt(input.split(" ")[0]);
         date.setDate(date.getDate() + number);
     }
+    else if (input.includes(" week")) {
+        let number = (parseInt(input.split(" ")[0])) * 7;
+        date.setDate(date.getDate() + number);
+    }
+    else if (input.includes(" month")) {
+        let number = parseInt(input.split(" ")[0]);
+        date.setMonth(date.getMonth() + number);
+    }
+    else if (input.includes(" year")) {
+        let number = parseInt(input.split(" ")[0]);
+        date.setFullYear(date.getFullYear() + number);
+    }
     else date = new Date(obj[property]);
     return date;
 }
