@@ -1,5 +1,5 @@
 const schedule = require('node-schedule');
-const horario = { hour: 12, minute: 00 };
+const horario = { hour: 11, minute:00 };
 const taskController = require('./../controllers/task');
 
 module.exports = function() {
