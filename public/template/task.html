@@ -25,13 +25,13 @@
                 <div class="task-button">
                     <div class="task-buttom-left">
                         <a class='button'> You have worked {{chosenTask.days}} days on this task </a>
-                        <a class='button' href="#!chart"> Chart</a>
                         <a ng-click="startTask(chosenTask._id)" class='button'> Start task</a>
                         <a ng-click="pauseTask(chosenTask._id)" class='button'> Pause task</a>
-                        <a ng-click="finishTask(chosenTask._id)" class='button'> Finish task</a>
-                        <a ng-click="showUpdateTask()" class='button'> Update task</a>
                     </div>
                     <div class="task-buttom-right">
+                        <a class='button' href="#!chart"> Chart</a>
+                        <a ng-click="finishTask(chosenTask._id)" class='button'> Finish task</a>
+                        <a ng-click="showUpdateTask()" class='button'> Update task</a>
                     </div>
                 </div>
             </div>
