@@ -1,0 +1,57 @@
+<div class="sidebar">
+    <div class="sidebar-top">
+        <div class="sidebar-item logo">
+        </div>
+        <div class="sidebar-item user">
+            <img class='user-img' src="https://avatars3.githubusercontent.com/u/15956455?s=100&v=4" alt="User photo">
+            <p class="username">Matheus de Assis</p>
+        </div>
+    </div>
+    <div class="sidebar-bottom">
+        <div onclick='changeActive(this)' class="sidebar-item menu menu-first">
+            <a href="#!project" class="menu-item">PROJECTS</a>
+        </div>
+        <div onclick='changeActive(this)' class="sidebar-item menu">
+            <a href="#!task" class="menu-item">TASKS</a>
+        </div>
+        <div onclick='changeActive(this)' class="sidebar-item menu">
+            <a href="#!chart" class="menu-item">CHARTS </a>
+        </div>
+        <div onclick='changeActive(this)' class="sidebar-item menu">
+            <a href="#!calendar" class="menu-item">CALENDAR</a>
+        </div>
+
+    </div>
+</div>
+<div class="content">
+  <div class="top-content">
+      <p class="title">{{project.name}}</p>
+  </div>
+  <div class="bottom-content">
+      <div class="tasks-panel">
+          <p class="sub-title">Tasks</p>
+          <div class="tasks">
+              <p ng-click='changeContent(x)' ng-repeat="x in tasks" ng-class="getChosen(x)">#{{$index+1}} - {{x.name}}</p>
+          </div>
+      </div>
+      <div class="selected-task">
+          <div class="top-selected-task">
+              <p class="sub-title-task">{{chosenTask.name}}</p>
+              <p ng-class="getPriority()">Priority: {{chosenTask.priority}}</p>
+          </div>
+          <div class="task-attribute">
+              <p class="description">{{chosenTask.description}}</p>
+              <div class="task-button">
+                  <div class="task-buttom-left">
+                      <a class='button' href="#!timetracker"> Time Tracker</a>
+                      <a class='button' href="#!chart"> Chart</a>
+                  </div>
+                  <div class="task-buttom-right">
+                      <a class='button' href="#!time">Deadline: {{ chosenTask.deadline }}</a>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+
+</div>
