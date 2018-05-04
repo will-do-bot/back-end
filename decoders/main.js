@@ -190,7 +190,13 @@ function apply(obj, cb) {
                 pause task My Task in My Project \u000A
                 finish task My Task in My Project \u000A
                 -- Visiting Interface -- \u000A
-                visit interface
+                visit interface\u000A
+                -- About Dates --\u000A
+                Date attributes should be used in one of the following formats:\u000A
+                deadline = may 16\u000A
+                deadline = tomorrow\u000A
+                deadline = 2 days\u000A
+                deadline = 1 month
                 `;
                 understood = true;
                 cb(null, commands);
