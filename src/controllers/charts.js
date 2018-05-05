@@ -3,6 +3,7 @@ module.exports = function ($scope, $httpController, $http) {
     console.log('charts');
 
     var ctx = document.getElementById("chartTasks");
+    var myChart;
 
     Chart.defaults.global.legend.display = false;
 
@@ -58,8 +59,8 @@ module.exports = function ($scope, $httpController, $http) {
     $scope.chosenTask = $scope.tasks.tasks[0];
 
     $scope.createChart = function (i) {
-        console.log(i);
-        var myChart = new Chart(ctx, {
+        if (myChart) myChart.destroy();
+        myChart = new Chart(ctx, {
             type: 'bar',
             data: {
                 labels: ["No prazo", "Atrasadas"],
