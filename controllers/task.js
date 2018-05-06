@@ -126,7 +126,7 @@ var exp = {
                     if (result) {
                         timeTracker.stop(result['_id'], cb);
                     }
-                    else cb('This task is already running', null);
+                    else cb('You need to start the task', null);
                 });
             }
             else cb('The desired task is finished', null);
@@ -144,10 +144,10 @@ var exp = {
                             });
                         });
                     }
-                    else cb('This task is already running', null);
+                    else cb('You need to start the task', null);
                 });
             }
-            else cb('The desired task is finished', null);
+            else cb('The task is already finished', null);
         });
     },
     generateReport: (proj_id, cb) => {
