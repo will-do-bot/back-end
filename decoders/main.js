@@ -97,6 +97,14 @@ function createDate(obj, property) {
         }
     }
     else date = new Date(obj[property]);
+    if (property === 'startDate') {
+        date.setHours(0);
+        date.setMinutes(1);
+    }
+    else if (property === 'deadline') {
+        date.setHours(23);
+        date.setMinutes(59);
+    }
     return date;
 }
 

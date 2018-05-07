@@ -65,6 +65,15 @@ module.exports = function ($scope, $httpController) {
   }
 
   $scope.addTask = function (task) {
+    if (task.startDate) {
+      task.startDate.setHours(0);
+      task.startDate.setMinutes(1);
+    }
+    if (task.deadline) {
+      task.deadline.setHours(23);
+      task.deadline.setMinutes(59);
+    }
+    console.log(task);
     $httpController.setTask(task, response => {
       console.alert("Tarefa " + response.name + " criada com sucesso!");
     })
