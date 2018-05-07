@@ -3,6 +3,8 @@ const horario = { hour: 11, minute:00 };
 const taskController = require('./../controllers/task');
 
 module.exports = function(userID) {
+    console.log("The user " + userID + " will be reminded");
+
     var j = schedule.scheduleJob(horario, function(){
         taskController.getByCond({}, (err, tasks) => {
             if (tasks[0] && !tasks[0]['finished']) {

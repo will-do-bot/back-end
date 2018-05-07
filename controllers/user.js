@@ -7,7 +7,7 @@ module.exports = {
 
 	save: function (user, cb){
         let a = new User(user);
-        reminder(a._id);
+        reminder(a.facebook_id);
         a.save(function(err,save){
             if(err) console.log(err)
             cb(save)
