@@ -1,0 +1,118 @@
+<div class="sidebar">
+    <div class="sidebar-top">
+        <div class="sidebar-item logo">
+        </div>
+        <div class="sidebar-item user">
+            <img class='user-img' src="https://avatars3.githubusercontent.com/u/15956455?s=100&v=4" alt="User photo">
+            <p class="username">Matheus de Assis</p>
+        </div>
+    </div>
+    <div class="sidebar-bottom">
+        <div onclick='changeActive(this)' class="sidebar-item menu menu-first">
+            <a href="#!project" class="menu-item">PROJECTS</a>
+        </div>
+        <div onclick='changeActive(this)' class="sidebar-item menu">
+            <a href="#!task" class="menu-item">TASKS</a>
+        </div>
+        <div onclick='changeActive(this)' class="sidebar-item menu">
+            <a href="#!chart" class="menu-item">CHARTS </a>
+        </div>
+        <div onclick='changeActive(this)' class="sidebar-item menu">
+            <a href="#!calendar" class="menu-item">CALENDAR</a>
+        </div>
+
+    </div>
+</div>
+<div class="content">
+    <div class="top-content">
+        <p class="title">Tasks</p>
+    </div>
+    <div class="bottom-content">
+        <div class="tasks-panel">
+            -
+            <p ng-click="showCreateTask()" class='green'>+ Create new Task</p>
+            <div class="tasks">
+                <div ng-click='changeContent(x)' ng-repeat="x in tasks" ng-class="getChosen(x)">#{{$index+1}} - {{x.name}}
+                    <p class="float-right" ng-click="deleteTask(x._id)">X</p>
+                </div>
+            </div>
+        </div>
+        <div class="selected-task" ng-show="!showAddTask">
+            <div class="top-selected-task">
+                <p class="sub-title-task">{{chosenTask.name}} -
+                    <a ng-href="#!/project/{{chosenTask.project._id}}">{{chosenTask.project.name}} </a>
+                </p>
+
+                <p ng-class="getPriority()">{{chosenTask.priority}} Priority</p>
+            </div>
+            <div class="task-attribute">
+                <p class="description">{{chosenTask.description}}</p>
+                <div class="task-button">
+                    <div class="task-buttom-left">
+                        <a class='button'> You have worked {{chosenTask.days}} days on this task </a>
+                        <a ng-show="!chosenTask.finished" ng-click="startTask(chosenTask._id)" class='button'> Start task</a>
+                        <a ng-show="!chosenTask.finished" ng-click="pauseTask(chosenTask._id)" class='button'> Pause task</a>
+                    </div>
+                    <div class="task-buttom-right">
+                        <a class='button' href="#!chart"> Chart</a>
+                        <a ng-show="!chosenTask.finished" ng-click="finishTask(chosenTask._id)" class='button'> Finish task</a>
+                        <a ng-show="!chosenTask.finished" ng-click="showUpdateTask()" class='button'> Update task</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class='selected-task' ng-show="showAddTask">
+            <div class='addTask'>
+                <p class="sub-title-task">{{subTitleTask}}</p>
+                <form>
+                    <div class="group">
+                        <input ng-model="task.name" type="text" required>
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label>Name</label>
+                    </div>
+
+                    <div class="group">
+                        <input ng-model="task.description" type="text" required>
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label>Description</label>
+                    </div>
+                    <div class="group">
+                        <span style="color: #5264AE">Start Date</span>
+                        <input ng-model="task.startDate" type="date" required>
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                    </div>
+                    <div class="group">
+                        <span style="color: #5264AE">Deadline</span>
+                        <input ng-model="task.deadline" type="date" required>
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                    </div>
+                    <div class="group">
+                        <input ng-model="task.priority" type="text" required>
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label>Priority</label>
+                    </div>
+
+                    <div ng-show="selectProject" class="group">
+                        <select ng-model="task.project">
+                            <option value='' disabled selected>Select one project</option>
+                            <option ng-repeat="project in projects" value="{{project._id}}">{{project.name}}</option>
+                        </select>
+                    </div>
+
+                </form>
+                <div style='float:right'>
+                    <p id="cancelButton" ng-click="cancelTask()">Cancel</p>
+                    <p id="addButton" ng-show="createButton" ng-click="addTask(task)">Create</p>
+                    <p id="addButton" ng-show="updateButton" ng-click="updateTask(task,chosenTask._id)">Update</p>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>

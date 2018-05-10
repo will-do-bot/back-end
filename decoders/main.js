@@ -8,6 +8,7 @@ const actions = ['add', 'build', 'create', 'list', 'show', 'remove', 'delete', '
 const actors = ['project', 'projects', 'task', 'tasks', 'interface'];
 const attributes = ['name', 'named', 'called', 'priority', 'deadline', 'project', 'description', 'about', 'user', 'change', '_id', 'billable'];
 const ignore = ['and', 'all', 'in', 'new', 'with', 'where', 'of', 'to', 'equal', 'equals', '=', 'is', 'the'];
+const months = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'];
 
 var projects = [];
 
@@ -68,27 +69,42 @@ function existsProject(name) {
 }
 
 function createDate(obj, property) {
-    let input = obj[property];
+    let input = obj[property].split(" ");
     let date = new Date(Date.now());
-    if (input === 'tomorrow')
+    if (input[0] === 'tomorrow')
         date.setDate(date.getDate() + 1);
-    else if (input.includes(" day")) {
-        let number = parseInt(input.split(" ")[0]);
-        date.setDate(date.getDate() + number);
-    }
-    else if (input.includes(" week")) {
-        let number = (parseInt(input.split(" ")[0])) * 7;
-        date.setDate(date.getDate() + number);
-    }
-    else if (input.includes(" month")) {
-        let number = parseInt(input.split(" ")[0]);
-        date.setMonth(date.getMonth() + number);
-    }
-    else if (input.includes(" year")) {
-        let number = parseInt(input.split(" ")[0]);
-        date.setFullYear(date.getFullYear() + number);
+    else if (input.length === 2) {
+        if (input[1] === 'day' || input[1] === 'days') {
+            let number = parseInt(input[0]);
+            date.setDate(date.getDate() + number);
+        }
+        else if (input[1] === 'week' || input[1] === 'weeks') {
+            let number = (parseInt(input[0])) * 7;
+            date.setDate(date.getDate() + number);
+        }
+        else if (input[1] === 'month' || input[1] === 'months') {
+            let number = parseInt(input[0]);
+            date.setMonth(date.getMonth() + number);
+        }
+        else if (input[1] === 'year' || input[1] === 'years') {
+            let number = parseInt(input[0]);
+            date.setFullYear(date.getFullYear() + number);
+        }
+        else if (months.includes(input[0])) {
+            let month = months.indexOf(input[0]) + 1;
+            date.setDate(parseInt(input[1]));
+            date.setMonth(month);
+        }
     }
     else date = new Date(obj[property]);
+    if (property === 'startDate') {
+        date.setHours(0);
+        date.setMinutes(1);
+    }
+    else if (property === 'deadline') {
+        date.setHours(23);
+        date.setMinutes(59);
+    }
     return date;
 }
 
@@ -182,7 +198,13 @@ function apply(obj, cb) {
                 pause task My Task in My Project \u000A
                 finish task My Task in My Project \u000A
                 -- Visiting Interface -- \u000A
-                visit interface
+                visit interface\u000A
+                -- About Dates --\u000A
+                Date attributes should be used in one of the following formats:\u000A
+                deadline may 16\u000A
+                deadline tomorrow\u000A
+                deadline 2 days\u000A
+                deadline 1 month
                 `;
                 understood = true;
                 cb(null, commands);

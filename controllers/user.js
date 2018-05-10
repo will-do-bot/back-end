@@ -1,15 +1,17 @@
 
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
+const reminder = require('./reminder');
 
 module.exports = {
 
 	save: function (user, cb){
-        let a = new User(user)
+        let a = new User(user);
+        reminder(a.facebook_id);
         a.save(function(err,save){
             if(err) console.log(err)
             cb(save)
-        })
+        });
     },
 
     find: function (id,cb){

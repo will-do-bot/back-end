@@ -6,6 +6,9 @@ const timeTracker = require('./time-tracker');
 const taskChooser = require('./taskChooser');
 const controllerProject = require('./project');
 
+/**
+ * Gambiarra extrema que gera os dados para os gráfico de projeto
+ */
 function tt(i = 0, np = 0, fp = 0, report=[], tasks, proj_id, cb) {
     if (!tasks[i]) {
         controllerProject.getOne(proj_id, (err, project) => {
@@ -58,6 +61,7 @@ var exp = {
             User.findOne(user, (err, u) => {
                 Project.findOne(project, (err, p) => {
                     if (!err && p) {
+                        task.name = task.name.toLowerCase();
                         task.project = p._id
                         task.user = u._id
                         new Task(task).save((err, t) => {
@@ -122,7 +126,7 @@ var exp = {
                     if (result) {
                         timeTracker.stop(result['_id'], cb);
                     }
-                    else cb('This task is already running', null);
+                    else cb('You need to start the task', null);
                 });
             }
             else cb('The desired task is finished', null);
@@ -140,10 +144,10 @@ var exp = {
                             });
                         });
                     }
-                    else cb('This task is already running', null);
+                    else cb('You need to start the task', null);
                 });
             }
-            else cb('The desired task is finished', null);
+            else cb('The task is already finished', null);
         });
     },
     generateReport: (proj_id, cb) => {
