@@ -45,4 +45,8 @@ app.controller('project', function ($scope, $httpController, $http) {
       })
   }
 
+  $scope.cancelProject = function () {
+    $scope.showAddProject = !$scope.showAddProject
+  }
+
 })
