@@ -69,7 +69,7 @@ module.exports = function ($http) {
       url: '/task/'
     })
       .then(response => {
-        task(response.data)
+        cb(response.data)
       })
   }
   this.updateTask = function (task, taskId) {

@@ -66,10 +66,7 @@ module.exports = function ($scope, $routeParams, $httpController){
   $scope.addTask = function (task) {
     task.project = $scope.project._id
     $httpController.setTask(task, response => {
-      $httpController.getTasksOfProject($scope.project._id).then(response=>{
-        console.log(response)
-        console.log($scope.project)
-      })
+      getTasksOfProject()
     })
     $scope.showAddTask = !$scope.showAddTask
   }
