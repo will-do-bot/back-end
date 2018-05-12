@@ -25,7 +25,7 @@ function updateProjectsArray(cb) {
     });
 }
 
-updateProjectsArray( function () {  } );
+updateProjectsArray( function () { } );
 
 /**
  * Resolve aspas
@@ -97,8 +97,8 @@ function createDate(obj, property) {
             date.setMonth(month);
         }
     }
-    else if (input[0] !== 'today')
-        date = new Date(obj[property]);
+    else if (input[0] === 'today') date.setDate(date.getDate());
+    else date = new Date(obj[property]);
     // Definir horário
     if (property === 'startDate') {
         date.setHours(0);
@@ -108,6 +108,7 @@ function createDate(obj, property) {
         date.setHours(23);
         date.setMinutes(59);
     }
+    console.log(property + ": " + date);
     return date;
 }
 
@@ -146,7 +147,7 @@ function postProcess(obj) {
             else if (property === 'deadline' || property === 'startDate')
                 obj2[property] = createDate(obj, property);
             else if (property === 'start date') {
-                obj2['startDate'] = obj[property];
+                obj2['startDate'] = createDate(obj, property);
             }
             // No caso default, só inserir no novo objeto
             else obj2[property] = obj[property];
@@ -363,6 +364,12 @@ const dec = {
             // Se palavra atual for um atributo. Ex: 'description'
             if (attributes.includes(word)) {
                 expecting = word;
+                continue;
+            }
+
+            // Gambi pra atributos com 2 palavras, exemplo start date - Preguiça de fazer direito
+            if (i > 0 && attributes.includes(words[i-1] + " " + words[i])) {
+                expecting = words[i-1] + " " + words[i];
                 continue;
             }
             
