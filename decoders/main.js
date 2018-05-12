@@ -6,7 +6,7 @@ const decoderTask = require('./task');
 
 const actions = ['add', 'build', 'create', 'list', 'show', 'remove', 'delete', 'edit', 'update', 'start', 'pause', 'finish', 'visit', 'help'];
 const actors = ['project', 'projects', 'task', 'tasks', 'interface'];
-const attributes = ['name', 'named', 'called', 'priority', 'deadline', 'project', 'description', 'about', 'user', 'change', '_id', 'billable'];
+const attributes = ['name', 'named', 'called', 'priority', 'start date', 'deadline', 'project', 'description', 'about', 'user', 'change', '_id', 'billable'];
 const ignore = ['and', 'all', 'in', 'new', 'with', 'where', 'of', 'to', 'equal', 'equals', '=', 'is', 'the'];
 const months = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'];
 
@@ -71,6 +71,7 @@ function existsProject(name) {
 function createDate(obj, property) {
     let input = obj[property].split(" ");
     let date = new Date(Date.now());
+    // Definir data
     if (input[0] === 'tomorrow')
         date.setDate(date.getDate() + 1);
     else if (input.length === 2) {
@@ -96,7 +97,9 @@ function createDate(obj, property) {
             date.setMonth(month);
         }
     }
-    else date = new Date(obj[property]);
+    else if (input[0] !== 'today')
+        date = new Date(obj[property]);
+    // Definir horário
     if (property === 'startDate') {
         date.setHours(0);
         date.setMinutes(1);
@@ -142,6 +145,9 @@ function postProcess(obj) {
             // Caso seja uma data
             else if (property === 'deadline' || property === 'startDate')
                 obj2[property] = createDate(obj, property);
+            else if (property === 'start date') {
+                obj2['startDate'] = obj[property];
+            }
             // No caso default, só inserir no novo objeto
             else obj2[property] = obj[property];
         }
@@ -178,7 +184,7 @@ function apply(obj, cb) {
         case 'interface':
             if (obj['action'] === 'visit') {
                 understood = true;
-                cb(null, 'https://willdomessenger.herokuapp.com/');
+                cb(null, 'https://willdomessenger.herokuapp.com/#!/project');
             }
             break;
         default:
