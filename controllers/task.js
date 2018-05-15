@@ -106,12 +106,15 @@ var exp = {
                 Task.update({ '_id': id }, res, () => { });
             }
             if (res && !res['finished']) {
+                var date = Date.now()
+                if(!res.timeStartDate) res.timeStartDate = date
                 timeTracker.getActiveTimeTracker(id, (result) => {
                     if (!result) {
                         timeTracker.create({
                             task: id,
-                            startDate: Date.now()
+                            startDate: date
                         }, cb);
+
                     }
                     else cb('This task is already running', null);
                 });
@@ -135,9 +138,11 @@ var exp = {
     finish: (id, cb) => {
         Task.findOne({ '_id': id }, (err, res) => {
             if (res && !res['finished']) {
+                var date = Date.now()
+                res.finishDate = date
                 timeTracker.getActiveTimeTracker(id, (result) => {
                     if (result) {
-                        timeTracker.stop(result['_id'], () => {
+                        timeTracker.stop(result['_id'], date, () => {
                             Task.findOne({ '_id': id }, (err, res) => {
                                 res['finished'] = true;
                                 Task.update({ '_id': id }, res, cb);
