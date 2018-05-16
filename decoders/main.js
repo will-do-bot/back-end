@@ -161,7 +161,6 @@ function postProcess(obj) {
  * Recebe ação gerada pelo decoder e encontra responsável por realizá-la
  */
 function apply(obj, cb) {
-    let understood = false;  // Define se bot entendeu a entrada do usuário
     var obj2 = { };          // Objeto que será enviado criado/buscado/editado/removido
     
     // Obj é o que foi compreendido da mensagem do usuário, a ação a ser realizada
@@ -175,6 +174,19 @@ function apply(obj, cb) {
     // Usuário por enquanto é este
     obj2['user'] = user;
     
+    var d = (chamarEspecifico, obj, obj2, cb) => chamarEspecifico(obj, obj2, cb)
+
+    if (obj.name) {
+        if (obj.actor === 'task')
+            controllerTask.getByCond({name: obj.name}, d, false)
+        else if (obj.actor === 'project')
+            controllerProject.getByCond({name: obj.name}, d, false)
+    } else chamarEspecifico(obj, obj2, cb)
+    
+}
+
+function chamarEspecifico(obj, obj2, cb) {
+    let understood = false;
     // Verifica quem chamar para executar ação
     switch (obj['actor']) {
         case 'project':
