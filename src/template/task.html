@@ -1,35 +1,11 @@
-<div class="sidebar">
-    <div class="sidebar-top">
-        <div class="sidebar-item logo">
-        </div>
-        <div class="sidebar-item user">
-            <img class='user-img' src="https://avatars3.githubusercontent.com/u/15956455?s=100&v=4" alt="User photo">
-            <p class="username">Matheus de Assis</p>
-        </div>
-    </div>
-    <div class="sidebar-bottom">
-        <div onclick='changeActive(this)' class="sidebar-item menu menu-first">
-            <a href="#!project" class="menu-item">PROJECTS</a>
-        </div>
-        <div onclick='changeActive(this)' class="sidebar-item menu">
-            <a href="#!task" class="menu-item">TASKS</a>
-        </div>
-        <div onclick='changeActive(this)' class="sidebar-item menu">
-            <a href="#!chart" class="menu-item">CHARTS </a>
-        </div>
-        <div onclick='changeActive(this)' class="sidebar-item menu">
-            <a href="#!calendar" class="menu-item">CALENDAR</a>
-        </div>
+<div ng-include="'sidebar.html'"></div>
 
-    </div>
-</div>
 <div class="content">
     <div class="top-content">
         <p class="title">Tasks</p>
     </div>
     <div class="bottom-content">
         <div class="tasks-panel">
-
             <p ng-click="showCreateTask()" class='green'>+ Create new Task</p>
             <div class="tasks">
                 <div ng-click='changeContent(x)' class='side-button' ng-repeat="x in tasks" ng-class="getChosen(x)">#{{$index+1}} - {{x.name}}
