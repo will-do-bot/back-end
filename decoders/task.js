@@ -62,11 +62,11 @@ module.exports = {
                                     dados += "Task (" + (num_registro++) + ")\r\n"
                                         + "Name: \'" + result[pos].name + "\'\r\n"
                                         + "Description: " + ((result[pos].description == undefined || result[pos].description.length == 0) ? 'No description' : "\'" + result[pos].description + "\'") + "\r\n"
-                                        + "Project: " + ((obj['project'] == undefined) ? 'Default project' : "\'" + obj['project'] + "\'") + "\r\n"
+                                        + "Project:  " + ((obj['project'] == undefined) ? 'Default project' : "\'" + obj['project'] + "\'") + "\r\n"
                                         + "Priority: " + result[pos].priority + "\r\n"
-                                        + "Started date: " + ((result[pos].started || result[pos].finished) ? "\'" + result[pos].startDate + "\'" : "Not started yet.") + "\r\n"
+                                        + "Started date:  " + ((result[pos].started || result[pos].finished) ? "\'" + result[pos].timeStartDate + "\'" : "Not started yet.") + "\r\n"
                                         + "Finished date: " + ((result[pos].finished) ? "\'" + result[pos].finishDate + "\'" : "Not finished yet.") + "\r\n"
-                                        + "Dependencies: [ ";
+                                        + "Dependencies:  [ ";
                                     if ((result[pos].dependencies.length == undefined || result[pos].dependencies.length === 0))
                                         dados += "]\r\n";
                                     else {
@@ -79,9 +79,11 @@ module.exports = {
                                                     dados += res.name + " ]\r\n";
                                             });
                                         }
-                                    }                                    
-                                    dados += "Created in: " + result[pos].created + "\r\n"
-                                    dados += "Finish until: " + result[pos].deadLine + "\r\n\r\n";
+                                    }
+                                    var date = result[pos].created
+                                    dados += "Created in: " + fix_date(""+date) + "\r\n"
+                                    date = result[pos].deadline
+                                    dados += "Finish until: " + fix_date(""+date) + "\r\n\r\n";
                                 }
                                 console.log(dados)
 
@@ -150,4 +152,13 @@ module.exports = {
             }
         });
     }
+}
+
+function fix_date(date) {
+    // " Weekday Month Day Year 00:00:00 GMT-XXXX (GMT LOCATION) "
+    var obj = date.split(" ")
+    date = "[" + obj[5] + "] " + obj[0] + " " + obj[3] + "/" + obj[1] + "/" + obj[2] + " - " + obj[4]
+    if(obj[0] == 'undefined') date = 'Not defined'
+    return date 
+
 }
