@@ -40,7 +40,7 @@ module.exports = function ($scope, $http, $httpController) {
   $scope.deleteProject = function (x) {
     $http({
       headers: {
-        auth_key: '9d277d84-665a-4c79-9823-6b1d7d41016e'
+        auth_key: '8e8281d3-1a09-452c-b218-a6566a09c7a7'
       },
       method: 'DELETE',
       url: '/project/' + x['_id']
