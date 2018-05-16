@@ -4,7 +4,7 @@ const controllerTask = require('./../controllers/task');
 
 const facebook_id = "2234224289938329";
 
-module.exports = { 
+module.exports = {
 
     /**
      * Realiza operação desejada pelo usuário
@@ -13,21 +13,23 @@ module.exports = {
     apply: function (obj, obj2, cb) {
         // Nome do projeto será igual ao atributo project, caso haja
         if (!obj2['name'] && obj['project']) obj2['name'] = obj['project'];
-        
+
         // Identificando a ação que o usuário deseja realizar
         switch (obj['action']) {
             case 'add':
-                controllerProject.create(obj2, {facebook_id: facebook_id}, (result, err) => {
+                controllerProject.create(obj2, { facebook_id: facebook_id }, (result, err) => {
                     if (!err) result = "Project created!";
                     cb(err, result);
                 });
                 break;
             case 'remove':
-                controllerProject.removeByCond(obj2, (err, result) => {
-                    if (result && result.n === 0) err = "Project not found"
-                    else if (result.n > 0) result = "Project deleted!";
-                    cb(err, result);
-                });
+                controllerProject.remove((result) => {
+                    if (result.v == 1) {
+                        cb(result.err, null)
+                    } else {
+                        cb(null, result.success)
+                    }
+                })
                 break;
             case 'list':
             case 'show':
@@ -37,7 +39,7 @@ module.exports = {
                 });
                 break;
             case 'update':
-                controllerProject.updateByCond({'name':obj['project']}, obj2, (err, result) => {
+                controllerProject.updateByCond({ 'name': obj['project'] }, obj2, (err, result) => {
                     if (result && result.n === 0) err = "Project not found?";
                     else if (result.n > 0) result = "Project updated!";
                     cb(err, result);

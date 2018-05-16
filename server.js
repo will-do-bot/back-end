@@ -1,8 +1,9 @@
-require('./models/Project')
-require('./models/Authentication')
 require('./models/User')
-require('./models/TimeTracker')
 require('./models/Task')
+require('./models/TimeTracker')
+require('./models/Project')
+
+require('./models/Authentication')
 
 //packages
 const express = require("express");

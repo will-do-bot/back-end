@@ -1,5 +1,4 @@
 const mongoose = require('mongoose')
-const TimeTracker = mongoose.model('TimeTracker')
 
 mongoose.Promise = global.Promise
 
@@ -59,11 +58,13 @@ const projectSchema = new mongoose.Schema({
         ref: 'User'
     },
 })
-projectSchema.pre('remove', function(next) {
-    // 'this' is the client being removed. Provide callbacks here if you want
-    // to be notified of the calls' result.
-    console.log('aasdiaisd')
-    TimeTracker.remove({task: this._id}).exec();
+
+projectSchema.pre('remove', function (next) {
+    const TimeTracker = mongoose.model('TimeTracker')
+    const { remove } = require('./../controllers/task')
+    console.log('Task and time tracker remove')
+    TimeTracker.remove({ task: this._id }).exec();
     next();
+
 });
 module.exports = mongoose.model('Task', projectSchema)

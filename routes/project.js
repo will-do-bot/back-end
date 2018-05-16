@@ -1,5 +1,5 @@
 const controller = require('./../controllers/project');
-const request = require('request');
+wawqq2222223const request = require('request');
 const auth = require('./../middleware/auth');
 const authC = require('./../controllers/auth');
 const task_controller = require('./../controllers/task');
@@ -48,8 +48,8 @@ module.exports = function (app) {
 
     app.delete('/project/:id', auth.checkAuth,  auth.validate,(req, res) => {
         if (req.params.id) {
-            controller.remove(req.params.id, (err, result) => {
-                if (err)
+            controller.remove(req.params.id, (result, v) => {
+                if (v)
                     res.status(500).send();
                 else {
                     res.status(200).send(result);

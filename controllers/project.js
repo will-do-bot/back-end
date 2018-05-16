@@ -37,18 +37,11 @@ module.exports = {
 		Project.update(cond, newObj, cb);
 	},
 	remove: function (id, cb) {
-		Project.remove({ '_id': id }, cb);
-	},
-	removeByCond: function (cond, cb) {
-		
-		Project.find({'_id': cond['id']}, (err, res) => {
-			if(res && !err){
-				let id_proj = res[0]['id'];
-
-				Task.remove({'project': id_proj}, (err, res) => {
-					if(!err) Project.remove(cond, cb);
-				});
-			}
+		Project.findOne({ '_id': id }, function (err, p) {
+			if (err) return cb({err, v: 1})
+			if (!p)  return cb({success:"Project not found", v: 0})
+			else p.remove()
+			return cb({success: 'Project removed', v: 0})
 		})
 	}
 };

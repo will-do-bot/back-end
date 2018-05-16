@@ -37,4 +37,13 @@ const projectSchema = new mongoose.Schema({
     }
 })
 
+projectSchema.pre('remove' ,function(next){
+    console.log('Removing projects and tasks')
+    const {remove} = require('./../controllers/task')
+    remove(this._id, function(result){
+        console.log(result)
+    })
+    next()
+})
+
 module.exports = mongoose.model('Project', projectSchema)

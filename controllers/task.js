@@ -1,7 +1,5 @@
 const mongoose = require('mongoose');
-const Task = mongoose.model('Task');
-const User = mongoose.model('User');
-const Project = mongoose.model('Project');
+
 const timeTracker = require('./time-tracker');
 const taskChooser = require('./taskChooser');
 const controllerProject = require('./project');
@@ -94,7 +92,11 @@ var exp = {
         Task.update(cond, newObj, cb);
     },
     remove: (id, cb) => {
-        Task.remove({ '_id': id }, cb);
+        Task.findOne({project: id}, function(err, task) {
+            if (err) return cb(1)
+            task.remove()
+            cb(0)
+        })
     },
     removeByCond: (cond, cb) => {
         Task.remove(cond, cb);
@@ -168,5 +170,9 @@ var exp = {
         });
     }
 };
+
+const Task = mongoose.model('Task');
+const User = mongoose.model('User');
+const Project = mongoose.model('Project');
 
 module.exports = exp;
