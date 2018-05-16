@@ -14,13 +14,6 @@ module.exports = function ($routeProvider) {
               'check': () => console.log('ha')
           }
       })
-      .when("/chart", {
-          template: require('./template/chart.html'),
-          controller: 'chart',
-          resolve: {
-              'check': () => console.log('ha')
-          }
-      })
       .when("/calendar", {
           template: require('./template/calendar.html'),
           controller: 'calendar',

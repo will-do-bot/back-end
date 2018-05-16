@@ -36,9 +36,15 @@ const projectSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
+    finishDate: {
+        type: Date
+    },
     started: {
         type: Boolean,
         default: false
+    },
+    timeStartDate: {
+        type: Date
     },
     dependencies: [
         {
