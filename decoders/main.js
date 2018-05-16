@@ -71,6 +71,7 @@ function existsProject(name) {
 function createDate(obj, property) {
     let input = obj[property].split(" ");
     let date = new Date(Date.now());
+    date.setHours(date.getHours() - 3)
     // Definir data
     if (input[0] === 'tomorrow')
         date.setDate(date.getDate() + 1);
