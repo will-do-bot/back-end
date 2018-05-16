@@ -12,7 +12,7 @@ const months = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 
 
 var projects = [];
 
-const user = "5ae1c9d93b5ebb00140c497d";
+const user = "5afc20963125df0014585269";
 
 /**
  * Atualiza lista de projetos. Esta lista é utilizada para verificar se existe projeto com determinado nome

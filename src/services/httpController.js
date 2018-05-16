@@ -1,4 +1,4 @@
-const auth_key = "9058c038-5e57-43ab-ad56-24dd603e89b0";
+const auth_key = "481a45d2-aa78-4c2d-a0e7-00e5b4e13ae3";
 
 module.exports = function ($http) {
   this.getProjects = function (cb) {

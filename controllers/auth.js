@@ -6,7 +6,9 @@ const User = mongoose.model('User')
 module.exports = {
 
     save: function (user, cb, token = '') {
+        console.log('hey')
         User.findOne(user, (err, u) => {
+            console.log(u)
             if (!err && u) {
                 new Auth({
                     token: token || generateToken(),
