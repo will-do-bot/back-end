@@ -174,13 +174,12 @@ function apply(obj, cb) {
     // Usuário por enquanto é este
     obj2['user'] = user;
     
-    console.log(obj);
     if (obj.actor && obj.action != 'add') {
         if (obj.actor === 'task') {
             console.log('--- Decoder de Task ---');
             controllerTask.getByCond({name: obj.task}, function(err, res) {
                 if (res && res[0]) {
-                    obj2._id = res._id;
+                    obj2._id = res[0]._id;
                     decoderTask.apply(obj, obj2, cb);
                 } else cb('Task not found!')
             }, false)
@@ -195,8 +194,6 @@ function apply(obj, cb) {
             }, false)
         }
     } else {
-        console.log('fail');
-        console.log(obj);
         chamarEspecifico(obj, obj2, cb)
     }
 }
@@ -406,8 +403,6 @@ const dec = {
         
         if (expecting) obj[expecting] = temp;
         let result = postProcess(obj);
-        console.log(result);
-        console.log('----');
         apply(result, (err, result) => {
             updateProjectsArray();
             if (cb) {

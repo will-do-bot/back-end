@@ -133,6 +133,8 @@ var exp = {
             if (res && !res['finished']) {
                 timeTracker.getActiveTimeTracker(id, (result) => {
                     if (result) {
+                        console.log("PAUSANDO")
+                        console.log(result);
                         timeTracker.stop(result['_id'], cb);
                     }
                     else cb('You need to start the task', null);
