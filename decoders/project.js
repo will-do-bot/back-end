@@ -5,7 +5,7 @@ const controllerTask = require('./../controllers/task');
 const facebook_id = "2234224289938329";
 
 function fix_date(date) {
-    if (!date) return "Not defined";
+    if (date != undefined) return "Not defined";
     date = new Date(date);
     let dia, mes, ano;
     dia = date.getDate();
