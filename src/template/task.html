@@ -38,62 +38,60 @@
                 <div class='descTime'>
                     <p class="description">Description: {{chosenTask.description}}</p>
                     <p class="description"> You have worked {{chosenTask.days}} days on this task </p>
-                </div> 
-            </div>
-        </div>
-    </div>
-    <div class='selected-task' ng-show="showAddTask">
-        <div class='addTask'>
-            <p class="sub-title-task">{{subTitleTask}}</p>
-            <form>
-                <div class="group">
-                    <input ng-model="task.name" type="text" required>
-                    <span class="highlight"></span>
-                    <span class="bar"></span>
-                    <label>Name</label>
                 </div>
-
-                <div class="group">
-                    <input ng-model="task.description" type="text" required>
-                    <span class="highlight"></span>
-                    <span class="bar"></span>
-                    <label>Description</label>
-                </div>
-                <div class="group">
-                    <span style="color: #5264AE">Start Date</span>
-                    <input ng-model="task.startDate" type="date" required>
-                    <span class="highlight"></span>
-                    <span class="bar"></span>
-                </div>
-                <div class="group">
-                    <span style="color: #5264AE">Deadline</span>
-                    <input ng-model="task.deadline" type="date" required>
-                    <span class="highlight"></span>
-                    <span class="bar"></span>
-                </div>
-                <div class="group">
-                    <input ng-model="task.priority" type="text" required>
-                    <span class="highlight"></span>
-                    <span class="bar"></span>
-                    <label>Priority</label>
-                </div>
-
-                <div ng-show="selectProject" class="group">
-                    <select ng-model="task.project">
-                        <option value='' disabled selected>Select one project</option>
-                        <option ng-repeat="project in projects" value="{{project._id}}">{{project.name}}</option>
-                    </select>
-                </div>
-
-            </form>
-            <div style='float:right'>
-                <p id="cancelButton" ng-click="cancelTask()">Cancel</p>
-                <p id="addButton" ng-show="createButton" ng-click="addTask(task)">Create</p>
-                <p id="addButton" ng-show="updateButton" ng-click="updateTask(task,chosenTask._id)">Update</p>
             </div>
         </div>
 
+        <div class='selected-task' ng-show="showAddTask">
+            <div class='addTask'>
+                <p class="sub-title-task">{{subTitleTask}}</p>
+                <form>
+                    <div class="group">
+                        <input ng-model="task.name" type="text" required>
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label>Name</label>
+                    </div>
 
+                    <div class="group">
+                        <input ng-model="task.description" type="text" required>
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label>Description</label>
+                    </div>
+                    <div class="group">
+                        <span style="color: #5264AE">Start Date</span>
+                        <input ng-model="task.startDate" type="date" required>
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                    </div>
+                    <div class="group">
+                        <span style="color: #5264AE">Deadline</span>
+                        <input ng-model="task.deadline" type="date" required>
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                    </div>
+                    <div class="group">
+                        <input ng-model="task.priority" type="text" required>
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label>Priority</label>
+                    </div>
+
+                    <div ng-show="selectProject" class="group">
+                        <select ng-model="task.project">
+                            <option value='' disabled selected>Select one project</option>
+                            <option ng-repeat="project in projects" value="{{project._id}}">{{project.name}}</option>
+                        </select>
+                    </div>
+                </form>
+                <div style='float:right'>
+                    <p id="cancelButton" ng-click="cancelTask()">Cancel</p>
+                    <p id="addButton" ng-show="createButton" ng-click="addTask(task)">Create</p>
+                    <p id="addButton" ng-show="updateButton" ng-click="updateTask(task,chosenTask._id)">Update</p>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 </div>

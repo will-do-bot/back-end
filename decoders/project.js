@@ -35,7 +35,26 @@ module.exports = {
             case 'show':
                 controllerProject.getByCond(obj2, (err, result) => {
                     if (result && result.length === 0) err = "Project not found";
-                    cb(err, result);
+                    else if (result.length > 0) {
+                        let num_registro = 1;
+
+                        var dados = "Projects found (" + result.length + "):\r\n\r\n";
+
+                        // ARRUMAR MENSAGEM DE `FINISHED DATE` e `FINISH UNTIL`
+                        for (let pos in result) {
+                            dados += "Project (" + (num_registro++) + ")\r\n"
+                                + "Name: \'" + result[pos].name + "\'\r\n"
+                                + "Description: " + ((result[pos].description == undefined || result[pos].description.length == 0) ? 'No description' : "\'" + result[pos].description + "\'") + "\r\n"
+                                + "Priority: " + result[pos].priority + "\r\n"
+                                + "Billable:  " + result[pos].billable + "\r\n"
+                                + ((result[pos].billable) ? "Cost: " + result[pos].cost + "\r\n" : "");
+                            var date = ""+result[pos].created
+                            dados += "Created in: " + fix_date(date) + "\r\n"
+                            date = ""+result[pos].deadline
+                            dados += "Finish until: " + fix_date(date) + "\r\n\r\n";
+                        }
+                    }
+                    cb(err, dados);
                 });
                 break;
             case 'update':
