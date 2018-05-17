@@ -52,7 +52,7 @@ module.exports = {
                         if (obj['project']) obj2['project'] = proj[0]['_id'];
                         controllerTask.getByCond(obj2, (err, result) => {
                             if (result && result.length === 0) err = "Task not found";
-                            else if (tam = result.length > 0) {
+                            else if (result.length > 0) {
                                 let num_registro = 1;
 
                                 var dados = "Tasks found (" + result.length + "):\r\n\r\n";
@@ -64,6 +64,7 @@ module.exports = {
                                         + "Description: " + ((result[pos].description == undefined || result[pos].description.length == 0) ? 'No description' : "\'" + result[pos].description + "\'") + "\r\n"
                                         + "Project:  " + ((obj['project'] == undefined) ? 'Default project' : "\'" + obj['project'] + "\'") + "\r\n"
                                         + "Priority: " + result[pos].priority + "\r\n"
+                                        + "Difficulty: " + ((result[pos].difficulty == undefined || result[pos].difficulty.length == 0) ? '0' : result[pos].difficulty) + "\r\n"
                                         + "Started date:  " + ((result[pos].started || result[pos].finished) ? "\'" + result[pos].timeStartDate + "\'" : "Not started yet.") + "\r\n"
                                         + "Finished date: " + ((result[pos].finished) ? "\'" + result[pos].finishDate + "\'" : "Not finished yet.") + "\r\n"
                                         + "Dependencies:  [ ";
@@ -85,9 +86,8 @@ module.exports = {
                                     date = result[pos].deadline
                                     dados += "Finish until: " + fix_date(""+date) + "\r\n\r\n";
                                 }
-
                             }
-                            cb(err, result);
+                            cb(err, dados);
                         });
                         break;
                     case 'update':
