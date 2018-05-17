@@ -25,7 +25,7 @@ function updateProjectsArray(cb) {
     });
 }
 
-updateProjectsArray( function () { } );
+updateProjectsArray( function () { dec.decode('remove lucas', res=>console.log(res)) } );
 
 /**
  * Resolve aspas
@@ -174,15 +174,27 @@ function apply(obj, cb) {
     // Usuário por enquanto é este
     obj2['user'] = user;
     
-    var d = (chamarEspecifico, obj, obj2, cb) => chamarEspecifico(obj, obj2, cb)
-
-    if (obj.name) {
-        if (obj.actor === 'task')
-            controllerTask.getByCond({name: obj.name}, d, false)
-        else if (obj.actor === 'project')
-            controllerProject.getByCond({name: obj.name}, d, false)
-    } else chamarEspecifico(obj, obj2, cb)
-    
+    console.log(obj);
+    if (obj.actor) {
+        if (obj.actor === 'task') {
+            console.log('--- Decoder de Task ---');
+            controllerTask.getByCond({name: obj.task}, function(err, res) {
+                obj2._id = res._id;
+                decoderTask.apply(obj, obj2, cb);
+            }, false)
+        }
+        else if (obj.actor === 'project') {
+            controllerProject.getByCond({name: obj.project}, function(err, res) {
+                console.log('--- Decoder de Project ---');
+                obj2._id = res[0]._id;
+                understood = decoderProject.apply(obj, obj2, cb);
+            }, false)
+        }
+    } else {
+        console.log('fail');
+        console.log(obj);
+        chamarEspecifico(obj, obj2, cb)
+    }
 }
 
 function chamarEspecifico(obj, obj2, cb) {

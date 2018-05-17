@@ -23,7 +23,7 @@ module.exports = {
                 });
                 break;
             case 'remove':
-                controllerProject.remove(obj2['id'],(result) => {
+                controllerProject.remove(obj2['_id'],(result) => {
                     if (result.v == 1) {
                         cb(result.err, null)
                     } else {

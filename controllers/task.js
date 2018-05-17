@@ -94,7 +94,7 @@ var exp = {
     remove: (id, cb) => {
         Task.findOne({project: id}, function(err, task) {
             if (err) return cb(1)
-            task.remove()
+            if (task) task.remove()
             cb(0)
         })
     },
