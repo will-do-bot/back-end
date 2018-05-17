@@ -99,7 +99,7 @@ var exp = {
         })
     },
     removeByCond: (id, cb) => {
-        Task.findOne({id}, function(err, task) {
+        Task.findOne({'_id': id}, function(err, task) {
             if (err) return cb(1)
             if (task) task.remove()
             cb(0)
