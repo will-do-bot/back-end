@@ -25,7 +25,7 @@ function updateProjectsArray(cb) {
     });
 }
 
-updateProjectsArray( function () { dec.decode('show project alo alo?', res=>console.log(res))} );
+updateProjectsArray( function () { } );
 
 /**
  * Resolve aspas
