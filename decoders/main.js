@@ -179,15 +179,19 @@ function apply(obj, cb) {
         if (obj.actor === 'task') {
             console.log('--- Decoder de Task ---');
             controllerTask.getByCond({name: obj.task}, function(err, res) {
-                obj2._id = res._id;
-                decoderTask.apply(obj, obj2, cb);
+                if (res && res[0]) {
+                    obj2._id = res._id;
+                    decoderTask.apply(obj, obj2, cb);
+                } else cb('Task not found!')
             }, false)
         }
         else if (obj.actor === 'project') {
             controllerProject.getByCond({name: obj.project}, function(err, res) {
                 console.log('--- Decoder de Project ---');
-                obj2._id = res[0]._id;
-                understood = decoderProject.apply(obj, obj2, cb);
+                if (res && res[0]) {
+                    obj2._id = res[0]._id;
+                    understood = decoderProject.apply(obj, obj2, cb);
+                } else cb('Project not found!')
             }, false)
         }
     } else {
