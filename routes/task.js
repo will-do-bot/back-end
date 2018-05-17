@@ -52,11 +52,11 @@ module.exports = function (app) {
     });
 
     app.delete('/task/:id', auth.checkAuth, auth.validate, (req, res) => {
-        task_controller.removeByCond(req.params.id, (err, result) => {
+        task_controller.removeByCond(req.params.id, (err) => {
             if (err)
                 res.status(500).send();
             else {
-                res.status(200).send(result);
+                res.status(200).send();
             }
         });
     });
