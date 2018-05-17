@@ -92,9 +92,14 @@ var exp = {
         Task.update(cond, newObj, cb);
     },
     remove: (id, cb) => {
-        Task.findOne({project: id}, function(err, task) {
+        Task.find({project: id}, function(err, tasks) {
             if (err) return cb(1)
-            if (task) task.remove()
+            
+            if (tasks){
+                tasks.forEach(element => {
+                    element.remove()
+                });
+            }
             cb(0)
         })
     },
