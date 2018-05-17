@@ -61,7 +61,7 @@ module.exports = {
                                 + "Description: " + ((result[pos].description == undefined || result[pos].description.length == 0) ? 'No description' : "\'" + result[pos].description + "\'") + "\r\n"
                                 + "Priority: " + result[pos].priority + "\r\n"
                                 + "Billable:  " + result[pos].billable + "\r\n"
-                                + ((result[pos].billable) ? "Cost: " + result[pos].cost + "\r\n" : "");
+                                + "Cost: " + result[pos].cost + "\r\n";
                             var date = ""+result[pos].created
                             dados += "Created in: " + fix_date(date) + "\r\n"
                             date = ""+result[pos].deadline
