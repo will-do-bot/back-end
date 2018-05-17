@@ -1,43 +1,49 @@
 <div ng-include="'sidebar.html'"></div>
 
 <div class="content">
-  <div class="top-content">
-      <h1 class="title">{{project.name}}</h1>
-  </div>
-  <div class="bottom-content">
-      <div class="tasks-panel">
-          <p class="sub-title">Tasks</p>
-          <p ng-click="showCreateTask()" class='green'>+ Create new Task</p>
-          <div class="tasks">
-              <div ng-click='changeContent(task)' ng-repeat="task in tasks" ng-class="getChosen(task)">#{{$index+1}} - {{task.name}}
-                <p class="float-right" ng-click="deleteTask(task._id)">X</p>
-              </div>
-              <a class='button' href="#!/project">Back</a>
+    <div class="top-content">
+        <h1 class="title">{{project.name}}</h1>
+    </div>
+    <div class="bottom-content">
+        <div class="tasks-panel">
+            <p class="sub-title">Tasks</p>
+            <p ng-click="showCreateTask()" class='green'>+ Create new Task</p>
+            <div class="tasks">
+                <div ng-click='changeContent(task)' ng-repeat="task in tasks" ng-class="getChosen(task)">#{{$index+1}} - {{task.name}}
+                    <p class="float-right" ng-click="deleteTask(task._id)">X</p>
+                </div>
+                <a class='button' href="#!/project">Back</a>
+            </div>
         </div>
-      </div>
-      <div class="selected-task" ng-show="!showAddTask">
-          <div class="top-selected-task">
-              <p class="sub-title-task">{{chosenTask.name}}</p>
-              <p ng-class="getPriority()">Priority: {{chosenTask.priority}}</p>
-          </div>
-          <div class="task-attribute">
-              <p class="description">{{chosenTask.description}}</p>
-              <div class="task-button">
-                  <div class="task-buttom-left">
-                      <a class='button' href="#!timetracker"> Time Tracker</a>
-                      <a ng-show="!chosenTask.finished" ng-click="startTask(chosenTask._id)" class='button'> Start task</a>
-                      <a ng-show="!chosenTask.finished" ng-click="pauseTask(chosenTask._id)" class='button'> Pause task</a>
-                  </div>
-                  <div class="task-buttom-right">
-                    <a class='button' href="#!time">Deadline: {{ chosenTask.deadline }}</a>
-                    <a class='button' href="#!chart"> Chart</a>  
-                    <a class='button' ng-show="!chosenTask.finished" ng-click="finishTask(chosenTask._id)"> Finish task</a>
-                    <a class='button' ng-show="!chosenTask.finished" ng-click="showUpdateTask()"> Update task</a>
-                  </div>
-              </div>
-          </div>
-      </div>
-      <div class='selected-task' ng-show="showAddTask">
+        <div class="selected-task" ng-show="!showAddTask">
+            <div class="top-selected-task">
+                <p class="sub-title-task">{{chosenTask.name}}</p>
+                <p ng-class="getPriority()">Priority: {{chosenTask.priority}}</p>
+            </div>
+            <div class="task-attribute">
+                <p class="description">{{chosenTask.description}}</p>
+                <div class="task-button">
+                    <div class="task-buttom-left">
+                        <a class='button' href="#!timetracker"> Time Tracker</a>
+                        <a ng-show="!chosenTask.finished" ng-click="startTask(chosenTask._id)" class='button'> Start task</a>
+                        <a ng-show="!chosenTask.finished" ng-click="pauseTask(chosenTask._id)" class='button'> Pause task</a>
+                    </div>
+                    <div class="task-buttom-right">
+                        <a class='button' href="#!time">Deadline: {{ chosenTask.deadline }}</a>
+                        <a class='button' href="#!chart"> Chart</a>
+                        <a class='button' ng-show="!chosenTask.finished" ng-click="finishTask(chosenTask._id)"> Finish task</a>
+                        <a class='button' ng-show="!chosenTask.finished" ng-click="showUpdateTask()"> Update task</a>
+                    </div>
+                </div>
+                <div>
+                    <div ng-repeat="time in chosenTask.times">
+                        <p>Started at : {{time.startDate}}</p>
+                        <p>Ended at: {{time.endDate}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class='selected-task' ng-show="showAddTask">
             <div class='addTask'>
                 <p class="sub-title-task">{{subTitleTask}}</p>
                 <form>
@@ -82,6 +88,6 @@
 
 
         </div>
-  </div>
+    </div>
 
 </div>

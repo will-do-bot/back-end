@@ -1,13 +1,17 @@
-module.exports = function ($scope, $routeParams, $httpController){
+module.exports = function ($scope, $routeParams, $httpController, $http) {
   $httpController.getTasksOfProject($routeParams.id, tasks => {
     $scope.tasks = tasks
     $scope.chosenTask = tasks[0]
+    tasks.forEach(element => {
+      getTimes(element)
+    });
+    console.log($scope.chosenTask)
     $httpController.getProjectById($routeParams.id, project => {
       $scope.project = project
     })
   })
 
-  function getTasksOfProject(){
+  function getTasksOfProject() {
     $httpController.getTasksOfProject($routeParams.id, tasks => {
       $scope.tasks = tasks
       $scope.chosenTask = tasks[0]
@@ -16,14 +20,21 @@ module.exports = function ($scope, $routeParams, $httpController){
       })
     })
   }
-  
-  $scope.changeContent = function (task) {
-    $scope.chosenTask = task
-    $scope.getPriority = `priority ${$scope.chosenProject.priority.toLowerCase()}`
+
+  function getTimes(task) {
+    $http({
+      headers: {
+        auth_key: '8e8281d3-1a09-452c-b218-a6566a09c7a7'
+      },
+      method: 'GET',
+      url: '/time_tracker?task=' + task._id
+    }).then(response => {
+      task.times = response.data
+    })
   }
 
-  $scope.getPriority = function () {
-    return "priority " + $scope.chosenTask.priority.toLowerCase()
+  $scope.changeContent = function (task) {
+    $scope.chosenTask = task
   }
 
 
@@ -42,7 +53,7 @@ module.exports = function ($scope, $routeParams, $httpController){
 
   }
 
-  $scope.showCreateTask = function(){
+  $scope.showCreateTask = function () {
     $scope.showAddTask = true
     $scope.updateButton = false
     $scope.createButton = true
@@ -50,7 +61,7 @@ module.exports = function ($scope, $routeParams, $httpController){
     $scope.selectProject = true
     console.log($scope.startTask)
   }
-  $scope.showUpdateTask = function(task){
+  $scope.showUpdateTask = function (task) {
     $scope.showAddTask = true
     $scope.updateButton = true
     $scope.createButton = false
@@ -71,10 +82,10 @@ module.exports = function ($scope, $routeParams, $httpController){
     $scope.showAddTask = !$scope.showAddTask
   }
 
-  $scope.updateTask = function (task,taskId) {
-    $httpController.updateTask(task,taskId, response => {
-     alert("Task updated!")
-     console.log(response)
+  $scope.updateTask = function (task, taskId) {
+    $httpController.updateTask(task, taskId, response => {
+      alert("Task updated!")
+      console.log(response)
     })
   }
 
@@ -89,7 +100,7 @@ module.exports = function ($scope, $routeParams, $httpController){
       console.log(response)
     })
   }
-  
+
   $scope.finishTask = function (id) {
     $httpController.finishTask(id, response => {
       console.log(response)

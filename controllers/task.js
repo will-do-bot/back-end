@@ -94,7 +94,6 @@ var exp = {
     remove: (id, cb) => {
         Task.find({project: id}, function(err, tasks) {
             if (err) return cb(1)
-            
             if (tasks){
                 tasks.forEach(element => {
                     element.remove()
@@ -104,7 +103,7 @@ var exp = {
         })
     },
     removeByCond: (id, cb) => {
-        Task.findOne({'_id': id}, function(err, task) {
+        Task.findOne({id}, function(err, task) {
             if (err) return cb(1)
             if (task) task.remove()
             cb(0)

@@ -24,10 +24,6 @@ module.exports = function ($scope, $httpController) {
     $scope.chosenTask = task
   }
 
-  $scope.getPriority = function () {
-    return "priority " + $scope.chosenTask.priority.toLowerCase()
-  }
-
   $scope.showAddTask = false
 
   $scope.getChosen = function (x) {
