@@ -119,8 +119,6 @@ module.exports = {
                         obj2['project'] = proj[0]['_id'];
                         // Fazendo get na tarefa para poder obter seu id
                         controllerTask.getByCond(obj2, (err, tarefa) => {
-                            console.log('pausando');
-                            console.log(obj2);
                             if (tarefa.length === 0) {
                                 cb("Task not found", null);
                                 return;
@@ -136,11 +134,17 @@ module.exports = {
                         obj2['project'] = proj[0]['_id'];
                         // Fazendo get na tarefa para poder obter seu id
                         controllerTask.getByCond(obj2, (err, tarefa) => {
+                            console.log("FINISHING")
+                            console.log("ID: " + tarefa[0]._id)
                             if (tarefa.length === 0) {
+                                console.log("NO TASK")
                                 cb("Task not found", null);
                                 return;
                             }
-                            else controllerTask.finish(tarefa[0]['_id'], (e, r) => {
+                            else controllerTask.finish(tarefa[0]._id, (e, r) => {
+                                console.log("ALMOST THERE")
+                                console.log(e);
+                                console.log(r);
                                 if (r) r = "Task finished";
                                 cb(e, r);
                             });

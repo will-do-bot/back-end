@@ -138,8 +138,6 @@ var exp = {
             if (res && !res['finished']) {
                 timeTracker.getActiveTimeTracker(id, (result) => {
                     if (result) {
-                        console.log("PAUSANDO")
-                        console.log(result);
                         timeTracker.stop(result['_id'], cb);
                     }
                     else cb('You need to start the task', null);
@@ -155,7 +153,7 @@ var exp = {
                 res.finishDate = date
                 timeTracker.getActiveTimeTracker(id, (result) => {
                     if (result) {
-                        timeTracker.stop(result['_id'], date, () => {
+                        timeTracker.stop(result['_id'], () => {
                             Task.findOne({ '_id': id }, (err, res) => {
                                 res['finished'] = true;
                                 Task.update({ '_id': id }, res, cb);
