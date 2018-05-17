@@ -39,6 +39,7 @@ module.exports = {
                     case 'remove':
                         // O atributo project será igual ao id do projeto, e não mais o nome
                         obj2['project'] = proj[0]['_id'];
+                        console.log(obj2.project);
                         controllerTask.remove(obj2._id, (result) => {
                             if (result) err = "Task not found";
                             else result = "Task deleted!";
