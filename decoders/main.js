@@ -25,7 +25,7 @@ function updateProjectsArray(cb) {
     });
 }
 
-updateProjectsArray( function () { dec.decode('pause task taskzinha in lucas', res=>console.log(res)) } );
+updateProjectsArray( function () { } );
 
 /**
  * Resolve aspas
