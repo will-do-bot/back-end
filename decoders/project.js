@@ -4,6 +4,18 @@ const controllerTask = require('./../controllers/task');
 
 const facebook_id = "2234224289938329";
 
+function fix_date(date) {
+    if (!date) return "Not defined";
+    date = new Date(date);
+    let dia, mes, ano;
+    dia = date.getDate();
+    mes = date.getMonth();
+    ano = date.getFullYear();
+    hora = date.getHours();
+    minutos = date.getMinutes();
+    return dia + "/" + mes + "/" + ano + " - " + hora + "h" + minutos;
+}
+
 module.exports = {
 
     /**
@@ -39,9 +51,11 @@ module.exports = {
                         let num_registro = 1;
 
                         var dados = "Projects found (" + result.length + "):\r\n\r\n";
+                        console.log("PROJECTS FOUND (" + result.length + ")")
 
                         // ARRUMAR MENSAGEM DE `FINISHED DATE` e `FINISH UNTIL`
                         for (let pos in result) {
+                            console.log(result);
                             dados += "Project (" + (num_registro++) + ")\r\n"
                                 + "Name: \'" + result[pos].name + "\'\r\n"
                                 + "Description: " + ((result[pos].description == undefined || result[pos].description.length == 0) ? 'No description' : "\'" + result[pos].description + "\'") + "\r\n"

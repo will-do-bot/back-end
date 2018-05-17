@@ -49,7 +49,7 @@ module.exports = {
                     case 'show':
                         // mensagem de retorno melhorada apenas para o caso de listagem por project. Caso ${obj['project']} não seja definido, poderá ocorrer erro
                         // O atributo project será igual ao id do projeto, e não mais o nome
-                        if (obj['project']) obj2['project'] = proj[0]['_id'];
+                        obj2['project'] = proj[0]['_id'];
                         controllerTask.getByCond(obj2, (err, result) => {
                             if (result && result.length === 0) err = "Task not found";
                             else if (result.length > 0) {
@@ -160,10 +160,13 @@ module.exports = {
 }
 
 function fix_date(date) {
-    // " Weekday Month Day Year 00:00:00 GMT-XXXX (GMT LOCATION) "
-    var obj = date.split(" ")
-    date = "[" + obj[5] + "] " + obj[0] + " " + obj[3] + "/" + obj[1] + "/" + obj[2] + " - " + obj[4]
-    if(obj[0] == 'undefined') date = 'Not defined'
-    return date 
-
+    if (!date) return "Not defined";
+    date = new Date(date);
+    let dia, mes, ano;
+    dia = date.getDate();
+    mes = date.getMonth();
+    ano = date.getFullYear();
+    hora = date.getHours();
+    minutos = date.getMinutes();
+    return dia + "/" + mes + "/" + ano + " - " + hora + "h" + minutos;
 }
