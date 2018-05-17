@@ -25,7 +25,7 @@ function updateProjectsArray(cb) {
     });
 }
 
-updateProjectsArray( function () { dec.decode('remove lucas', res=>console.log(res)) } );
+updateProjectsArray( function () { } );
 
 /**
  * Resolve aspas
