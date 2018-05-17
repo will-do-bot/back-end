@@ -30,7 +30,7 @@ module.exports = {
                 switch (obj['action']) {
                     case 'add':
                         // O atributo project será igual ao id do projeto, e não mais o nome
-                        obj2['project'] = proj[0]['id'];
+                        obj2['project'] = proj[0]['_id'];
                         controllerTask.create(obj2, { 'name': obj['project'] }, { 'facebook_id': facebook_id }, (err, result) => {
                             if (!err) result = "Task created!";
                             cb(err, result);
@@ -39,7 +39,6 @@ module.exports = {
                     case 'remove':
                         // O atributo project será igual ao id do projeto, e não mais o nome
                         obj2['project'] = proj[0]['_id'];
-                        console.log(obj2.project);
                         controllerTask.removeByCond(obj2._id, (result) => {
                             if (result) err = "Task not found";
                             else result = "Task deleted!";
@@ -50,7 +49,7 @@ module.exports = {
                     case 'show':
                         // mensagem de retorno melhorada apenas para o caso de listagem por project. Caso ${obj['project']} não seja definido, poderá ocorrer erro
                         // O atributo project será igual ao id do projeto, e não mais o nome
-                        if (obj['project']) obj2['project'] = proj[0]['id'];
+                        if (obj['project']) obj2['project'] = proj[0]['_id'];
                         controllerTask.getByCond(obj2, (err, result) => {
                             if (result && result.length === 0) err = "Task not found";
                             else if (tam = result.length > 0) {
@@ -86,7 +85,6 @@ module.exports = {
                                     date = result[pos].deadline
                                     dados += "Finish until: " + fix_date(""+date) + "\r\n\r\n";
                                 }
-                                console.log(dados)
 
                             }
                             cb(err, result);
@@ -94,7 +92,7 @@ module.exports = {
                         break;
                     case 'update':
                         // O atributo project será igual ao id do projeto, e não mais o nome
-                        obj2['project'] = proj[0]['id'];
+                        obj2['project'] = proj[0]['_id'];
                         controllerTask.updateByCond({ 'name': obj['task'] }, obj2, (err, result) => {
                             if (result && result.n === 0) err = "Task not found";
                             else if (result.n > 0) result = "Task updated!";
@@ -103,7 +101,7 @@ module.exports = {
                         break;
                     case 'start':
                         // O atributo project será igual ao id do projeto, e não mais o nome
-                        obj2['project'] = proj[0]['id'];
+                        obj2['project'] = proj[0]['_id'];
                         // Fazendo get na tarefa para poder obter seu id
                         controllerTask.getByCond(obj2, (err, tarefa) => {
                             if (tarefa.length === 0) {
@@ -118,14 +116,16 @@ module.exports = {
                         break;
                     case 'pause':
                         // O atributo project será igual ao id do projeto, e não mais o nome
-                        obj2['project'] = proj[0]['id'];
+                        obj2['project'] = proj[0]['_id'];
                         // Fazendo get na tarefa para poder obter seu id
                         controllerTask.getByCond(obj2, (err, tarefa) => {
+                            console.log('pausando');
+                            console.log(obj2);
                             if (tarefa.length === 0) {
                                 cb("Task not found", null);
                                 return;
                             }
-                            else controllerTask.pause(tarefa[0]['id'], (e, r) => {
+                            else controllerTask.pause(tarefa[0]['_id'], (e, r) => {
                                 if (r) r = "Task paused";
                                 cb(e, r);
                             });
@@ -133,14 +133,14 @@ module.exports = {
                         break;
                     case 'finish':
                         // O atributo project será igual ao id do projeto, e não mais o nome
-                        obj2['project'] = proj[0]['id'];
+                        obj2['project'] = proj[0]['_id'];
                         // Fazendo get na tarefa para poder obter seu id
                         controllerTask.getByCond(obj2, (err, tarefa) => {
                             if (tarefa.length === 0) {
                                 cb("Task not found", null);
                                 return;
                             }
-                            else controllerTask.finish(tarefa[0]['id'], (e, r) => {
+                            else controllerTask.finish(tarefa[0]['_id'], (e, r) => {
                                 if (r) r = "Task finished";
                                 cb(e, r);
                             });
