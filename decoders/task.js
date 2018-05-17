@@ -31,7 +31,7 @@ module.exports = {
                     case 'add':
                         // O atributo project será igual ao id do projeto, e não mais o nome
                         obj2['project'] = proj[0]['_id'];
-                        controllerTask.create(obj2, { 'name': obj['project'] }, { 'facebook_id': facebook_id }, (err, result) => {
+                        controllerTask.create(obj2, { 'name': obj['project'] }, { 'facebook_id': facebook_id }, (result, err) => {
                             if (!err) result = "Task created!";
                             cb(err, result);
                         });
