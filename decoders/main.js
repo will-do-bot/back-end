@@ -93,7 +93,7 @@ function createDate(obj, property) {
             date.setFullYear(date.getFullYear() + number);
         }
         else if (months.includes(input[0])) {
-            let month = months.indexOf(input[0]) + 1;
+            let month = months.indexOf(input[0]);
             date.setDate(parseInt(input[1]));
             date.setMonth(month);
         }
