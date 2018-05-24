@@ -4,7 +4,7 @@ const controllerTask = require('./../controllers/task');
 const decoderProject = require('./project');
 const decoderTask = require('./task');
 
-const actions = ['hello', 'add', 'build', 'create', 'list', 'show', 'remove', 'delete', 'edit', 'update', 'start', 'pause', 'finish', 'visit', 'help'];
+const actions = ['hey', 'add', 'build', 'create', 'list', 'show', 'remove', 'delete', 'edit', 'update', 'start', 'pause', 'finish', 'visit', 'help'];
 const actors = ['project', 'projects', 'task', 'tasks', 'interface'];
 const attributes = ['name', 'named', 'called', 'priority', 'start date', 'deadline', 'project', 'description', 'about', 'user', 'change', '_id', 'billable'];
 const ignore = ['and', 'me', 'my', 'all', 'in', 'new', 'with', 'where', 'of', 'to', 'equal', 'equals', '=', 'is', 'the'];
@@ -25,7 +25,7 @@ function updateProjectsArray(cb) {
     });
 }
 
-updateProjectsArray( function () { } );
+updateProjectsArray( function () { dec.decode('hey willdo', res=>console.log(res))} );
 
 /**
  * Resolve aspas
@@ -161,6 +161,9 @@ function postProcess(obj) {
  * Recebe ação gerada pelo decoder e encontra responsável por realizá-la
  */
 function apply(obj, cb) {
+
+    if (obj.action === 'hey') obj.actor = 'hello';
+
     var obj2 = { };          // Objeto que será enviado criado/buscado/editado/removido
     
     // Obj é o que foi compreendido da mensagem do usuário, a ação a ser realizada
