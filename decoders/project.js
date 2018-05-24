@@ -5,7 +5,7 @@ const controllerTask = require('./../controllers/task');
 const facebook_id = "2234224289938329";
 
 function fix_date(date) {
-    if (date != undefined) return "Not defined";
+    if (date === undefined) return "Not defined";
     date = new Date(date);
     let dia, mes, ano;
     dia = date.getDate();
@@ -63,6 +63,8 @@ module.exports = {
                                 + "Billable:  " + result[pos].billable + "\r\n"
                                 + "Cost: " + result[pos].cost + "\r\n";
                             var date = ""+result[pos].created
+                            console.log(date);
+                            console.log(fix_date(date));
                             dados += "Created in: " + fix_date(date) + "\r\n"
                             date = ""+result[pos].deadline
                             dados += "Finish until: " + fix_date(date) + "\r\n\r\n";
