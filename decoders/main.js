@@ -4,7 +4,7 @@ const controllerTask = require('./../controllers/task');
 const decoderProject = require('./project');
 const decoderTask = require('./task');
 
-const actions = ['add', 'build', 'create', 'list', 'show', 'remove', 'delete', 'edit', 'update', 'start', 'pause', 'finish', 'visit', 'help'];
+const actions = ['hello', 'add', 'build', 'create', 'list', 'show', 'remove', 'delete', 'edit', 'update', 'start', 'pause', 'finish', 'visit', 'help'];
 const actors = ['project', 'projects', 'task', 'tasks', 'interface'];
 const attributes = ['name', 'named', 'called', 'priority', 'start date', 'deadline', 'project', 'description', 'about', 'user', 'change', '_id', 'billable'];
 const ignore = ['and', 'all', 'in', 'new', 'with', 'where', 'of', 'to', 'equal', 'equals', '=', 'is', 'the'];
@@ -213,6 +213,9 @@ function chamarEspecifico(obj, obj2, cb) {
                 understood = true;
                 cb(null, 'https://willdomessenger.herokuapp.com/#!/project');
             }
+            break;
+        case 'hello':
+            cb(null, 'Hello, my lord!');
             break;
         default:
             if (obj['action'] === 'help') {
