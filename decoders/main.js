@@ -174,7 +174,7 @@ function apply(obj, cb) {
     // Usuário por enquanto é este
     obj2['user'] = user;
     
-    if (obj.actor && obj.action != 'add' && obj.action != 'show' && obj.action != 'list' && obj.action != 'visit' && obj.action != 'help') {
+    if (obj.actor && obj.action != 'add' && obj[obj.actor]) {
         if (obj.actor === 'task') {
             console.log('--- Decoder de Task ---');
             controllerTask.getByCond({name: obj.task}, function(err, res) {
