@@ -103,7 +103,10 @@ var exp = {
         })
     },
     removeByCond: (id, cb) => {
-        Task.find({'_id': id}, function(err, tasks) {
+		var cond;
+		if (id) cond = { '_id': id};
+		else cond = { };
+        Task.find(cond, function(err, tasks) {
             if (err || !tasks) return cb(1)
             tasks.forEach(function(task) { task.remove() });
             cb(0)

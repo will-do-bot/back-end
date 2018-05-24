@@ -37,7 +37,10 @@ module.exports = {
 		Project.update(cond, newObj, cb);
 	},
 	remove: function (id, cb) {
-		Project.find({ '_id': id }, function (err, projects) {
+		var cond;
+		if (id) cond = { '_id': id};
+		else cond = { };
+		Project.find(cond, function (err, projects) {
 			if (err) return cb({err, v: 1})
 			if (!projects)  return cb({success:"Project not found", v: 0})
 			projects.forEach(function(p) { p.remove() });
