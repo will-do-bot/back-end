@@ -1,6 +1,6 @@
 .project-tasks{
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 4em 1fr;
     grid-gap: 2%;
 }
 #tasks{

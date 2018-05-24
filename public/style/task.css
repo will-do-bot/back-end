@@ -173,5 +173,5 @@ h2 small {
 
   .addTask {
     display: grid;
-    grid-template-rows: 1fr 1fr;
+    grid-template-rows: 4em 1fr;
   }
