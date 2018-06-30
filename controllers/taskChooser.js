@@ -1,10 +1,8 @@
-const taskController = require('./task');
-
 function checarTempoRestante(task) {
-    if (!task['deadline']) return 0;
+    if (!task.deadline) return 0;
     
-    let dataInicio    = task['created'];
-    let deadline      = task['deadline'];
+    let dataInicio    = task.created;
+    let deadline      = task.deadline;
     let tempoAtual    = Date.now();
     
     let tempoInicial  = deadline - dataInicio;
@@ -21,7 +19,7 @@ function checarTempoRestante(task) {
 }
 
 function checarDataInicio(task) {
-    if (Date.now() >= task['startDate'])
+    if (Date.now() >= task.startDate)
         return 100;
     return 0;
 }
@@ -35,36 +33,45 @@ function checarLucratividade(task) {
     return 3;
 }
 
-function checarPrioridade(task, cb) {
+function checarPrioridade(task, maiorPrioridade) {
     let points = 0;
-    if (task['priority'] === 10)
-        points += 3;
-    else if (task['priority'] >= 7)
-        points += 2;
-    else if (task['priority'] >= 3)
-        points += 1;
+    if (task.priority > menorPrioridade) {
+        if (task.priority === maiorPrioridade)
+            points += 3;
+        else points += 2 - (tasks.priority / maiorPrioridade);
+    }
     return points;
 }
 
 function calcularPontos(tasks, cb) {
     if (tasks) {
         tasks.forEach((task, index) => {
+            let maiorP = maiorPrioridade(tasks);
+            let menorP = menorPrioridade(tasks);
             let points = 0;
             points += checarDataInicio(task);
             points += checarIniciada(task);
             points += checarLucratividade(task);
-            points += checarPrioridade(task);
+            points += checarPrioridade(task, maiorP, menorP);
             points += checarTempoRestante(task);
-            if (task['finished']) points -= 100000;
-            tasks[index]['points'] = points;
+            if (task.finished) points -= 100000;
+            tasks[index].points = points;
         });
     }
     if (cb) cb(tasks);
 }
 
+function maiorPrioridade(tasks) {
+    return tasks ? tasks.reduce((a,b) => Math.max(a.priority, b.priority)) : null;
+}
+
+function menorPrioridade(tasks) {
+    return tasks ? tasks.reduce((a,b) => Math.min(a.priority, b.priority)) : null;
+}
+
 function sort(tasks, cb) {
     if (tasks) {
-        tasks.sort(function(a, b) { return b['points'] - a['points']; })
+        tasks.sort(function(a, b) { return b.points - a.points; })
     }
     cb(null, tasks);
 }

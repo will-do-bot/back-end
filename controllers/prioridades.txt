@@ -16,4 +16,4 @@ Prioridade baixa       +1
 Finalizada             -100000
 
 --- TODO ---
-Prioridade do projeto  +3, +2, +!
+Prioridade do projeto  +3, +2, +1

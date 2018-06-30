@@ -25,7 +25,7 @@ function updateProjectsArray(cb) {
     });
 }
 
-updateProjectsArray( function () { dec.decode('hey willdo', res=>console.log(res))} );
+updateProjectsArray( function () { dec.decode('show me all tasks in TIS-3', res=>console.log(res))} );
 
 /**
  * Resolve aspas
