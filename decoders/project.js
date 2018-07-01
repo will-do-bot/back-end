@@ -2,8 +2,6 @@ const main = require('./main');
 const controllerProject = require('./../controllers/project');
 const controllerTask = require('./../controllers/task');
 
-const facebook_id = "2234224289938329";
-
 function fix_date(date) {
     if (date === undefined) return "Not defined";
     date = new Date(date);
@@ -22,7 +20,7 @@ module.exports = {
      * Realiza operação desejada pelo usuário
      * Recebe o objeto com a ação a ser realizada e o objeto a ser utilizado no controller
      */
-    apply: function (obj, obj2, cb) {
+    apply: function (facebook_id, obj, obj2, cb) {
         // Nome do projeto será igual ao atributo project, caso haja
         if (!obj2['name'] && obj['project']) obj2['name'] = obj['project'];
 
