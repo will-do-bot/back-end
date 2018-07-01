@@ -1,6 +1,7 @@
 const project = require('./project');
 const controllerProject = require('./../controllers/project');
 const controllerTask = require('./../controllers/task');
+const userController = require('./../controllers/user');
 const decoderProject = require('./project');
 const decoderTask = require('./task');
 
@@ -24,7 +25,11 @@ function updateProjectsArray(cb) {
     });
 }
 
-updateProjectsArray( function () { } );
+updateProjectsArray( function () { 
+    // userController.find('1636208479780756', user => {
+    //     dec.decode('show projects', user, res=>console.log(res))
+    // });
+});
 
 /**
  * Resolve aspas

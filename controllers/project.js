@@ -28,6 +28,7 @@ module.exports = {
 		Project.findOne({ '_id': id }, cb);
 	},
 	getByCond: function (cond, cb) {
+		console.log(cond);
 		Project.find(cond, cb);
 	},
 	update: function (id, newObj, cb) {
