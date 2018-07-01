@@ -19,10 +19,12 @@ var user, facebook;
  */
 
 function updateProjectsArray(cb) {
-    controllerProject.list(user, (err, obj) => {
-        projects = obj;
-        if (cb) cb();
-    });
+    if (user) {
+        controllerProject.list(user._id, (err, obj) => {
+            projects = obj;
+            if (cb) cb();
+        });
+    } //else if (cb) setTimeout(cb, 500);
 }
 
 updateProjectsArray( function () { 
