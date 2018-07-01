@@ -11,8 +11,7 @@ const ignore = ['and', 'me', 'my', 'all', 'in', 'new', 'with', 'where', 'of', 't
 const months = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'];
 
 var projects = [];
-
-const user = "5afc20963125df0014585269";
+var user;
 
 /**
  * Atualiza lista de projetos. Esta lista é utilizada para verificar se existe projeto com determinado nome
@@ -258,7 +257,8 @@ const dec = {
     /**
      * Entender string e retornar objeto com a ação a ser realizada.
      */
-    decode: (string, cb) => {
+    decode: (string, user_id, cb) => {
+        user = user_id;
         console.log("Command: " + string);
         
         // Separando palavras em vetor de strings

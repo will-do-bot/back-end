@@ -31,7 +31,7 @@ module.exports = function (app) {
 									})
 								}
 							})
-							dec.decode(event.message.text, (result) => {
+							dec.decode(event.message.text, event.sender.id, (result) => {
 								if (result instanceof Object)
 									controller.sendMessage(event.sender.id, JSON.stringify(result));
 								else controller.sendMessage(event.sender.id, result);
