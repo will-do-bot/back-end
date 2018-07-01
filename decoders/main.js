@@ -26,7 +26,7 @@ function updateProjectsArray(cb) {
 }
 
 updateProjectsArray( function () { 
-    //dec.decode('create project teste 9 deadline 1 month', '1636208479780756', res=>console.log(res))
+    //dec.decode('show willdo', '1636208479780756', res=>console.log(res))
 });
 
 /**
@@ -263,8 +263,8 @@ const dec = {
      */
     decode: (string, facebook_id, cb) => {
         userController.find(facebook_id, (user_id)=> {
+            user = user_id;
             updateProjectsArray(()=> {
-                user = user_id;
                 facebook = facebook_id;
                 console.log("Command: " + string);
                 console.log("User: " + facebook_id + "\n");
