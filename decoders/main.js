@@ -88,7 +88,7 @@ function createDate(obj, property) {
         }
         else if (input[1] === 'month' || input[1] === 'months') {
             let number = parseInt(input[0]);
-            date.setMonth(date.getMonth() + number);
+            date.setMonth(date.getMonth() + number + 1);
         }
         else if (input[1] === 'year' || input[1] === 'years') {
             let number = parseInt(input[0]);
