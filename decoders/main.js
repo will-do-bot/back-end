@@ -26,7 +26,7 @@ function updateProjectsArray(cb) {
 }
 
 updateProjectsArray( function () { 
-    //dec.decode('create project willdo', '1636208479780756', res=>console.log(res))
+    //dec.decode('create project teste 9 deadline 1 month', '1636208479780756', res=>console.log(res))
 });
 
 /**
@@ -74,6 +74,7 @@ function createDate(obj, property) {
     let input = obj[property].split(" ");
     let date = new Date(Date.now());
     date.setHours(date.getHours() - 3)
+    date.setMonth(date.getMonth());
     // Definir data
     if (input[0] === 'tomorrow')
         date.setDate(date.getDate() + 1);
@@ -88,7 +89,7 @@ function createDate(obj, property) {
         }
         else if (input[1] === 'month' || input[1] === 'months') {
             let number = parseInt(input[0]);
-            date.setMonth(date.getMonth() + number + 1);
+            date.setMonth(date.getMonth() + number);
         }
         else if (input[1] === 'year' || input[1] === 'years') {
             let number = parseInt(input[0]);
