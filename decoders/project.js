@@ -47,7 +47,7 @@ module.exports = {
             case 'show':
                 controllerProject.getByCond(obj2, (err, result) => {
                     if (result && result.length === 0) err = "Project not found";
-                    else if (result.length > 0) {
+                    else if (result && result.length > 0) {
                         let num_registro = 1;
 
                         var dados = "Projects found (" + result.length + "):\r\n\r\n";
