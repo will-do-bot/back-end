@@ -263,166 +263,167 @@ const dec = {
      */
     decode: (string, facebook_id, cb) => {
         userController.find(facebook_id, (user_id)=> {
-            user = user_id;
-            facebook = facebook_id;
-            console.log("Command: " + string);
-            console.log("User: " + facebook_id + "\n");
+            updateProjectsArray(()=> {
+                user = user_id;
+                facebook = facebook_id;
+                console.log("Command: " + string);
+                console.log("User: " + facebook_id + "\n");
 
-            // Separando palavras em vetor de strings
-            let words = string.toLowerCase().split(" ");
-            
-            // Definição de variáveis
-            let obj = { };                               // Objeto que será retornado
-            let expecting;                               // Atributo que se espera receber em seguida
-            let temp;                                    // Conjunto de palavras não compreendidas
-            let word;                                    // Recebe a palavra atual no comando de repetição
-            let lendoName = false;                       // Define se está esperando pelo nome de um projeto
-            
-            // Iterando pelas palavras da string
-            for (let i = 0; i < words.length; i++) {
+                // Separando palavras em vetor de strings
+                let words = string.toLowerCase().split(" ");
                 
-                // Caso possua aspas
-                if (words[i].startsWith('"')) {
-                    // Colocar todo o conteúdo das aspas dentro de word e avançar para quando elas acabam
-                    let x = solveQuot(i, words);
-                    i = x[0];
-                    word = x[1];
-                }
-                else { 
-                    // Se não, word será a palavra atual
-                    word = words[i]; 
-                }
+                // Definição de variáveis
+                let obj = { };                               // Objeto que será retornado
+                let expecting;                               // Atributo que se espera receber em seguida
+                let temp;                                    // Conjunto de palavras não compreendidas
+                let word;                                    // Recebe a palavra atual no comando de repetição
+                let lendoName = false;                       // Define se está esperando pelo nome de um projeto
                 
-                // Remover vírgula da palavra, caso haja
-                if (word.endsWith(','))
-                    word = word.substring(0, word.length-1);
+                // Iterando pelas palavras da string
+                for (let i = 0; i < words.length; i++) {
                     
-                // Caso palavra atual seja uma palavra chave
-                if (isKeyword(word)) {
-                    // Resetar variáveis temporárias
-                    temp = null;
-                    if (lendoName) lendoName = false;
-                }
-                
-                // Caso esta palavra deva ser ignorada
-                if (ignore.includes(word)) {
-                    // Resetar variáveis temporárias
-                    temp = null;
-                    if (lendoName) lendoName = false;
-                }
-                
-                // Caso esteja esperando por algum atributo
-                if (expecting) {
-                    var eraseTemp = false;  // Define se as variáveis temporárias devem ser resetadas
-                    var r = false;          // Define se deverá pular para próxima palavra
+                    // Caso possua aspas
+                    if (words[i].startsWith('"')) {
+                        // Colocar todo o conteúdo das aspas dentro de word e avançar para quando elas acabam
+                        let x = solveQuot(i, words);
+                        i = x[0];
+                        word = x[1];
+                    }
+                    else { 
+                        // Se não, word será a palavra atual
+                        word = words[i]; 
+                    }
                     
-                    // Caso seja palavra a ser ignorada ao final de um atributo
-                    if (ignore.includes(word) && obj[expecting]) {
-                        // Parar de ler atributo e pular para próxima palavra
-                        eraseTemp = true;
-                        r = true;
-                    }
-                    else if (isKeyword(word)) {
-                        // Parar de ler atributo, porém esperar para analisar essa palavra-chave
-                        eraseTemp = true;
-                    }
-                    // Caso esta palavra esteja livre
-                    else {
-                        // Atribuí-la e pular para próxima palavra
-                        if (obj[expecting]) obj[expecting] += ' ' + word;
-                        else obj[expecting] = word;
-                        r = true;
+                    // Remover vírgula da palavra, caso haja
+                    if (word.endsWith(','))
+                        word = word.substring(0, word.length-1);
                         
-                        // Caso esta seja a última palavra, parar de esperar atributo
-                        if (i === words.length - 1)
-                            eraseTemp = true;
-                    }
-                    
-                    if (eraseTemp) {
-                        temp = null;
-                        expecting = null;
-                    }
-                    if (r) continue;
-                }
-                else {
-                    // Não está esperando por nenhum atributo
-                
-                    // Se palavra atual for o nome de um projeto existente
-                    if (existsProject(word)) {
-                        // Se ainda não tiver definido ator, ele será projeto
-                        if (!obj['actor']) obj['actor'] = 'project';
-                        // Projeto será a palavra atual
-                        obj['project'] = word;
-                        continue;
-                    }
-                    
-                    // Se valor temporário for o nome de um projeto existente
-                    if (existsProject(temp)) {
-                        // Se ainda não tiver definido ator, ele será projeto
-                        if (!obj['actor']) obj['actor'] = 'project';
-                        // Projeto será o valor temporário
-                        obj['project'] = temp;
-                        continue;
-                    }
-                    
-                    // Se estiver esperando pelo nome
-                    if (lendoName) {
-                        // Palavra atual irá se referir ao ator
-                        // Exemplo:  actor: 'project', project: 'este nome'
-                        // Exemplo2: actor: 'task',    task: 'este nome'
-                        if (obj[obj['actor']]) obj[obj['actor']] += ' ' + word;
-                        else obj[obj['actor']] = word;
-                    }
-                    
-                    // Se for palavra chave
+                    // Caso palavra atual seja uma palavra chave
                     if (isKeyword(word)) {
-                        // Resetar valor temporário
+                        // Resetar variáveis temporárias
                         temp = null;
+                        if (lendoName) lendoName = false;
                     }
-                    else if (!ignore.includes(word)){   
-                        // Atribuir a valor temporário
-                        if (temp) temp += ' ' + word;
-                        else temp = word;
+                    
+                    // Caso esta palavra deva ser ignorada
+                    if (ignore.includes(word)) {
+                        // Resetar variáveis temporárias
+                        temp = null;
+                        if (lendoName) lendoName = false;
                     }
-                }
-                // Caso palavra atual seja uma ação. Ex: 'create'
-                if (actions.includes(word) && !obj['action']) {
-                    obj['action'] = word;
-                    continue;
-                }
-                
-                // Caso palavra atual seja um ator. Ex: 'project'
-                if (actors.includes(word) && !obj['actor']) {
-                    obj['actor'] = word;
-                    // Esperar por nome depois do ator
-                    if (!isKeyword(words[i+1]) && !ignore.includes(words[i+1]))
-                        lendoName = true;
-                    continue;
-                }
-                
-                // Se palavra atual for um atributo. Ex: 'description'
-                if (attributes.includes(word)) {
-                    expecting = word;
-                    continue;
-                }
+                    
+                    // Caso esteja esperando por algum atributo
+                    if (expecting) {
+                        var eraseTemp = false;  // Define se as variáveis temporárias devem ser resetadas
+                        var r = false;          // Define se deverá pular para próxima palavra
+                        
+                        // Caso seja palavra a ser ignorada ao final de um atributo
+                        if (ignore.includes(word) && obj[expecting]) {
+                            // Parar de ler atributo e pular para próxima palavra
+                            eraseTemp = true;
+                            r = true;
+                        }
+                        else if (isKeyword(word)) {
+                            // Parar de ler atributo, porém esperar para analisar essa palavra-chave
+                            eraseTemp = true;
+                        }
+                        // Caso esta palavra esteja livre
+                        else {
+                            // Atribuí-la e pular para próxima palavra
+                            if (obj[expecting]) obj[expecting] += ' ' + word;
+                            else obj[expecting] = word;
+                            r = true;
+                            
+                            // Caso esta seja a última palavra, parar de esperar atributo
+                            if (i === words.length - 1)
+                                eraseTemp = true;
+                        }
+                        
+                        if (eraseTemp) {
+                            temp = null;
+                            expecting = null;
+                        }
+                        if (r) continue;
+                    }
+                    else {
+                        // Não está esperando por nenhum atributo
+                    
+                        // Se palavra atual for o nome de um projeto existente
+                        if (existsProject(word)) {
+                            // Se ainda não tiver definido ator, ele será projeto
+                            if (!obj['actor']) obj['actor'] = 'project';
+                            // Projeto será a palavra atual
+                            obj['project'] = word;
+                            continue;
+                        }
+                        
+                        // Se valor temporário for o nome de um projeto existente
+                        if (existsProject(temp)) {
+                            // Se ainda não tiver definido ator, ele será projeto
+                            if (!obj['actor']) obj['actor'] = 'project';
+                            // Projeto será o valor temporário
+                            obj['project'] = temp;
+                            continue;
+                        }
+                        
+                        // Se estiver esperando pelo nome
+                        if (lendoName) {
+                            // Palavra atual irá se referir ao ator
+                            // Exemplo:  actor: 'project', project: 'este nome'
+                            // Exemplo2: actor: 'task',    task: 'este nome'
+                            if (obj[obj['actor']]) obj[obj['actor']] += ' ' + word;
+                            else obj[obj['actor']] = word;
+                        }
+                        
+                        // Se for palavra chave
+                        if (isKeyword(word)) {
+                            // Resetar valor temporário
+                            temp = null;
+                        }
+                        else if (!ignore.includes(word)){   
+                            // Atribuir a valor temporário
+                            if (temp) temp += ' ' + word;
+                            else temp = word;
+                        }
+                    }
+                    // Caso palavra atual seja uma ação. Ex: 'create'
+                    if (actions.includes(word) && !obj['action']) {
+                        obj['action'] = word;
+                        continue;
+                    }
+                    
+                    // Caso palavra atual seja um ator. Ex: 'project'
+                    if (actors.includes(word) && !obj['actor']) {
+                        obj['actor'] = word;
+                        // Esperar por nome depois do ator
+                        if (!isKeyword(words[i+1]) && !ignore.includes(words[i+1]))
+                            lendoName = true;
+                        continue;
+                    }
+                    
+                    // Se palavra atual for um atributo. Ex: 'description'
+                    if (attributes.includes(word)) {
+                        expecting = word;
+                        continue;
+                    }
 
-                // Gambi pra atributos com 2 palavras, exemplo start date - Preguiça de fazer direito
-                if (i > 0 && attributes.includes(words[i-1] + " " + words[i])) {
-                    expecting = words[i-1] + " " + words[i];
-                    continue;
+                    // Gambi pra atributos com 2 palavras, exemplo start date - Preguiça de fazer direito
+                    if (i > 0 && attributes.includes(words[i-1] + " " + words[i])) {
+                        expecting = words[i-1] + " " + words[i];
+                        continue;
+                    }
+                    
                 }
                 
-            }
-            
-            if (expecting) obj[expecting] = temp;
-            let result = postProcess(obj);
-            apply(result, (err, result) => {
-                updateProjectsArray();
-                if (cb) {
-                    if (err) cb(err);
-                    else cb(result);
-                }
-            })
+                if (expecting) obj[expecting] = temp;
+                let result = postProcess(obj);
+                apply(result, (err, result) => {
+                    if (cb) {
+                        if (err) cb(err);
+                        else cb(result);
+                    }
+                })
+            });
         });
     }
 
