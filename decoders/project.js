@@ -44,7 +44,7 @@ module.exports = {
             case 'list':
             case 'show':
                 controllerProject.getByCond(obj2, (err, result) => {
-                    if (result && result.length === 0) err = "Project not found";
+                    if (result && result.length === 0) err = "No matching projects found";
                     else if (result && result.length > 0) {
                         let num_registro = 1;
 
